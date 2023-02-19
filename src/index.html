@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Root</title>
+    <link rel="stylesheet" href="style.scss">
+    <link rel="stylesheet" href="./bootstrap/bootstrap.min.css">
+</head>
+<body>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 d-flex justify-content-between align-items-center">
+                <title>
+                    <h1>Registrar assunto</h1>
+                </title>
+                <div>
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#cadAssuntoModal">
+                        Cadastrar assunto
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-dialog modal-dialog-centered fade" id="cadAssuntoModal" tabindex="-1" aria-labelledby="cadAssuntoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="cadAssuntoModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <label for="titulo">Título: </label>
+                        <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Título. Ex: Study Root" required>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" id="cad-assunto-btn" value="Salvar">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./bootstrap/bootstrap.bundle.js"></script>
+</body>
+</html>

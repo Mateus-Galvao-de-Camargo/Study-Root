@@ -9,5 +9,5 @@ app.on('ready', () => {
         resizable: false
     })
 
-    janelaPrincipal.loadURL(`file://${__dirname}/index.html`)
+    janelaPrincipal.loadURL(`file://${__dirname}/src/index.html`)
 })
