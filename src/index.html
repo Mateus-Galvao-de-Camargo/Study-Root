@@ -6,46 +6,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Study Root</title>
     <link rel="stylesheet" href="style.scss">
-    <link rel="stylesheet" href="./bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
 </head>
 <body>
-    
+    <div class="col-3">
+        <nav class="navbar navbar-dark bg-dark fixed-top">
+            <div class="container-fluid">
+              <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#assuntosNavbar" aria-controls="assuntosNavbar">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+
+                <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="assuntosNavbar" aria-labelledby="assuntosNavbarLabel">
+
+                    <!-- Cabeçário da barra lateral -->
+                    <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="assuntosNavbarLabel">Study Root</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+
+                    <!-- Corpo da barra lateral -->
+                    <div class="offcanvas-body">
+
+                        <form class="d-flex mt-3" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Assunto desejado..." aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Buscar</button>
+                        </form>
+
+                        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#cadAssuntoModal">
+                            Cadastrar assunto
+                        </button>
+
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item">
+                                Assunto 1
+                            </li>
+
+                            <li class="nav-item">
+                                Assunto 2
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Conteúdos a ser definido -->
     <div class="container">
         <div class="row">
-            <div class="col-lg-12 d-flex justify-content-between align-items-center">
-                <title>
-                    <h1>Registrar assunto</h1>
-                </title>
-                <div>
-                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#cadAssuntoModal">
-                        Cadastrar assunto
-                    </button>
-                </div>
+            <div class="col-8 d-flex justify-content-between align-items-center">
+                
             </div>
         </div>
     </div>
 
-    <div class="modal-dialog modal-dialog-centered fade" id="cadAssuntoModal" tabindex="-1" aria-labelledby="cadAssuntoModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+
+    <!-- Modal para cadastro de Assunto -->
+    <div class="modal fade" id="cadAssuntoModal" tabindex="-1" aria-labelledby="cadAssuntoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="cadAssuntoModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="cadAssuntoModalLabel">Adicionar assunto:</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="cad-assunto">
                         <label for="titulo">Título: </label>
                         <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Título. Ex: Study Root" required>
+
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <input type="submit" class="btn btn-primary" id="cad-assunto-btn" value="Salvar">
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" id="cad-assunto-btn" value="Salvar">
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="./bootstrap/bootstrap.bundle.js"></script>
+    <script src="./js/dados.js"></script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -5,7 +5,7 @@ let janelaPrincipal
 app.on('ready', () => {
     janelaPrincipal = new BrowserWindow({
         height: 900,
-        width: 1200,
+        width: 900,
         resizable: false
     })
 
