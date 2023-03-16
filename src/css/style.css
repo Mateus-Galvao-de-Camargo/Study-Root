@@ -1,0 +1,53 @@
+body{
+    background-color:  rgb(26, 26, 26);
+}
+
+.logo{
+    border-radius: 55px;
+    margin: auto;
+    display: block;
+    width: 250px;
+    margin-top: 135px;
+}
+
+.email{
+  
+    height: 40px;
+}
+
+.login-email{
+    width: 380px;
+    height: 45px;
+    border-radius: 10px;
+    margin: auto;
+    display: block;
+    margin-top: 35px;
+}
+
+.login-password{
+    width: 380px;
+    height: 45px;
+    border-radius: 10px;
+    margin: auto;
+    display: block;
+    margin-top: 45px;
+}
+
+.login-btn{
+    width: 190px;
+    height: 45px;
+    border-radius: 10px;
+    margin: auto;
+    display: block;
+    margin-top: 25px;
+}
+
+h3{
+    margin-top: 45px;
+    text-align: center;
+}
+
+.link{
+    text-decoration: none;
+    color: white;
+}

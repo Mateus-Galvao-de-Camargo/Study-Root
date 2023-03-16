@@ -1,0 +1,55 @@
+body{
+    background-color:  rgb(26, 26, 26);
+}
+
+.config{
+    margin: 10px;
+    display: block;
+    width: 45px;
+    margin-top: 30px;
+
+}
+
+img{
+    border-radius: 55px;
+    margin: 750px;
+    display: block;
+    width: 250px;
+    margin-top: 300px;
+}
+
+.sidebar{
+    position: fixed;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 240px;
+    height: 100%;
+    padding: 40px 10px 30px 10px;
+    border-right: 1px solid gray;
+}
+
+.sidebar-header{
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.sidebar button{
+height: 50px;
+   background: transparent;
+   border: 1px solid gray;
+   color: white;
+   cursor: pointer;
+   padding: 2;
+
+}
+
+.sidebar button > span{
+    
+    
+    display: inline-flex;
+    padding: 0 95px;
+
+
+}
