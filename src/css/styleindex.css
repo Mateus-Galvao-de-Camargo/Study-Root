@@ -35,13 +35,16 @@ img{
     margin-bottom: 16px;
 }
 
-.sidebar button{
-height: 50px;
+li button{
+    height: 50px;
    background: transparent;
    border: 1px solid gray;
    color: white;
    cursor: pointer;
-   padding: 2;
+   padding-right: 60px;
+   padding-left: 60px;
+   margin-left: 0%;
+
 
 }
 
