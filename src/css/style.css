@@ -42,11 +42,20 @@ body{
     margin-top: 25px;
 }
 
+p{
+    
+    color: rgb(26, 26, 26);
+}
+
 h3{
     margin-top: 45px;
     text-align: center;
 }
 
+.linka{
+    text-decoration: none;
+   
+}
 .link{
     text-decoration: none;
     color: white;
