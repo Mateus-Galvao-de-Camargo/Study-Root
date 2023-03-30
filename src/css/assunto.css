@@ -1,7 +1,8 @@
 body{
     
-    overflow-x: hidden ;
     background-color:  rgb(26, 26, 26);
+    width: 100%;
+    overflow-x: hidden;
 }
 
 
@@ -129,10 +130,68 @@ p{
 
 .botao-cadastro-assunto{
 
-    margin: 310px 0 0 865px;
+    margin: 289px 0 0 865px;
+ 
     border-radius: 15px;
     width: 85px;
     border-color: transparent;
     background: white;
 }
 
+.modale{
+    color: white;
+}
+
+h2{
+    
+     margin: 0 0 0 155px;
+
+}
+
+.nome-assunto{
+    border-radius: 15px;
+    margin: 0 0 0 100px;
+    padding: 15px 75px 10px 15px;
+}
+
+.descricao-assunto{
+
+    border-radius: 10px;
+    margin: 0 0 0 100px;
+    padding: 15px 75px 75px 15px;
+    margin-left: 82px;
+}
+
+.botao-concluir{
+
+    margin: 10px 200px 0 0;
+    border-radius: 15px;
+    width: 85px;
+    border-color: transparent;
+    background-color: white;
+    
+
+
+}
+    
+@media only screen and (min-width: 900px) and (max-width: 1440px) {
+    .botao-cadastro-aside{
+    
+        margin: 225px 0 0 95px;
+
+        border-radius: 15px;
+        width: 85px;
+        border-color: transparent;
+        background: white;
+    
+    }
+
+    .botao-cadastro-assunto{
+
+    margin: 289px 0 0 865px;
+    border-radius: 15px;
+    width: 85px;
+    border-color: transparent;
+    background: white;
+}
+  }
