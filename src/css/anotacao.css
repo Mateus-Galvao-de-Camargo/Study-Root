@@ -131,3 +131,15 @@ h1{
 
 }
     
+@media (max-width: 1440px){
+
+    .botao-sair{
+        display: block;
+        margin: 47px 0 0 1315px;
+        font-size: 38px;
+        border-color: transparent;
+        background-color: transparent;
+        
+    }
+
+}
