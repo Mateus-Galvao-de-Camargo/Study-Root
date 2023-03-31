@@ -116,20 +116,31 @@ h1{
 
 
 }
-@media (max-width: 1440px){
+@media only screen and (min-width: 900px) and (max-width: 1440px)  {
     .logo{
         border-radius: 55px;
-        margin: 306px 0 0 740px;
+        margin: 252px 0 0 738px;
         display: block;
         width: 250px;
 
     }
 
+
   }
-  @media (max-width: 1680px){
+  @media screen and (max-width: 1680px){
     .logo{
         border-radius: 55px;
-        margin: 370px 0 0 840px;
+        margin: 242px 0 0 695px;
+        display: block;
+        width: 250px;
+
+    }
+ 
+  } 
+  @media screen and (max-width: 1920px){
+    .logo{
+        border-radius: 55px;
+        margin: 257.8px 0 0 794.7px;
         display: block;
         width: 250px;
 
