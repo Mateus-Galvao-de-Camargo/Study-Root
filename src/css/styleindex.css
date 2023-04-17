@@ -38,10 +38,10 @@ body{
 
 .logo{
     border-radius: 55px;
-    margin: 800px;
+    margin-bottom: 800px;
     display: block;
     width: 250px;
-    margin-top: 250px;
+    margin-top: 50px;
 }
 
 .sidebar{
@@ -131,7 +131,6 @@ h1{
     .logo{
         border-radius: 55px;
         margin: 242px 0 0 695px;
-        display: block;
         width: 250px;
 
     }
@@ -140,8 +139,7 @@ h1{
   @media screen and (max-width: 1920px){
     .logo{
         border-radius: 55px;
-        margin: 257.8px 0 0 794.7px;
-        display: block;
+        margin: 350px 0 0 950px;
         width: 250px;
 
     }
