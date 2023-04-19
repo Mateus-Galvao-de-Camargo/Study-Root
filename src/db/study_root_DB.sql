@@ -2,23 +2,26 @@ CREATE DATABASE IF NOT EXISTS study_root;
 
 USE study_root;
 
-CREATE TABLE estudante(
+CREATE TABLE IF NOT EXISTS estudante(
   id_estudante INT NOT NULL AUTO_INCREMENT,
-  email VARCHAR NOT NULL,
-  senha VARCHAR NOT NULL,
+  usuario VARCHAR(30) NOT NULL,
+  email VARCHAR(50) NOT NULL,
+  senha VARCHAR(37) NOT NULL,
 );
 
-
-
-CREATE TABLE assunto(
+CREATE TABLE IF NOT EXISTS assunto(
   id_assunto INT NOT NULL AUTO_INCREMENT,
-  titulo VARCHAR NOT NULL,
-  PRIMARY KEY (id_assunto)
+  titulo VARCHAR(52) NOT NULL,
+  resumo VARCHAR(300),
+  id_estudante_fk VARCHAR NOT NULL,
+  PRIMARY KEY (id_assunto),
+  FOREIGN KEY (id_estudante_fk) REFERENCES estudante(id_estudante)
 );
 
-CREATE TABLE anotacao(
+CREATE TABLE IF NOT EXISTS anotacao(
   id_anotacao INT NOT NULL AUTO_INCREMENT,
-  titulo_fk VARCHAR NOT NULL,
+  conteudo TEXT COLLATE utf8_unicode_ci NOT NULL,
+  id_assunto_fk VARCHAR NOT NULL,
   PRIMARY KEY (id_anotacao),
-  FOREIGN KEY (titulo_fk) REFERENCES assunto(titulo)
+  FOREIGN KEY (id_assunto_fk) REFERENCES assunto(id_assunto)
 );

@@ -1,11 +1,7 @@
 body{
     background-color:  rgb(26, 26, 26);
     width: 100%;
-    
-}
-
-.branqueia{
-    color: white;
+    overflow-x: hidden;
 }
 
 .buscas{
