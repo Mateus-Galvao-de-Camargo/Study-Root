@@ -41,9 +41,6 @@
             <!-- Button trigger modal -->
 
             <button type="button" class ="botao-cadastro" data-bs-toggle="modal" data-bs-target="#exampleModal">Cadastrar</button>
-
-
-
         </header>
     </aside>
 
@@ -54,35 +51,51 @@
     
     <div>
       <form method="post" action="submit.php">
-        <textarea name="editor" id="editor" rows="25" cols="145"></textarea>
         <input type="submit" name="submit" value="Salvar">
+        <textarea name="editor" id="editor" rows="25" cols="145"></textarea>
       </form>
     </div>
 
-    <!-- Modal -->
-<div class="modal fade modale" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5 titulo" id="staticBackdropLabel">Adicionar Matéria</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <input  class ="nome-assunto" type ="search" placeholder ="Nome" aria-label ="Search">
-      </div>
-      <div class="modal-footer">
-        <div class="modal-body">
-        <input  class ="descricao-assunto" type ="search" placeholder ="Descrição" aria-label ="Search">
-      </div>
+        <!-- Modal -->
+    <div class="modal fade modale" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5 titulo" id="staticBackdropLabel">Adicionar Matéria</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <input  class ="nome-assunto" type ="search" placeholder ="Nome" aria-label ="Search">
+          </div>
+          <div class="modal-footer">
+            <div class="modal-body">
+            <input  class ="descricao-assunto" type ="search" placeholder ="Descrição" aria-label ="Search">
+          </div>
 
-        <button type="button" class="botao-concluir">Concluir</button>
+            <button type="button" class="botao-concluir">Concluir</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+
+    <script type="text/javascript" src="js/jquery-3.6.4.min.js"></script>
+		<script type="text/javascript" src="plugin/tinymce/js/tinymce/tinymce.min.js"></script>
+		<script type="text/javascript" src="plugin/tinymce/js/tinymce/init-tinymce.js"></script>
+
+    <!-- Inicialização do Tinymce(Editor de texto) -->
+    <script>
+      tinymce.init({
+        selector: '#editor',
+        menubar:false,
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+        entity_encoding:'raw',
+        statusbar:false,
+        skin:"oxide-dark",
+      });
+    </script> 
      
-     <script src="./js/bootstrap.bundle.min.js"></script>
-     <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
     
 </body>
 </html>
