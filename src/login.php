@@ -2,7 +2,7 @@
     session_start();
 
     if(empty($_POST) or (empty($_POST["email"]) or (empty($_POST["senha"])))){
-        print "<script>location.href='logindex.php';</script>";
+        print "<script>location.href='index.php';</script>";
     }
 
     include('config.php');
@@ -20,8 +20,8 @@
 
     if($qtd > 0){
         $_SESSION["email"] = $email;
-        print "<script>location.href='index.php'</script>";
+        print "<script>location.href='home.php'</script>";
     } else{
         print "<script>alert('Email e/ou senhha incorreto(s)');</script>";
-        print "<script>Location.href='logindex.php';</script>";
+        print "<script>location.href='index.php';</script>";
     }

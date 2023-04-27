@@ -2,5 +2,5 @@
     session_start();
     unset($_SESSION["email"]);
     session_destroy();
-    header("Location: logindex.php");
+    header("Location: index.php");
     exit;
