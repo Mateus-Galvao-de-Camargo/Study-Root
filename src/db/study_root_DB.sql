@@ -7,21 +7,22 @@ CREATE TABLE IF NOT EXISTS estudante(
   usuario VARCHAR(30) NOT NULL,
   email VARCHAR(50) NOT NULL,
   senha VARCHAR(37) NOT NULL,
+  PRIMARY KEY (id_estudante)
 );
 
 CREATE TABLE IF NOT EXISTS assunto(
   id_assunto INT(11) NOT NULL AUTO_INCREMENT,
   titulo VARCHAR(52) NOT NULL,
-  resumo VARCHAR(300),
-  id_estudante_fk VARCHAR NOT NULL,
-  PRIMARY KEY (id_assunto),
-  FOREIGN KEY (id_estudante_fk) REFERENCES estudante(id_estudante)
+  resumo VARCHAR(300) NULL,
+  id_estudante_fk INT(11) NOT NULL,
+  FOREIGN KEY (id_estudante_fk) REFERENCES estudante(id_estudante),
+  PRIMARY KEY (id_assunto)
 );
 
 CREATE TABLE IF NOT EXISTS anotacao(
   id_anotacao INT(11) NOT NULL AUTO_INCREMENT,
-  conteudo TEXT COLLATE utf8_unicode_ci NOT NULL,
-  id_assunto_fk VARCHAR NOT NULL,
-  PRIMARY KEY (id_anotacao),
-  FOREIGN KEY (id_assunto_fk) REFERENCES assunto(id_assunto)
+  conteudo TEXT NOT NULL,
+  id_assunto_fk INT(11) NOT NULL,
+  FOREIGN KEY (id_assunto_fk) REFERENCES assunto(id_assunto),
+  PRIMARY KEY (id_anotacao)
 );
