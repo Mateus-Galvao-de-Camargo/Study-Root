@@ -15,12 +15,12 @@
    
     <img src="./img/logo.jpeg" class="logo">
 
-    <form action="" method="post"></form>
+    <form action="./login.php" method="post">
         <input type="email" name="email" class="login-email" placeholder="Email">
-        <label for="input"></label>
+ 
 
         <input type="password" name="senha" class="login-password" placeholder="Senha">
-        <label for="Password"></label>
+
    
         <button type="submit" class="login-btn">Login</button>
     </form>
