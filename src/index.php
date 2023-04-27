@@ -11,6 +11,13 @@
 </head>
 <body>
 
+<?php
+sessin_start();
+if(empty($_SESSION)){
+  print "<script>location.href='logindex.php'</script>";
+}
+
+?>
     <aside class="sidebar"> 
         
             <form  class ="buscas" role ="search">

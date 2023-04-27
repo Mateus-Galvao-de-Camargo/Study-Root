@@ -15,14 +15,15 @@
    
     <img src="./img/logo.jpeg" class="logo">
 
-    <input type="email" class="login-email" placeholder="Email">
-    <label for="input"></label>
+    <form action="" method="post"></form>
+        <input type="email" name="email" class="login-email" placeholder="Email">
+        <label for="input"></label>
 
-    <input type="password" class="login-password" placeholder="Senha">
-    <label for="Password"></label>
+        <input type="password" name="senha" class="login-password" placeholder="Senha">
+        <label for="Password"></label>
    
-    
-    <a class="linka" href="./index.html"><button class="login-btn" type="button"><p>Login</p></button></a>
+        <button type="submit" class="login-btn">Login</button>
+    </form>
    
     <h3><a class="link" href="./cadastro.html">Não tem uma conta? Cadastre-se</a></h3>
 
