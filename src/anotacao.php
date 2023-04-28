@@ -53,7 +53,7 @@
 
     
     <div>
-      <form method="post" action="submit.php">
+      <form method="post" action="submit.php" class="editor">
         <input class="btn btn-light" type="submit" name="submit" value="Salvar">
         <textarea name="editor" id="editor" rows="25" cols="145"></textarea>
       </form>
@@ -67,16 +67,18 @@
             <h1 class="modal-title fs-5 titulo" id="staticBackdropLabel">Adicionar Matéria</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
+
+          <form action="./cadastro_assunto.php" method="post">
           <div class="modal-body">
-            <input  class ="nome-assunto" type ="search" placeholder ="Nome" aria-label ="Search">
-          </div>
-          <div class="modal-footer">
-            <div class="modal-body">
-            <input  class ="descricao-assunto" type ="search" placeholder ="Descrição" aria-label ="Search">
+            <input  class ="nome-assunto" type ="text" placeholder ="Nome" aria-label ="Search">
+
+            <input  class ="descricao-assunto" type ="text" placeholder ="Descrição" aria-label ="Search">
           </div>
 
-            <button type="button" class="botao-concluir">Concluir</button>
+          <div class="modal-footer">
+            <button type="submit" class="botao-concluir">Concluir</button>
           </div>
+          </form>
         </div>
       </div>
     </div>
