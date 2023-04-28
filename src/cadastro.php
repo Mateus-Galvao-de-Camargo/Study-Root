@@ -17,6 +17,8 @@
   
     <form action="cadastrar.php" method="post">
 
+        <input type="text" name="usuario" class="login-usuario" placeholder="Usuario">
+
         <input type="email" name="email" class="login-email" placeholder="Email">
 
         <input type="password" name="senha" class="login-password" placeholder="Senha">
