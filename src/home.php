@@ -69,9 +69,9 @@ if(empty($_SESSION)){
 
           <form action="./cadastro_assunto.php" method="post">
           <div class="modal-body">
-            <input  class ="nome-assunto" type ="text" placeholder ="Nome" aria-label ="Search">
+            <input  class ="nome-assunto" name="titulo" id="titulo" type ="text" placeholder ="Título" aria-label ="Search">
 
-            <input  class ="descricao-assunto" type ="text" placeholder ="Descrição" aria-label ="Search">
+            <input  class ="descricao-assunto" name="resumo" id="resumo" type ="text" placeholder ="Descrição" aria-label ="Search">
           </div>
 
           <div class="modal-footer">

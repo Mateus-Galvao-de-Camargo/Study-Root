@@ -20,8 +20,11 @@
 
     if($qtd > 0){
         $_SESSION["email"] = $email;
+
+        $nome = $conn->query("SELECT usuario FROM estudante WHERE email = '{$email}'");
+
         print "<script>location.href='home.php'</script>";
     } else{
-        print "<script>alert('Email e/ou senhha incorreto(s)');</script>";
+        print "<script>alert('Email e/ou senha incorreto(s)');</script>";
         print "<script>location.href='index.php';</script>";
     }
