@@ -45,7 +45,7 @@ if(empty($_SESSION)){
                 </button>
             </nav>
 
-            <button type="button" class ="botao-cadastro" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Cadastrar</button>
+            <button type="button" class ="botao-cadastro" data-bs-toggle="modal" data-bs-target="#exampleModal">Cadastrar</button>
 
         </header>
     <?php
@@ -59,26 +59,28 @@ if(empty($_SESSION)){
     
 
       <!-- Modal -->
-      <div class="modal fade modale" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5 titulo" id="staticBackdropLabel">Adicionar Assunto</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <input  class ="nome-assunto" type ="search" placeholder ="Nome" aria-label ="Search">
-            </div>
-            <div class="modal-footer">
-              <div class="modal-body">
-              <input  class ="descricao-assunto" type ="search" placeholder ="Descrição" aria-label ="Search">
-            </div>
-
-              <button type="button" class="botao-concluir">Concluir</button>
-            </div>
+      <div class="modal fade modale" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5 titulo" id="staticBackdropLabel">Adicionar Matéria</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
+
+          <form action="./cadastro_assunto.php" method="post">
+          <div class="modal-body">
+            <input  class ="nome-assunto" type ="text" placeholder ="Nome" aria-label ="Search">
+
+            <input  class ="descricao-assunto" type ="text" placeholder ="Descrição" aria-label ="Search">
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" class="botao-concluir">Concluir</button>
+          </div>
+          </form>
         </div>
       </div>
+    </div>
 
 
     <script src="./js/bootstrap.bundle.min.js"></script>
