@@ -20,7 +20,7 @@
            
             <nav>
               <!-- Botões dos assuntos, todos são da classe bts, e são gerados por DOM. -->
-                <a href="./assunto.html"> <button class="bts">
+                <a href="./assunto.php"> <button class="bts">
                     <span>
                         <span>nome assunto01</span>
                     </span>
@@ -42,11 +42,14 @@
 
             <button type="button" class ="botao-cadastro" data-bs-toggle="modal" data-bs-target="#exampleModal">Cadastrar</button>
         </header>
+        <?php
+          print "<a href='logout.php' class='btn btn-danger'>Sair</a>";
+        ?>
     </aside>
 
 
     <!-- conteudo -->
-    <button class ="botao-sair" type ="button"><a class="link-sair" href="./assunto.html"><p class="btn-close"></p></a></button>
+    <button class ="botao-sair" type ="button"><a class="link-sair" href="./assunto.php"><p class="btn-close"></p></a></button>
 
     
     <div>

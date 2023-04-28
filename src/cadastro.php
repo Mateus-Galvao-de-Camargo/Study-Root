@@ -13,14 +13,18 @@
 <body>
 
     
-        <img src="./img/logo.jpeg" class="logo">
+    <img src="./img/logo.jpeg" class="logo">
   
+    <form action="cadastrar.php" method="post">
 
-    <input type="email" class="login-email" placeholder="Email">
+        <input type="email" name="email" class="login-email" placeholder="Email">
 
-    <input type="password" class="login-password" placeholder="Senha">
+        <input type="password" name="senha" class="login-password" placeholder="Senha">
+
+        <button name="cadastrar" class="login-btn">Cadastrar</button>      
+    </form>
+
    
-    <button class="login-btn" type="button">Cadastrar</button>
     <h3><a class="link" href="./index.php">Já possui uma conta?</a></h3>
 
 </body>

@@ -27,7 +27,7 @@ if(empty($_SESSION)){
             </form> 
            
             <nav>
-               <a href="./assunto.html"> <button class="bts">
+               <a href="./assunto.php"> <button class="bts">
                     <span>
                         <span>nome assunto01</span>
                     </span>
@@ -48,10 +48,13 @@ if(empty($_SESSION)){
             <button type="button" class ="botao-cadastro" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Cadastrar</button>
 
         </header>
+    <?php
+       print "<a href='logout.php' class='btn btn-danger'>Sair</a>";
+    ?>
     </aside>
 
     
-        <img src="./img/logo.jpeg" class="logo">
+    <img src="./img/logo.jpeg" class="logo">
     
 
       <!-- Modal -->
@@ -75,6 +78,7 @@ if(empty($_SESSION)){
           </div>
         </div>
       </div>
+
 
     <script src="./js/bootstrap.bundle.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>

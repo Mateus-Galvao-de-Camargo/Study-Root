@@ -19,7 +19,7 @@
             </form> 
            
             <nav>
-                <a href="./assunto.html"> <button class="bts">
+                <a href="./assunto.php"> <button class="bts">
                     <span>
                         <span>nome assunto01</span>
                     </span>
@@ -38,11 +38,15 @@
 
             <button type="button" class="botao-cadastro-aside" data-bs-toggle="modal" data-bs-target="#modals">Cadastrar</button>
         </header>
+
+        <?php
+           print "<a href='logout.php' class='btn btn-danger'>Sair</a>";
+        ?>
     </aside>
 
-    <h1 class="titulo">nome assunto01 <button class ="botao-sair" type ="submit"><a class="link-sair" href="./index.html"><p class="btn-close"></p></a></button></h1> 
+    <h1 class="titulo">nome assunto01 <button class ="botao-sair" type ="submit"><a class="link-sair" href="./home.php"><p class="btn-close"></p></a></button></h1> 
 
-    <a class="primeira-aula" href="./anotacao.html"><button class ="botao-materia" type ="submit"><p>ex: primeira aula</p></button></a>
+    <a class="primeira-aula" href="./anotacao.php"><button class ="botao-materia" type ="submit"><p>ex: primeira aula</p></button></a>
 
     <button class ="botao-cadastro-assunto" type ="submit">Cadastrar</button>
 
