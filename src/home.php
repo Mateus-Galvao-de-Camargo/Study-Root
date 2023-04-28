@@ -49,6 +49,7 @@ if(empty($_SESSION)){
 
         </header>
     <?php
+      
        print "<a href='logout.php' class='btn btn-danger'>Sair</a>";
     ?>
     </aside>

@@ -16,6 +16,16 @@ body{
   
     height: 40px;
 }
+.login-usuario{
+  
+    width: 380px;
+    height: 45px;
+    border-radius: 10px;
+    margin: 90px 762px -50px;
+    display: block;
+
+}
+
 
 .login-email{
     width: 380px;
