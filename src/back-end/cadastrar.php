@@ -9,9 +9,17 @@
         $senha = $_POST['senha'];
         $query = mysqli_query($conn, "INSERT INTO estudante (usuario, email, senha) VALUE ('$usuario', '$email', '$senha')");
 
-        if($query){
+        $sql = "SELECT email FROM  estudante WHERE email = '{$email}'";
+
+        $res = $conn->query($sql);
+
+        $qtd = $res->num_rows;
+
+        if($qtd>0){
+            print "<script>alert('Email já utilizado! Cadastro não realizado');</script>";
+        } else if($query){
             print "<script>alert('Cadastro realizado com sucesso');</script>";
-            print "<script>location.href='home.php'</script>";
+            require_once('./login.php');
         } else{
             echo 'Não foi possível cadastrar';
         }

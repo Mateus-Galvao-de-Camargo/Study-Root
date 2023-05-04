@@ -6,8 +6,8 @@
     if(isset($_POST['cadastrar'])){
         $titulo = $_POST['titulo'];
         $resumo = $_POST['resumo'];
-        $estudante = $_SESSION['estudante_id'];
-        $query = mysqli_query($conn, "INSERT INTO assunto (titulo, resumo, id_estudante_fk) VALUE ('$titulo', '$resumo', '$estudante')");
+        $estudante = $_SESSION['id'];
+        $query = $conn->query("INSERT INTO assunto (id_assunto, titulo, resumo, id_estudante_fk) VALUE ('NULL', '$titulo', '$resumo', '$estudante')");
 
         if($query){
             print "<script>alert('Cadastro realizado com sucesso');</script>";

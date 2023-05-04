@@ -10,7 +10,7 @@
     $email = $_POST["email"];
     $senha = $_POST["senha"];
 
-    $sql = "SELECT id_estudante FROM  estudante WHERE email = '{$email}' AND senha = '{$senha}' ";
+    $sql = "SELECT id_estudante FROM estudante WHERE email = '{$email}' AND senha = '{$senha}' ";
 
     $res = $conn->query($sql) or die($conn->error);
 

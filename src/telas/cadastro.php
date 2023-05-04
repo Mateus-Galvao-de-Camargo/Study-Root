@@ -11,9 +11,7 @@
 </head>
 
 <body>
-
-    
-    <img src="./img/logo.jpeg" class="logo">
+    <img src="../img/logo.jpeg" class="logo">
   
     <form action="../back-end/cadastrar.php" method="post">
 
@@ -26,7 +24,6 @@
         <button name="cadastrar" class="login-btn">Cadastrar</button>      
     </form>
 
-   
     <h3><a class="link" href="./index.php">Já possui uma conta?</a></h3>
 
 </body>
