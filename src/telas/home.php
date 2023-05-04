@@ -18,6 +18,7 @@
   if(empty($_SESSION)){
     print "<script>location.href='index.php'</script>";
   }
+
   ?>
 
   <aside class="sidebar"> 
@@ -41,17 +42,19 @@
             <span>nome567</span>
           </button>
         </a>
-        <button class="bts-options btn-preto-background-hover" onclick="mostra(3)"><i class="fa-solid fa-ellipsis-vertical branco"></i></button>
-        <div class="edit" id="3" name="editors">
-          <form action="" method="post">
-            <button class="btn-transparente"><i class="fa-solid fa-trash-can fa-lg btn-vermelho"></i></button>
-          </form>
-          
+        <button class="bts-options btn-preto-background-hover" onclick="mostra(1)"><i class="fa-solid fa-ellipsis-vertical branco"></i></button>
+        <div class="edit" id="1" name="editors">
+
+          <form action="../back-end/delete_assunto.php" method="post">
+            <input hidden type="text" value="2" name="id">
+            <button type="submit" class="btn-transparente"><i class="fa-solid fa-trash-can fa-lg btn-vermelho"></i></button>
+            </form>
           <button class="btn-transparente"><i class="fa-regular fa-pen-to-square fa-lg branco btn-branco-hover"></i></button>
         </div>
       </div>
 
       <?php
+        
         include('../back-end/popula-assuntos.php');
       ?>
     </nav>

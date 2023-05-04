@@ -11,7 +11,7 @@
 
         if($query){
             print "<script>alert('Cadastro realizado com sucesso');</script>";
-            print "<script>location.href='home.php'</script>";
+            print "<script>location.href='../telas/home.php'</script>";
         } else{
             echo 'Não foi possível cadastrar';
         }

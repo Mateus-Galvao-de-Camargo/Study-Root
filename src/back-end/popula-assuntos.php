@@ -1,6 +1,6 @@
 <?php
-    include('config.php');
-
+    require_once('config.php');
+    
     $id = $_SESSION['id'];
 
     $sql = "SELECT * FROM assunto WHERE id_estudante_fk = $id";
