@@ -1,0 +1,110 @@
+/* Forma da própria aside - Ajuste do formato dos botões */
+.sidebar{
+    position: fixed;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 300px;
+    height: 100%;
+    padding: 40px 10px 30px 10px;
+    border-right: 2px solid gray;
+}
+
+.sidebar-header{
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.sidebar .bts{
+   margin-left: -24px;
+   padding-left: 15px;
+   padding-right: 15px;
+   width: 314px;
+   height: 70px;
+   background: transparent;
+   border: 1.5px solid gray;
+   color: white;
+   cursor: pointer;
+}
+
+.sidebar button > span{
+    display: inline-flex;
+    padding: 0 95px;
+}
+
+/* Header da aside - SearchBar */
+.buscas{
+    margin-bottom: 20px;
+}
+
+.buscador{
+    padding: 10px 45px 10px 15px;
+    border-radius: 15px;
+    border: 0;
+    border-color: transparent;   
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.btn-buscador{
+    padding: 10px;
+    position: absolute;
+    border-radius: 10px;
+    border: 0;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    background-color: white;
+}
+
+.btn-buscador:hover{
+    background-color: #ddd;
+}
+
+/* Modal */
+.modal h1{
+    margin: 0 0 0 155px;
+}
+
+.branco{
+    color: white;
+}
+
+.nome-assunto{
+    border-radius: 15px;
+    margin: 0 0 0 100px;
+    padding: 15px 75px 10px 15px;
+}
+
+.descricao-assunto{
+    border-radius: 10px;
+    margin: 0 0 0 100px;
+    padding: 15px 75px 75px 15px;
+    margin-left: 100px;
+    margin-top: 20px;
+}
+
+/* Botões */
+.btn-vermelho{
+    color: #d20000;
+}
+
+.btn-vermelho:hover{
+    color: #a00000;
+}
+
+.botao-cadastro{
+    margin: 225px 0 0 95px;
+    border-radius: 15px;
+    width: 85px;
+    border-color: transparent;
+    background: white;
+}
+
+.botao-concluir{
+    margin: 10px 200px 0 0;
+    border-radius: 15px;
+    width: 85px;
+    border-color: transparent;
+    background-color: white;
+}

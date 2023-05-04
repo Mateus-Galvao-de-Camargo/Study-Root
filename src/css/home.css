@@ -1,0 +1,43 @@
+body{
+    background-color:  rgb(26, 26, 26);
+    width: 100%;
+}
+
+.logo{
+    border-radius: 55px;
+    margin-bottom: 800px;
+    display: block;
+    width: 250px;
+    margin-top: 50px;
+}
+
+@media only screen and (min-width: 900px) and (max-width: 1440px)  {
+    .logo{
+        border-radius: 55px;
+        margin: 252px 0 0 738px;
+        display: block;
+        width: 250px;
+
+    }
+}
+
+@media screen and (max-width: 1680px){
+    .logo{
+        border-radius: 55px;
+        margin: 242px 0 0 695px;
+        width: 250px;
+
+    }
+ 
+}
+
+@media screen and (max-width: 1920px){
+    .logo{
+        border-radius: 55px;
+        margin: 350px 0 0 950px;
+        width: 250px;
+
+    }
+
+  }
+  
