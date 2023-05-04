@@ -7,7 +7,7 @@
     align-items: flex-start;
     width: 300px;
     height: 100%;
-    padding: 40px 10px 30px 10px;
+    padding: 0px 0px 0px 10px;
     border-right: 2px solid gray;
 }
 
@@ -17,10 +17,10 @@
 }
 
 .sidebar .bts{
-   margin-left: -24px;
+   margin-left: -20px;
    padding-left: 15px;
-   padding-right: 15px;
-   width: 314px;
+   padding-right: 10px;
+   width: 275px;
    height: 70px;
    background: transparent;
    border: 1.5px solid gray;
@@ -28,14 +28,47 @@
    cursor: pointer;
 }
 
+.link-assunto{
+    margin-right: -5px;
+    text-decoration: none;
+}
+
+.bts-options{
+    position: absolute;
+    width: 20px;
+    margin-left: 3px;
+    padding-top: 21.5px;
+    padding-bottom: 23px;
+    padding-left: 16px;
+    padding-right: 18px;
+    background: transparent;
+    border: 1.5px solid gray;
+}
+
 .sidebar button > span{
     display: inline-flex;
     padding: 0 95px;
 }
 
+.absolute{
+    position: relative;
+}
+
+.edit{
+    position: absolute;
+    left: 100%;
+    top: 0;
+    margin-top: -12px;
+    margin-left: 7px;
+    border-radius: 6px;
+    padding: 20px 10px 20px 10px;
+    background: #0e0e0e;
+    display: none;
+}
+
 /* Header da aside - SearchBar */
 .buscas{
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .buscador{
@@ -57,8 +90,9 @@
     background-color: white;
 }
 
-.btn-buscador:hover{
-    background-color: #ddd;
+.barra-de-ferramentas{
+    margin-top: 10px;
+    margin-bottom: 8px;
 }
 
 /* Modal */
@@ -94,11 +128,23 @@
 }
 
 .botao-cadastro{
-    margin: 225px 0 0 95px;
-    border-radius: 15px;
+    margin: 0;
+    border-radius: 10px;
     width: 85px;
     border-color: transparent;
     background: white;
+}
+
+.btn-branco-hover:hover{
+    color: #ddd;
+}
+
+.btn-branco-background-hover:hover{
+    background: #ddd;
+}
+
+.btn-preto-background-hover:hover{
+    background: #0e0e0e;
 }
 
 .botao-concluir{
@@ -107,4 +153,26 @@
     width: 85px;
     border-color: transparent;
     background-color: white;
+}
+
+.btn-transparente{
+    background-color: transparent;
+    border: 0;
+    font-size: larger;
+}
+
+.gira:hover{
+    -webkit-animation-name: fa-spin;
+            animation-name: fa-spin;
+    -webkit-animation-delay: var(--fa-animation-delay, 0s);
+            animation-delay: var(--fa-animation-delay, 0s);
+    -webkit-animation-direction: var(--fa-animation-direction, normal);
+            animation-direction: var(--fa-animation-direction, normal);
+    -webkit-animation-duration: var(--fa-animation-duration, 2s);
+            animation-duration: var(--fa-animation-duration, 2s);
+    -webkit-animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+            animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+    -webkit-animation-timing-function: var(--fa-animation-timing, linear);
+            animation-timing-function: var(--fa-animation-timing, linear);
+
 }

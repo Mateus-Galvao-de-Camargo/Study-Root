@@ -12,47 +12,55 @@
     <link rel="stylesheet" href="../css/anotacao.css">
 </head>
 <body>
+  <?php
+  session_start();
+  if(empty($_SESSION)){
+    print "<script>location.href='index.php'</script>";
+  }
+  ?>
 
   <aside class="sidebar"> 
-    <form  class ="buscas" role ="search">
-      <input  class ="buscador" type ="text" placeholder ="Assunto desejado" aria-label ="Search">
-      <button class ="botao-pesquisa" type ="submit" >Buscar</button>
-    </form> 
-           
-            <nav>
-              <!-- Botões dos assuntos, todos são da classe bts. -->
-                <a href="./assunto.php"><button class="bts">
-                    <span>
-                        <span>nome assunto01</span>
-                    </span>
-                </button> </a>
-                
-            </nav>
 
-            
-            <!-- Button trigger do modal -->
+    <button class="btn-transparente"><i class="fa-solid fa-gear fa-lg gira" style="color: #a6a6a6;"></i></button>
 
-            <button type="button" class ="botao-cadastro" data-bs-toggle="modal" data-bs-target="#exampleModal">Cadastrar</button>
-        </header>
-        
-        <a href='logout.php' class='btn btn-danger'>Sair</a>
-
-    </aside>
-
-
-    <!-- conteudo -->
-    <button class ="botao-sair" type ="button"><a class="link-sair" href="./assunto.php"><p class="btn-close"></p></a></button>
-
-    
-    <div>
-      <form method="post" action="submit.php" class="editor">
-        <input class="btn btn-light" type="submit" name="submit" value="Salvar">
-        <textarea name="editor" id="editor" rows="25" cols="145"></textarea>
+    <div class="buscas">
+      <form action="">
+        <input class="buscador" type ="text" placeholder ="Assunto desejado" aria-label ="Search">
+        <button class="btn-buscador" type="submit"><i class="fa-solid fa-search"></i></button>
       </form>
     </div>
+        
+    <nav>
+      <a href="./assunto.php">
+              <button class="bts">
+                <span>nome</span>
+                <i class="fa-solid fa-trash-can btn-vermelho"></i>
+              </button>
+            </a>
+      <?php
+        include('../back-end/popula-assuntos.php');
+      ?>
+    </nav>
 
-        <!-- Modal -->
-    <div class="modal fade modale" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <button type="button" class ="botao-cadastro" data-bs-toggle="modal" data-bs-target="#exampleModal">Cadastrar</button>
+
+    <a href='logout.php' class='btn btn-danger'>Sair</a>
+  </aside>
+
+
+  <!-- conteudo -->
+  <button class ="botao-sair" type ="button"><a class="link-sair" href="./assunto.php"><p class="btn-close"></p></a></button>
+
+    
+  <div>
+    <form method="post" action="submit.php" class="editor">
+      <input class="btn btn-light" type="submit" name="submit" value="Salvar">
+      <textarea name="editor" id="editor" rows="25" cols="145"></textarea>
+    </form>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade modale" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -75,11 +83,10 @@
       </div>
     </div>
 
-    <script type="text/javascript" src="js/jquery-3.6.4.min.js"></script>
-		<script type="text/javascript" src="plugin/tinymce/js/tinymce/tinymce.min.js"></script>
-		<script type="text/javascript" src="plugin/tinymce/js/tinymce/init-tinymce.js"></script> 
-    <script src="./js/bootstrap.bundle.min.js"></script>
-    <script src="./js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="plugin/tinymce/js/tinymce/tinymce.min.js"></script>
+	<script type="text/javascript" src="plugin/tinymce/js/tinymce/init-tinymce.js"></script> 
+  <script src="../js/bootstrap.bundle.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
     
 </body>
 </html>

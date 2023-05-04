@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS assunto(
 
 CREATE TABLE IF NOT EXISTS anotacao(
   id_anotacao INT(11) NOT NULL AUTO_INCREMENT,
-  conteudo TEXT NOT NULL,
+  conteudo TEXT NULL,
   id_assunto_fk INT(11) NOT NULL,
   FOREIGN KEY (id_assunto_fk) REFERENCES assunto(id_assunto),
   PRIMARY KEY (id_anotacao)

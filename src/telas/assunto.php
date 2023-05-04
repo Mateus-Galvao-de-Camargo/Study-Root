@@ -12,39 +12,40 @@
     <link rel="stylesheet" href="../css/assunto.css">
 </head>
 <body>
+  <?php
+  session_start();
+  if(empty($_SESSION)){
+    print "<script>location.href='index.php'</script>";
+  }
+  ?>
 
-    <aside class="sidebar"> 
+  <aside class="sidebar"> 
+
+    <button class="btn-transparente"><i class="fa-solid fa-gear fa-lg gira" style="color: #a6a6a6;"></i></button>
+
+    <div class="buscas">
+      <form action="">
+        <input class="buscador" type ="text" placeholder ="Assunto desejado" aria-label ="Search">
+        <button class="btn-buscador" type="submit"><i class="fa-solid fa-search"></i></button>
+      </form>
+    </div>
         
-            <form  class ="buscas" role ="search">
-                <input  class ="buscador" type ="text" placeholder ="Assunto desejado" aria-label ="Search">
-                <button class ="botao-pesquisa" type ="submit" >Buscar</button>
-            </form> 
-           
-            <nav>
-                <a href="./assunto.php"> <button class="bts">
-                    <span>
-                        <span>nome assunto01</span>
-                    </span>
-                </button> </a>
-                <button class="bts">
-                    <span>
-                        <span>nome assunto02</span>
-                    </span>
-                </button>
-                <button class="bts">
-                    <span>
-                        <span>nome assunto03</span>
-                    </span>
-                </button>
-            </nav>
+    <nav>
+      <a href="./assunto.php">
+              <button class="bts">
+                <span>nome assunto01</span>
+                
+              </button>
+            </a>
+      <?php
+        include('../back-end/popula-assuntos.php');
+      ?>
+    </nav>
 
-            <button type="button" class="botao-cadastro-aside" data-bs-toggle="modal" data-bs-target="#exampleModal">Cadastrar</button>
-        </header>
+    <button type="button" class ="botao-cadastro" data-bs-toggle="modal" data-bs-target="#exampleModal">Cadastrar</button>
 
-        <?php
-           print "<a href='../back-end/logout.php' class='btn btn-danger'>Sair</a>";
-        ?>
-    </aside>
+    <a href='logout.php' class='btn btn-danger'>Sair</a>
+  </aside>
 
     <h1 class="titulo">nome assunto01 <button class ="botao-sair" type ="submit"><a class="link-sair" href="./home.php"><p class="btn-close"></p></a></button></h1> 
 
@@ -76,8 +77,8 @@
       </div>
     </div>
   
-    <script src="./js/bootstrap.bundle.min.js"></script>
-    <script src="./js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
     
 </body>
 </html>
