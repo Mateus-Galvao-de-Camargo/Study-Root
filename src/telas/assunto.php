@@ -44,7 +44,7 @@
 
     <button type="button" class ="botao-cadastro" data-bs-toggle="modal" data-bs-target="#exampleModal">Cadastrar</button>
 
-    <a href='logout.php' class='btn btn-danger'>Sair</a>
+    <a href='../back-end/logout.php' class='btn btn-danger'>Sair</a>
   </aside>
 
     <h1 class="titulo">nome assunto01 <button class ="botao-sair" type ="submit"><a class="link-sair" href="./home.php"><p class="btn-close"></p></a></button></h1> 

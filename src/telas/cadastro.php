@@ -11,6 +11,13 @@
 </head>
 
 <body>
+    <?php
+        session_start();
+        if(isset($_SESSION["id"])){
+            print "<script>location.href='../telas/home.php'</script>";
+        }
+    ?>
+
     <img src="../img/logo.jpeg" class="logo">
   
     <form action="../back-end/cadastrar.php" method="post">
