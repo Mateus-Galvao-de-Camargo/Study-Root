@@ -14,11 +14,11 @@
 <body>
 
   <?php
+  require_once('../back-end/config.php');
   session_start();
   if(empty($_SESSION)){
     print "<script>location.href='index.php'</script>";
   }
-
   ?>
 
   <aside class="sidebar"> 
@@ -33,6 +33,7 @@
     <div class="barra-de-ferramentas">
       <button class="btn-transparente"><i class="fa-solid fa-gear fa-lg gira" style="color: #a3a3a3;"></i></button>
       <button class="btn-transparente branco btn-branco-hover" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-circle-plus fa-lg"></i></button>
+      <button hidden id="botao-magia" data-bs-toggle="modal" data-bs-target="#modalUpdate"></button>
     </div>
    
     <nav>
@@ -48,8 +49,15 @@
           <form action="../back-end/delete_assunto.php" method="post">
             <input hidden type="text" value="#" name="id">
             <button type="submit" class="btn-transparente"><i class="fa-solid fa-trash-can fa-lg btn-vermelho"></i></button>
-            </form>
-          <button class="btn-transparente"><i class="fa-regular fa-pen-to-square fa-lg branco btn-branco-hover"></i></button>
+          </form>
+
+          <!-- Action muda de acordo com a página  -->
+          <form action="./home.php" method="get">
+            <input hidden name="id_assunto" type="text" value="">
+            <input hidden name="titulo-btn" type="text" value="">
+            <input hidden name="resumo-btn" type="text" value="">
+            <button type="submit" name="mostraAtt" class="btn-transparente"><i class="fa-regular fa-pen-to-square fa-lg branco btn-branco-hover"></i></button>
+          </form>
         </div>
       </div>
 
@@ -86,6 +94,36 @@
     </div>
   </div>
 
+  <!-- Modal de Update -->
+  <div class="modal fade branco" id="modalUpdate">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 titulo">Alterar Assunto</h1>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <form action="../back-end/update_assunto.php" method="post">
+          <div class="modal-body">
+            <input class ="nome-assunto" name="tituloAtt" id="tituloAtt" type ="text" placeholder ="Título" aria-label ="Search">
+            <input class ="descricao-assunto" name="resumoAtt" id="resumoAtt" type ="text" placeholder ="Descrição" aria-label ="Search">
+            <input hidden name='idAssunto' id='idAssunto' type ='text'>
+          </div>
+
+          <div class="modal-footer">
+            <button name="atualizar" type="submit" class="botao-concluir">Concluir</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  
+
+  
+
   <script src="../js/bootstrap.bundle.min.js"></script>
   <script src="../js/bootstrap.min.js"></script>
   <script>
@@ -97,6 +135,19 @@
         edit.style.display = "none"
       }
     }
+
+      var idAssunto = document.querySelector('#idAssunto');
+      var titulo = document.querySelector('#tituloAtt');
+      var resumo = document.querySelector('#resumoAtt');
+      var botao = document.querySelector('#botao-magia')
+      idAssunto.value = '<?php if(isset($_GET['mostraAtt'])){print $_GET['id_assunto'];} ?>'
+      titulo.value = '<?php if(isset($_GET['mostraAtt'])){print $_GET['titulo-btn'];} ?>'
+      resumo.value = '<?php if(isset($_GET['mostraAtt'])){print $_GET['resumo-btn'];} ?>'
+      <?php
+      if(isset($_GET['mostraAtt'])){
+        print 'botao.click()';
+      } 
+      ?>
   </script>
     
 </body>
