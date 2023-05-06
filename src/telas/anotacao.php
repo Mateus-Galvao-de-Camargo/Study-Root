@@ -128,8 +128,8 @@
     </div>
   </div>
 
-	<script type="text/javascript" src="plugin/tinymce/js/tinymce/tinymce.min.js"></script>
-	<script type="text/javascript" src="plugin/tinymce/js/tinymce/init-tinymce.js"></script> 
+	<script type="text/javascript" src="../plugin/tinymce/js/tinymce/tinymce.min.js"></script>
+	<script type="text/javascript" src="../plugin/tinymce/js/tinymce/init-tinymce.js"></script> 
   <script src="../js/bootstrap.bundle.min.js"></script>
   <script src="../js/bootstrap.min.js"></script>
   <script>
