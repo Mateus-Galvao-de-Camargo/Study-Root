@@ -3,11 +3,6 @@ body{
     width: 100%;
 }
 
-h1{
-    color: white;
-    padding: 30px 0 0 660px;
-    font-size: 68px;
-}
 
 .primeira-aula{
     display: block;
@@ -33,14 +28,6 @@ p{
     text-decoration: none;
     color: white;
 }
-    
-@media only screen and (min-width: 900px) and (max-width: 1440px) {
-
-    .titulo{
-        color: white;
-        padding: 30px 0 0 613.5px;
-        font-size: 68px;
-    }
 
     .botao-cadastro-aside{
     
@@ -63,65 +50,4 @@ p{
         border-color: transparent;
     }
 
-    .botao-cadastro-assunto{
-
-        margin: 279px 0 0 822px;
-        border-radius: 15px;
-        width: 85px;
-        border-color: transparent;
-        background: white;
-    }
-
-}
-
-@media screen and (max-width: 1680px){
-    .titulo{
-        color: white;
-        padding: 30px 0 0 573.5px;
-        font-size: 68px;
-    }
-
-    .botao-materia{
-
-        border-radius: 15px;
-        margin: 120px 0 0 515px;
-        display: block;
-        width: 625px;
-        padding: 25px;
-        background-color: rgb(35, 35, 35);
-        border-color: transparent;
-    }
-
-}
-
-@media screen and (max-width: 1920px){   
-
-    .titulo{
-        color: white;
-        padding: 30px 0 0 800px;
-        font-size: 68px;
-    }
-
-    .botao-materia{
-
-        border-radius: 15px;
-        margin: 140px 0 0 735px;
-        display: block;
-        width: 625px;
-        padding: 25px;
-        background-color: rgb(35, 35, 35);
-        border-color: transparent;
-    }
-
-    .botao-cadastro-assunto{
-
-        margin: 258px 0 0 985px;
-        border-radius: 15px;
-        width: 85px;
-        border-color: transparent;
-        background: white;
-    }
-
-
-}
   

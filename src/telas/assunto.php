@@ -70,8 +70,7 @@
 
     <a class="primeira-aula" href="./anotacao.php"><button class ="botao-materia" type ="submit"><p>ex: primeira aula</p></button></a>
 
-    <button class ="botao-cadastro-assunto" type ="submit">Cadastrar</button>
-
+    
     <!-- Modal -->
   <div class="modal fade branco" id="modal">
     <div class="modal-dialog modal-dialog-centered">
