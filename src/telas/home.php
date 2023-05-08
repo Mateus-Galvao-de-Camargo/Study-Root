@@ -143,11 +143,34 @@
       idAssunto.value = '<?php if(isset($_GET['mostraAtt'])){print $_GET['id_assunto'];} ?>'
       titulo.value = '<?php if(isset($_GET['mostraAtt'])){print $_GET['titulo-btn'];} ?>'
       resumo.value = '<?php if(isset($_GET['mostraAtt'])){print $_GET['resumo-btn'];} ?>'
+
+      var navBar = document.querySelector('nav')
+
       <?php
       if(isset($_GET['mostraAtt'])){
         print 'botao.click()';
       } 
+
+      if(isset($_GET['search'])){
+
+      }
       ?>
+
+      
+
+
+
+     Array.from(navBar.children).forEach(filtrar(navBar.children.id.value.toLowerCase()))
+
+     function filtrar(tituloAssunto){
+      txtValue = tituloAssunto.textContent || tituloAssunto.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+        $_GET['search_valor']
+     }
   </script>
     
 </body>
