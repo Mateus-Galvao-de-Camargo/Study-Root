@@ -21,7 +21,9 @@
         $query = mysqli_query($conn, "INSERT INTO estudante (usuario, email, senha) VALUE ('$usuario', '$email', '$senha')");
         
         if($query){
-            require_once('./login.php');
+            $_SESSION["id"] = $row->id_estudante;
+
+            print "<script>location.href='../telas/home.php'</script>";
         } else{
             echo 'Não foi possível cadastrar';
         }

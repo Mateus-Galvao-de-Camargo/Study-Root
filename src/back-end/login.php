@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    if(empty($_POST) or (empty($_POST["email"]) or (empty($_POST["senha"])))){
+    if(empty($_POST) or (empty($_POST['email']) or (empty($_POST['senha'])))){
         print "<script>location.href='../telas/index.php';</script>";
     }
 
