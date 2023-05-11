@@ -8,7 +8,7 @@
         $email = $_POST['email'];
         $senha = $_POST['senha'];
 
-        $sql = "SELECT email FROM  estudante WHERE email = '$email'";
+        $sql = "SELECT * FROM  estudante WHERE email = '$email'";
 
         $res = $conn->query($sql);
 
@@ -18,10 +18,14 @@
             print "<script>alert('Email já utilizado! Cadastro não realizado'); location.href='../telas/cadastro.php'</script>";
         }
         
-        $query = mysqli_query($conn, "INSERT INTO estudante (usuario, email, senha) VALUE ('$usuario', '$email', '$senha')");
-        
-        if($query){
-            $_SESSION["id"] = $row->id_estudante;
+        $row = $conn->query("INSERT INTO estudante (usuario, email, senha) VALUE ('$usuario', '$email', '$senha')");
+
+        if($row){
+            $select = $conn->query($sql);
+
+            $res = $select->fetch_object();
+
+            $_SESSION["id"] = $res->id_estudante;
 
             print "<script>location.href='../telas/home.php'</script>";
         } else{

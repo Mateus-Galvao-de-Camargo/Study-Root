@@ -63,6 +63,8 @@
 
       <?php
         include('../back-end/popula-assuntos.php');
+
+        include('../back-end/ListAssuntos.php');
       ?>
     </nav>
   </aside>
@@ -136,6 +138,13 @@
       }
     }
 
+      var divs = ["" <?php $id = $_SESSION['id'];$sqlTitulos = "SELECT * FROM assunto WHERE id_estudante_fk = $id";if($result = $conn -> query($sqlTitulos)){ while($assunto = $result -> fetch_object()){ printf(", '%s'", $assunto->titulo);}$result -> free_result();} ?>];
+      console.log(divs)
+
+      var fruits = ["banana", "manga"]
+      console.log(fruits)
+
+
       var idAssunto = document.querySelector('#idAssunto');
       var titulo = document.querySelector('#tituloAtt');
       var resumo = document.querySelector('#resumoAtt');
@@ -150,27 +159,7 @@
       if(isset($_GET['mostraAtt'])){
         print 'botao.click()';
       } 
-
-      if(isset($_GET['search'])){
-
-      }
       ?>
-
-      
-
-
-
-     Array.from(navBar.children).forEach(filtrar(navBar.children.id.value.toLowerCase()))
-
-     function filtrar(tituloAssunto){
-      txtValue = tituloAssunto.textContent || tituloAssunto.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            li[i].style.display = "";
-        } else {
-            li[i].style.display = "none";
-        }
-        $_GET['search_valor']
-     }
   </script>
     
 </body>

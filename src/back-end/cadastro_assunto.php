@@ -8,9 +8,9 @@
         $resumo = $_POST['resumo'];
         $estudante = $_SESSION['id'];
 
-        $res = $conn->query("INSERT INTO `assunto` (`id_assunto`, `titulo`, `resumo`, `id_estudante_fk`) VALUES (NULL, '$titulo', '$resumo', '$estudante');");
+        $row = $conn->query("INSERT INTO assunto (id_assunto, titulo, resumo, id_estudante_fk) VALUES (NULL, '$titulo', '$resumo', '$estudante');");
 
-        if($res){
+        if($row){
             print "<script>location.href='../telas/home.php'</script>";
         } else{
             print 'Não foi possível cadastrar';
