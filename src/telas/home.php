@@ -24,10 +24,7 @@
   <aside class="sidebar"> 
 
     <div class="buscas">
-      <form action="">
-        <input class="buscador" type ="text" placeholder ="Assunto desejado" aria-label ="Search">
-        <button class="btn-buscador btn-branco-background-hover" type="submit"><i class="fa-solid fa-search"></i></button>
-      </form>
+        <input class="buscador" onkeyup="filtrar()" type ="text" id="inputDeSearch" placeholder ="Assunto desejado">
     </div>
 
     <div class="barra-de-ferramentas">
@@ -37,7 +34,7 @@
     </div>
    
     <nav>
-      <div class="absolute">
+      <div value="abc" class="absolute">
         <a href="./assunto.php" class="link-assunto">
           <button class="bts btn-preto-background-hover">
             <span>nome567</span>
@@ -63,8 +60,6 @@
 
       <?php
         include('../back-end/popula-assuntos.php');
-
-        include('../back-end/ListAssuntos.php');
       ?>
     </nav>
   </aside>
@@ -137,13 +132,25 @@
         edit.style.display = "none"
       }
     }
-
+      
       var divs = ["" <?php $id = $_SESSION['id'];$sqlTitulos = "SELECT * FROM assunto WHERE id_estudante_fk = $id";if($result = $conn -> query($sqlTitulos)){ while($assunto = $result -> fetch_object()){ printf(", '%s'", $assunto->titulo);}$result -> free_result();} ?>];
-      console.log(divs)
-
-      var fruits = ["banana", "manga"]
-      console.log(fruits)
-
+      
+      function filtrar(){
+        var inputDaSearch = document.querySelector("#inputDeSearch")
+        var input = inputDaSearch.value.toLowerCase()
+        
+        for(i=1; i < divs.length; i++){
+          valorId = divs[i]
+          var string = `div[value='${valorId}']`
+          var div = document.querySelector(string)
+          if(valorId.toLowerCase().indexOf(input) > -1){
+            div.style.display = "block"
+          } else {
+            div.style.display = "none"
+          }
+        }
+      }
+      
 
       var idAssunto = document.querySelector('#idAssunto');
       var titulo = document.querySelector('#tituloAtt');
