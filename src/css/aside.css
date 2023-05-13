@@ -75,19 +75,7 @@
     padding: 10px 45px 10px 15px;
     border-radius: 15px;
     border: 0;
-    border-color: transparent;   
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
-}
-
-.btn-buscador{
-    padding: 10px;
-    position: absolute;
-    border-radius: 10px;
-    border: 0;
-    border-top-left-radius: 0px;
-    border-bottom-left-radius: 0px;
-    background-color: white;
+    border-color: transparent;
 }
 
 .barra-de-ferramentas{

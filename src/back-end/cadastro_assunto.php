@@ -11,7 +11,7 @@
         $tituloFormatado = trim(preg_replace('/\s+/', ' ', $titulo));
 
         if($titulo == NULL || $titulo = "" || $tituloFormatado == NULL){
-            print "<script>alert('Sem gracinhas, tente denovo, da maneira correta.'); location.href='../telas/home.php'</script>";
+            print "<script>alert('Sem gracinhas, tente denovo, da maneira correta, o título é obrigatório e não pode ser vazio ou apenas espaços em branco.'); location.href='../telas/home.php'</script>";
         }
 
         $row = $conn->query("INSERT INTO assunto (id_assunto, titulo, resumo, id_estudante_fk) VALUES (NULL, '$tituloFormatado', '$resumo', '$estudante');");
