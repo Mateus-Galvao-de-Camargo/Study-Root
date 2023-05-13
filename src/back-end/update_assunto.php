@@ -10,8 +10,10 @@
 
         $tituloFormatado = trim(preg_replace('/\s+/', ' ', $titulo));
 
-        if($titulo == NULL || $titulo = "" || $tituloFormatado == NULL){
-            print "<script>alert('Sem gracinhas, tente denovo, da maneira correta, o título é obrigatório e não pode ser vazio ou apenas espaços em branco.'); location.href='../telas/home.php'</script>";
+        $tamanhoDoTitulo = mb_strlen($tituloFormatado);
+
+        if($titulo == NULL || $titulo = "" || $tituloFormatado == NULL || $tamanhoDoTitulo > 52){
+            print "<script>alert('Sem gracinhas, tente denovo, da maneira correta, o título é obrigatório, deve conter no máximo 52 caractéres e não pode ser vazio ou apenas conter espaços em branco.'); location.href='../telas/home.php'</script>";
         }
 
         $res = $conn->query("UPDATE assunto SET titulo = '$titulo', resumo = '$resumo' WHERE id_assunto = $idAssunto AND id_estudante_fk = $estudante");

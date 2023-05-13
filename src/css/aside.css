@@ -95,13 +95,13 @@
 .nome-assunto{
     border-radius: 15px;
     margin: 0 0 0 100px;
-    padding: 15px 75px 10px 15px;
+    padding: 15px 15px 10px 15px;
 }
 
 .descricao-assunto{
     border-radius: 10px;
     margin: 0 0 0 100px;
-    padding: 15px 75px 75px 15px;
+    padding: 15px 15px 10px 15px;
     margin-left: 100px;
     margin-top: 20px;
 }
