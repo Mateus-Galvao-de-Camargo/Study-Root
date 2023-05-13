@@ -78,8 +78,8 @@
 
         <form action="../back-end/cadastro_assunto.php" method="post">
           <div class="modal-body">
-            <input  class ="nome-assunto" name="titulo" id="titulo" type ="text" placeholder ="Título" aria-label ="Search">
-            <input  class ="descricao-assunto" name="resumo" id="resumo" type ="text" placeholder ="Descrição" aria-label ="Search">
+            <input class ="nome-assunto" required name="titulo" id="titulo" type ="text" placeholder ="Título" aria-label ="Search">
+            <input class ="descricao-assunto" name="resumo" id="resumo" type ="text" placeholder ="Descrição" aria-label ="Search">
           </div>
 
           <div class="modal-footer">
@@ -103,7 +103,7 @@
 
         <form action="../back-end/update_assunto.php" method="post">
           <div class="modal-body">
-            <input class ="nome-assunto" name="tituloAtt" id="tituloAtt" type ="text" placeholder ="Título" aria-label ="Search">
+            <input class ="nome-assunto" required name="tituloAtt" id="tituloAtt" type ="text" placeholder ="Título" aria-label ="Search">
             <input class ="descricao-assunto" name="resumoAtt" id="resumoAtt" type ="text" placeholder ="Descrição" aria-label ="Search">
             <input hidden name='idAssunto' id='idAssunto' type ='text'>
           </div>
