@@ -58,8 +58,19 @@
   </div>
 
   <?php
-    include('../back-end/popula-assuntos.php');
-  ?>
+    $id = $_SESSION['id'];
+
+    $sql = "SELECT * FROM assunto WHERE id_estudante_fk = $id";
+
+    if($result = $conn -> query($sql)){
+
+        while($assunto = $result -> fetch_object()){
+            printf("<div class='absolute' value='%s'> <a href='./assunto.php' class='link-assunto'> <button class='bts btn-preto-background-hover'> <span>%s</span> </button> </a> <button class='bts-options btn-preto-background-hover' onclick='mostra(%d)'><i class='fa-solid fa-ellipsis-vertical branco'></i></button> <div class='edit' id='%d' name=''> <form action='../back-end/delete_assunto.php' method='post'> <input hidden type='text' value='%d' name='id'> <button type='submit' class='btn-transparente'><i class='fa-solid fa-trash-can fa-lg btn-vermelho'></i></button> </form> <form action='./assunto.php' method='get'><input hidden name='id_assunto' type='text' value='%d'><input hidden name='titulo-btn' type='text' value='%s'><input hidden name='resumo-btn' type='text' value='%s'><button type='submit' name='mostraAtt' class='btn-transparente'><i class='fa-regular fa-pen-to-square fa-lg branco btn-branco-hover'></i></button></form> </div> </div>", $assunto->titulo, $assunto->titulo, $assunto->id_assunto, $assunto->id_assunto, $assunto->id_assunto, $assunto->id_assunto, $assunto->titulo, $assunto->resumo);
+        }
+
+        $result -> free_result();
+    }
+?>
 </nav>
 </aside>
 
@@ -82,6 +93,7 @@
           <div class="modal-body">
             <input  class ="nome-assunto" name="titulo" id="titulo" type ="text" placeholder ="Título" aria-label ="Search">
             <input  class ="descricao-assunto" name="resumo" id="resumo" type ="text" placeholder ="Descrição" aria-label ="Search">
+            <input hidden type="text" name="pagina" id="pagina" value="assunto.php">
           </div>
 
           <div class="modal-footer">
@@ -108,6 +120,7 @@
             <input class ="nome-assunto" name="tituloAtt" id="tituloAtt" type ="text" placeholder ="Título" aria-label ="Search">
             <input class ="descricao-assunto" name="resumoAtt" id="resumoAtt" type ="text" placeholder ="Descrição" aria-label ="Search">
             <input hidden name='idAssunto' id='idAssunto' type ='text'>
+            <input hidden type="text" name="paginaUp" id="paginaUp" value="assunto.php">
           </div>
 
           <div class="modal-footer">

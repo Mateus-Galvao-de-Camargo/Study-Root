@@ -7,6 +7,7 @@
         $titulo = $_POST['titulo'];
         $resumo = $_POST['resumo'];
         $estudante = $_SESSION['id'];
+        $paginaQueEnviou = $_POST['pagina'];
 
         $tituloFormatado = trim(preg_replace('/\s+/', ' ', $titulo));
 
@@ -23,17 +24,17 @@
         $qtd = $tituloRepetido->num_rows;
 
         if($qtd > 0){
-            printf("<script>alert('O título %s já é registrado na sua conta'); location.href='../telas/home.php'</script>", $linha->titulo);
+            printf("<script>alert('O título %s já é registrado na sua conta'); location.href='../telas/$paginaQueEnviou'</script>", $linha->titulo);
         } else if($titulo == NULL || $titulo = "" || $tituloFormatado == NULL || $tamanhoDoTitulo > 52 || $tamanhoDoResumo > 300){
-            print "<script>alert('Sem gracinhas, tente denovo, da maneira correta, o título é obrigatório, deve conter no máximo 52 caractéres e não pode ser vazio ou apenas conter espaços em branco. Assim como o resumo deve conter no máximo 300 caractéres.'); location.href='../telas/home.php'</script>";
+            print "<script>alert('Sem gracinhas, tente denovo, da maneira correta, o título é obrigatório, deve conter no máximo 52 caractéres e não pode ser vazio ou apenas conter espaços em branco. Assim como o resumo deve conter no máximo 300 caractéres.'); location.href='../telas/$paginaQueEnviou'</script>";
         } else {
             $row = $conn->query("INSERT INTO assunto (id_assunto, titulo, resumo, id_estudante_fk) VALUES (NULL, '$tituloFormatado', '$resumoFormatado', '$estudante');");
         }
 
         if($row){
-            print "<script>location.href='../telas/home.php'</script>";
+            print "<script>location.href='../telas/$paginaQueEnviou'</script>";
         } else{
-            print "<script>alert('Não foi possível cadastrar'); location.href='../telas/home.php'</script>";
+            print "<script>alert('Não foi possível cadastrar'); location.href='../telas/$paginaQueEnviou'</script>";
         }
     }
 ?>

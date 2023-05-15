@@ -8,7 +8,11 @@
         $email = $_POST['email'];
         $senha = $_POST['senha'];
 
-        $sql = "SELECT * FROM  estudante WHERE email = '$email'";
+        $emailFormatado = preg_replace('/\s+/', '', $email);
+        $senhaFormatada = preg_replace('/\s+/', '', $senha);
+        $usuarioFormatado = preg_replace('/\s+/', '', $usuario);
+
+        $sql = "SELECT * FROM  estudante WHERE email = '$emailFormatado'";
 
         $res = $conn->query($sql);
 
@@ -16,9 +20,11 @@
 
         if($qtd>0){
             print "<script>alert('Email já utilizado! Cadastro não realizado'); location.href='../telas/cadastro.php'</script>";
+        } else if($emailFormatado == NULL || $emailFormatado == "" || $usuarioFormatado == NULL || $usuarioFormatado == "" || $senhaFormatada == NULL || $senhaFormatada == ""){
+            print "<script>alert('Informações vazias ou com apenas espaços em branco! Cadastro não realizado'); location.href='../telas/cadastro.php'</script>";
+        } else {
+            $row = $conn->query("INSERT INTO estudante (usuario, email, senha) VALUE ('$usuarioFormatado', '$emailFormatado', '$senhaFormatada')");
         }
-        
-        $row = $conn->query("INSERT INTO estudante (usuario, email, senha) VALUE ('$usuario', '$email', '$senha')");
 
         if($row){
             $select = $conn->query($sql);
@@ -29,7 +35,7 @@
 
             print "<script>location.href='../telas/home.php'</script>";
         } else{
-            echo 'Não foi possível cadastrar';
+            print "<script>alert('Não foi possível cadastrar.'); location.href='../telas/cadastro.php'</script>";
         }
     }
 ?>
