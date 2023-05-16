@@ -2,15 +2,17 @@
     require_once('config.php');
 
     $id = $_POST["id"];
+    $pagina = $_POST["pagina"];
 
-    $sql = "DELETE FROM assunto WHERE  id_assunto = $id";
+    $deleteAnotacoes = $conn->query("DELETE FROM anotacao WHERE id_assunto_fk = $id");
+
+    $sql = "DELETE FROM assunto WHERE id_assunto = $id";
     
     $res = $conn->query($sql);
 
     if($res){
-        print "<script>location.href='../telas/home.php'</script>";
+        print "<script>location.href='../telas/$pagina'</script>";
     } else{
-        echo 'Não foi possivel excluir';
+        print "<script>alert('Não foi possível deletar'); location.href='../telas/$pagina'</script>";
     }
-
 ?>
