@@ -3,6 +3,19 @@ body{
     width: 100%;
 }
 
+.divas{
+    
+    position: absolute;
+    top: 2rem;
+    left: 50rem;
+}
+.btn-close{
+    position: absolute;
+    top: 3rem;
+    left: 45rem;
+    margin: 0;
+    padding: 0;
+}
 
 .primeira-aula{
     display: block;
@@ -11,12 +24,32 @@ body{
     text-decoration: none;
 }
 
-.botao-sair{
+.titulo{
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 3rem;
+    left: 15rem;
+    font-size: 32px;
+    color: white;
+}
+
+.botao-materia{
+
+    position: absolute;
+    border-radius: 15px;
+    top: 18rem;
     display: block;
-    margin: 0 0 0 700px;
-    margin-top: -65px;
+    width: 625px;
+    padding: 25px;
+    background-color: rgb(35, 35, 35);
     border-color: transparent;
-    background-color: transparent;
+}
+
+.resumidamente{
+    position: absolute;
+    top: 10rem;
+    left: 15.5rem;
 }
 
 p{
@@ -29,25 +62,6 @@ p{
     color: white;
 }
 
-    .botao-cadastro-aside{
-    
-        margin: 225px 0 0 95px;
 
-        border-radius: 15px;
-        width: 85px;
-        border-color: transparent;
-        background: white;
-    }
-
-    .botao-materia{
-
-        border-radius: 15px;
-        margin: 120px 0 0 555px;
-        display: block;
-        width: 625px;
-        padding: 25px;
-        background-color: rgb(35, 35, 35);
-        border-color: transparent;
-    }
-
+ 
   

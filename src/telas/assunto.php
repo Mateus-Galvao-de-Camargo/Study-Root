@@ -72,13 +72,15 @@
     }
 ?>
 </nav>
+ 
 </aside>
-
-    <h1 class="titulo">nome assunto01 <button class ="botao-sair" type ="submit"><a class="link-sair" href="./home.php"><p class="btn-close"></p></a></button></h1> 
-
+<div class="divas">
+    <h1 class="titulo">nome567<a class="link-sair" href="./home.php"></a></h1> 
+    <p class="btn-close"></p>
+    <p class="resumidamente">resumo</p>
     <a class="primeira-aula" href="./anotacao.php"><button class ="botao-materia" type ="submit"><p>ex: primeira aula</p></button></a>
 
-    
+  </div>   
     <!-- Modal -->
   <div class="modal fade branco" id="modal">
     <div class="modal-dialog modal-dialog-centered">
