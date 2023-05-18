@@ -138,18 +138,16 @@
       <div class="modal-content">
 
         <div class="modal-header">
-          <h1 class="modal-title fs-5 titulo">Deletar o Assunto:</h1>
+          <h1 class="modal-title fs-5 titulo">Deletar o Assunto:<p id="mostraTituloDel"></p></h1>
           <button class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
         <form action="../back-end/delete_assunto.php" method="post">
           <div class="modal-body">
-            <div id="tituloDel"></div>
-
-            <input hidden name='idAssuntoDel' id='idAssuntoDel' type ='text'>
+            <input hidden name='idAssuntoDelelete' id='idAssuntoDelete' type ='text'>
             <input hidden type="text" name="pagina" id="pagina" value="home.php">
 
-            <button name="deletarAssunto" type="submit" class="botao-concluir btn-vermelho">Apagar Assunto</button>
+            <button name="deletarAssunto" type="submit" class="vermelho btn-delete-assunto">Apagar Assunto</button>
           </div>
         </form>
 
@@ -199,12 +197,12 @@
       var navBar = document.querySelector('nav')
 
       // Mostra e atualiza o modal de delete
-      var idAssuntoDel = document.querySelector('#idAssuntoDel');
-      var tituloDel = document.querySelector('#tituloDel');
+      var idAssuntoDel = document.querySelector('#idAssuntoDelete');
+      var tituloDel = document.querySelector('#mostraTituloDel');
       var botaoMaravilha = document.querySelector('#botao-maravilha');
 
-      tituloDel.textContent = '<?php if(isset($_GET['mostraDelete'])){print $_GET['tituloDel'];} ?>'
-      idAssuntoDel.value = '<?php if(isset($_GET['mostraDelete'])){print $_GET['idAssuntoDel'];} ?>'
+      tituloDel.innerHTML = "<?php if(isset($_GET['mostraDelete'])){print $_GET['tituloDel'];} ?>"
+      idAssuntoDel.value = "<?php if(isset($_GET['mostraDelete'])){print $_GET['idAssuntoDel'];} ?>"
 
       <?php
       if(isset($_GET['mostraAtt'])){

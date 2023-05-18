@@ -5,7 +5,7 @@
         print "<script>location.href='../telas/index.php';</script>";
     }
 
-    include('config.php');
+    include('config.php');alert('Não foi possível deletar');
 
     $email = $_POST["email"];
     $senha = $_POST["senha"];

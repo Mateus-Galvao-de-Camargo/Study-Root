@@ -1,18 +1,30 @@
 <?php
-    require_once('config.php');
+    require('config.php');
 
-    $id = $_POST["idAssuntoDel"];
+    $id = $_POST["idAssuntoDelelete"];
     $pagina = $_POST["pagina"];
 
-    $deleteAnotacoes = $conn->query("DELETE FROM anotacao WHERE id_assunto_fk = $id");
+    if($conn){
+        $verificaAnotacoes = $conn->query("SELECT * FROM anotacao WHERE id_assunto_fk = $id");
 
-    $sql = "DELETE FROM assunto WHERE id_assunto = $id";
-    
-    $res = $conn->query($sql);
+        if($verificaAnotacoes){
+            $deleteAnotacoes = $conn->query("DELETE FROM anotacao WHERE id_assunto_fk = $id");
 
-    if($res){
-        print "<script>location.href='../telas/$pagina'</script>";
-    } else{
-        print "<script>alert('Não foi possível deletar'); location.href='../telas/$pagina'</script>";
+            if($deleteAnotacoes){
+                $deleteAssunto = $conn->query("DELETE FROM assunto WHERE id_assunto = $id");
+
+                if($deleteAssunto){
+                    print "<script>location.href='../telas/$pagina'</script>";
+                }
+            }
+        } else {
+            $deleteAssunto = $conn->query("DELETE FROM assunto WHERE id_assunto = $id");
+
+            if($deleteAssunto){
+                print "<script>location.href='../telas/$pagina'</script>";
+            }
+
+        }
     }
+    print "<script>alert('Não foi possível deletar'); location.href='../telas/$pagina'</script>";
 ?>
