@@ -1,7 +1,7 @@
 <?php
     require_once('config.php');
 
-    $id = $_POST["id"];
+    $id = $_POST["idAssuntoDel"];
     $pagina = $_POST["pagina"];
 
     $deleteAnotacoes = $conn->query("DELETE FROM anotacao WHERE id_assunto_fk = $id");

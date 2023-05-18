@@ -31,6 +31,7 @@
       <button class="btn-transparente"><i class="fa-solid fa-gear fa-lg gira" style="color: #a3a3a3;"></i></button>
       <button class="btn-transparente branco btn-branco-hover" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-circle-plus fa-lg"></i></button>
       <button hidden id="botao-magia" data-bs-toggle="modal" data-bs-target="#modalUpdate"></button>
+      <button hidden id="botao-maravilha" data-bs-toggle="modal" data-bs-target="#modalDelete"></button>
     </div>
    
     <nav>
@@ -43,9 +44,10 @@
         <button class="bts-options btn-preto-background-hover" onclick="mostra(#)"><i class="fa-solid fa-ellipsis-vertical branco"></i></button>
 
         <div class="edit" id="#" name="editors">
-          <form action="../back-end/delete_assunto.php" method="post">
-            <input hidden type="text" value="#" name="id">
-            <button type="submit" class="btn-transparente"><i class="fa-solid fa-trash-can fa-lg btn-vermelho"></i></button>
+          <form action="./home.php" method="get">
+            <input hidden type="text" value="#" name="idAnota">
+            <input hidden type="text" value='%s' name='tituloDel'>
+            <button type="submit" name="mostraDelete" class="btn-transparente"><i class="fa-solid fa-trash-can fa-lg btn-vermelho"></i></button>
           </form>
 
           <!-- Action muda de acordo com a página  -->
@@ -58,10 +60,6 @@
         </div>
       </div>
 
-      <?php
-
-      ?>
-
 <?php
     $id = $_SESSION['id'];
 
@@ -70,7 +68,7 @@
     if($result = $conn -> query($sql)){
 
         while($assunto = $result -> fetch_object()){
-            printf("<div class='absolute' value='%s'> <a href='./assunto.php' class='link-assunto'> <button class='bts btn-preto-background-hover'> <span>%s</span> </button> </a> <button class='bts-options btn-preto-background-hover' onclick='mostra(%d)'><i class='fa-solid fa-ellipsis-vertical branco'></i></button> <div class='edit' id='%d' name=''> <form action='../back-end/delete_assunto.php' method='post'> <input hidden type='text' value='%d' name='id'> <button type='submit' class='btn-transparente'><i class='fa-solid fa-trash-can fa-lg btn-vermelho'></i></button> </form> <form action='./home.php' method='get'><input hidden name='id_assunto' type='text' value='%d'><input hidden name='titulo-btn' type='text' value='%s'><input hidden name='resumo-btn' type='text' value='%s'><button type='submit' name='mostraAtt' class='btn-transparente'><i class='fa-regular fa-pen-to-square fa-lg branco btn-branco-hover'></i></button></form> </div> </div>", $assunto->titulo, $assunto->titulo, $assunto->id_assunto, $assunto->id_assunto, $assunto->id_assunto, $assunto->id_assunto, $assunto->titulo, $assunto->resumo);
+            printf("<div class='absolute' value='%s'> <a href='./assunto.php' class='link-assunto'> <button class='bts btn-preto-background-hover'> <span>%s</span> </button> </a> <button class='bts-options btn-preto-background-hover' onclick='mostra(%d)'><i class='fa-solid fa-ellipsis-vertical branco'></i></button> <div class='edit' id='%d' name=''> <form action='./home.php' method='get'> <input hidden type='text' value='%d' name='idAssuntoDel' id='idAssuntoDel'> <input hidden type='text' value='%s' name='tituloDel' id='tituloDel'> <button type='submit' name='mostraDelete' class='btn-transparente'><i class='fa-solid fa-trash-can fa-lg btn-vermelho'></i></button> </form> <form action='./home.php' method='get'><input hidden name='id_assunto' type='text' value='%d'><input hidden name='titulo-btn' type='text' value='%s'><input hidden name='resumo-btn' type='text' value='%s'><button type='submit' name='mostraAtt' class='btn-transparente'><i class='fa-regular fa-pen-to-square fa-lg branco btn-branco-hover'></i></button></form> </div> </div>", $assunto->titulo, $assunto->titulo, $assunto->id_assunto, $assunto->id_assunto, $assunto->id_assunto, $assunto->titulo, $assunto->id_assunto, $assunto->titulo, $assunto->resumo);
         }
 
         $result -> free_result();
@@ -134,6 +132,31 @@
     </div>
   </div>
 
+  <!-- Modal de Delete -->
+  <div class="modal fade branco" id="modalDelete">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 titulo">Deletar o Assunto:</h1>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <form action="../back-end/delete_assunto.php" method="post">
+          <div class="modal-body">
+            <div id="tituloDel"></div>
+
+            <input hidden name='idAssuntoDel' id='idAssuntoDel' type ='text'>
+            <input hidden type="text" name="pagina" id="pagina" value="home.php">
+
+            <button name="deletarAssunto" type="submit" class="botao-concluir btn-vermelho">Apagar Assunto</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
   <script src="../js/bootstrap.bundle.min.js"></script>
   <script src="../js/bootstrap.min.js"></script>
   <script>
@@ -164,7 +187,7 @@
         }
       }
       
-
+      // Mostra e atualiza o modal de update
       var idAssunto = document.querySelector('#idAssunto');
       var titulo = document.querySelector('#tituloAtt');
       var resumo = document.querySelector('#resumoAtt');
@@ -175,10 +198,21 @@
 
       var navBar = document.querySelector('nav')
 
+      // Mostra e atualiza o modal de delete
+      var idAssuntoDel = document.querySelector('#idAssuntoDel');
+      var tituloDel = document.querySelector('#tituloDel');
+      var botaoMaravilha = document.querySelector('#botao-maravilha');
+
+      tituloDel.textContent = '<?php if(isset($_GET['mostraDelete'])){print $_GET['tituloDel'];} ?>'
+      idAssuntoDel.value = '<?php if(isset($_GET['mostraDelete'])){print $_GET['idAssuntoDel'];} ?>'
+
       <?php
       if(isset($_GET['mostraAtt'])){
-        print 'botao.click()';
-      } 
+        print 'botao.click();';
+      }
+      if(isset($_GET['mostraDelete'])){
+        print 'botaoMaravilha.click();';
+      }
       ?>
   </script>
     
