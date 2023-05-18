@@ -9,7 +9,12 @@ form.editor{
     margin-right: 90px;
 }
 
+.btn-salvas{
+    position: absolute;
+    top: 40rem;
+    left: 65rem;
 
+}
 
 .botao-sair{
     margin: 0 0 0 700px;
@@ -28,46 +33,6 @@ p{
 }
 
     
-@media only screen and (min-width: 900px) and (max-width: 1440px) {
-
-    .botao-sair{
-        display: block;
-        margin: 46.8px 0 0 1313.8px;
-        font-size: 38px;
-        border-color: transparent;
-        background-color: transparent;
-        
-    }
-    
-}
-
-@media screen and (max-width: 1680px){
-    .botao-sair{
-        display: block;
-        margin: 46.8px 0 0 1273.8px;
-        font-size: 38px;
-        border-color: transparent;
-        background-color: transparent;
-        
-    }
-
-}
-
-@media screen and (max-width: 1920px){
-    .botao-sair{
-        display: block;
-        margin: 46.8px 0 0 1500px;
-        font-size: 38px;
-        border-color: transparent;
-        background-color: transparent;
-        
-    }
-
-}
-
-
-
-
 
 
 

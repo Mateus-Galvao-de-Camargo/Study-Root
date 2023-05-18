@@ -17,13 +17,32 @@ body{
     padding: 0;
 }
 
+.btn-aulas{
+    position: absolute;
+    top: 18rem;
+    display: flex;
+}
+
 .primeira-aula{
     display: block;
     font-size: 26px;
     text-align: center;
     text-decoration: none;
 }
-
+.bts-assunto-3p{
+  
+    position: absolute;
+    width: 20px;
+    left: 38.9rem;
+    height: 7rem;
+    margin-left: 3px;
+    padding-top: 21.5px;
+    padding-bottom: 23px;
+    padding-left: 16px;
+    padding-right: 18px;
+    background: transparent;
+    border: 1.5px solid gray;
+}
 .titulo{
     position: absolute;
     margin: 0;
@@ -36,9 +55,8 @@ body{
 
 .botao-materia{
 
-    position: absolute;
-    border-radius: 15px;
-    top: 18rem;
+    border-top-left-radius: 15px;
+   border-bottom-left-radius: 15px;
     display: block;
     width: 625px;
     padding: 25px;

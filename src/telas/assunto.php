@@ -76,11 +76,29 @@
 </aside>
 <div class="divas">
     <h1 class="titulo">nome567<a class="link-sair" href="./home.php"></a></h1> 
-    <p class="btn-close"></p>
+    <a href="./home.php"><p class="btn-close"></p></a>
     <p class="resumidamente">resumo</p>
+    <div class="btn-aulas">
     <a class="primeira-aula" href="./anotacao.php"><button class ="botao-materia" type ="submit"><p>ex: primeira aula</p></button></a>
+    <button class="bts-assunto-3p btn-preto-background-hover" onclick="mostra(#)"><i class="fa-solid fa-ellipsis-vertical branco"></i></button>
+    </div>
+    
+    <div class="edit-assunto" id="#" name="editors">
+          <form action="../back-end/delete_assunto.php" method="post">
+            <input hidden type="text" value="#" name="id">
+            <button type="submit" class="btn-transparente"><i class="fa-solid fa-trash-can fa-lg btn-vermelho"></i></button>
+          </form>
 
+          <!-- Action muda de acordo com a página  -->
+          <form action="./home.php" method="get">
+            <input hidden name="id_assunto" type="text" value="">
+            <input hidden name="titulo-btn" type="text" value="">
+            <input hidden name="resumo-btn" type="text" value="">
+            <button type="submit" name="mostraAtt" class="btn-transparente"><i class="fa-regular fa-pen-to-square fa-lg branco btn-branco-hover"></i></button>
+          </form>
+      </div>
   </div>   
+
     <!-- Modal -->
   <div class="modal fade branco" id="modal">
     <div class="modal-dialog modal-dialog-centered">
@@ -163,6 +181,7 @@
           }
         }
       }
+      
       
 
       var idAssunto = document.querySelector('#idAssunto');

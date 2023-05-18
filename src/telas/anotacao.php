@@ -80,7 +80,7 @@
     
   <div>
     <form method="post" action="submit.php" class="editor">
-      <input class="btn btn-light" type="submit" name="submit" value="Salvar">
+      <input class="btn-salvas btn-light" type="submit" name="submit" value="Salvar">
       <textarea name="editor" id="editor" rows="25" cols="145"></textarea>
     </form>
   </div>
