@@ -28,6 +28,34 @@
    cursor: pointer;
 }
 
+.flex{
+    display: flex;
+}
+
+.wrap{
+    flex-wrap: wrap;
+}
+
+.column{
+    flex-flow: column;
+}
+
+.center{
+    justify-content: center;
+}
+
+.end{
+    justify-content: flex-end;
+}
+
+.start{
+    justify-content: flex-start;
+}
+
+.space-between{
+    justify-content: space-between;
+}
+
 .link-assunto{
     margin-right: -5px;
     text-decoration: none;
@@ -67,15 +95,13 @@
 }
 
 /* Header da aside - SearchBar */
-.buscas{
-    margin-top: 20px;
-}
-
 .buscador{
     padding: 10px 45px 10px 15px;
     border-radius: 15px;
     border: 0;
     border-color: transparent;
+    margin-top: 20px;
+    margin-left: 1.2rem;
 }
 
 .barra-de-ferramentas{
