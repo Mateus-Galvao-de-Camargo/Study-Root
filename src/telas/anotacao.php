@@ -29,6 +29,7 @@
   <button class="btn-transparente"><i class="fa-solid fa-gear fa-lg gira" style="color: #a3a3a3;"></i></button>
   <button class="btn-transparente branco btn-branco-hover" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-circle-plus fa-lg"></i></button>
   <button hidden id="botao-magia" data-bs-toggle="modal" data-bs-target="#modalUpdate"></button>
+  <button hidden id="botao-maravilha" data-bs-toggle="modal" data-bs-target="#modalDelete"></button>
 </div>
 
 <nav>
@@ -64,7 +65,7 @@
     if($result = $conn -> query($sql)){
 
         while($assunto = $result -> fetch_object()){
-            printf("<div class='absolute' value='%s'> <a href='./assunto.php' class='link-assunto'> <button class='bts btn-preto-background-hover'> <span>%s</span> </button> </a> <button class='bts-options btn-preto-background-hover' onclick='mostra(%d)'><i class='fa-solid fa-ellipsis-vertical branco'></i></button> <div class='edit' id='%d' name=''> <form action='../back-end/delete_assunto.php' method='post'> <input hidden type='text' value='%d' name='id'> <button type='submit' class='btn-transparente'><i class='fa-solid fa-trash-can fa-lg btn-vermelho'></i></button> </form> <form action='./anotacao.php' method='get'><input hidden name='id_assunto' type='text' value='%d'><input hidden name='titulo-btn' type='text' value='%s'><input hidden name='resumo-btn' type='text' value='%s'><button type='submit' name='mostraAtt' class='btn-transparente'><i class='fa-regular fa-pen-to-square fa-lg branco btn-branco-hover'></i></button></form> </div> </div>", $assunto->titulo, $assunto->titulo, $assunto->id_assunto, $assunto->id_assunto, $assunto->id_assunto, $assunto->id_assunto, $assunto->titulo, $assunto->resumo);
+            printf("<div class='absolute' value='%s'> <a href='./assunto.php' class='link-assunto'> <button class='bts btn-preto-background-hover'> <span>%s</span> </button> </a> <button class='bts-options btn-preto-background-hover' onclick='mostra(%d)'><i class='fa-solid fa-ellipsis-vertical branco'></i></button> <div class='edit' id='%d' name=''> <form action='./anotacao.php' method='get'> <input hidden type='text' value='%d' name='idAssuntoDel' id='idAssuntoDel'> <input hidden type='text' value='%s' name='tituloDel' id='tituloDel'> <button type='submit' name='mostraDelete' class='btn-transparente'><i class='fa-solid fa-trash-can fa-lg btn-vermelho'></i></button> </form> <form action='./anotacao.php' method='get'><input hidden name='id_assunto' type='text' value='%d'><input hidden name='titulo-btn' type='text' value='%s'><input hidden name='resumo-btn' type='text' value='%s'><button type='submit' name='mostraAtt' class='btn-transparente'><i class='fa-regular fa-pen-to-square fa-lg branco btn-branco-hover'></i></button></form> </div> </div>", $assunto->titulo, $assunto->titulo, $assunto->id_assunto, $assunto->id_assunto, $assunto->id_assunto, $assunto->titulo, $assunto->id_assunto, $assunto->titulo, $assunto->resumo);
         }
 
         $result -> free_result();
@@ -136,6 +137,30 @@
     </div>
   </div>
 
+  <!-- Modal de Delete -->
+  <div class="modal fade branco" id="modalDelete">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h1 class="modal-title fs-5 titulo">Deletar o Assunto:<p id="mostraTituloDel"></p></h1>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <form action="../back-end/delete_assunto.php" method="post">
+          <div class="modal-body">
+            <p>Tenha certeza antes de deletar seu assunto. Pois, todas as anotações dele também serão excluídas!</p>
+            <input hidden name='idAssuntoDelelete' id='idAssuntoDelete' type ='text'>
+            <input hidden type="text" name="pagina" id="pagina" value="anotacao.php">
+
+            <button name="deletarAssunto" type="submit" class="vermelho btn-delete-assunto">Apagar Assunto</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
 	<script type="text/javascript" src="../plugin/tinymce/js/tinymce/tinymce.min.js"></script>
 	<script type="text/javascript" src="../plugin/tinymce/js/tinymce/init-tinymce.js"></script> 
   <script src="../js/bootstrap.bundle.min.js"></script>
@@ -179,10 +204,21 @@
 
       var navBar = document.querySelector('nav')
 
+      // Mostra e atualiza o modal de delete
+      var idAssuntoDel = document.querySelector('#idAssuntoDelete');
+      var tituloDel = document.querySelector('#mostraTituloDel');
+      var botaoMaravilha = document.querySelector('#botao-maravilha');
+
+      tituloDel.innerHTML = "<?php if(isset($_GET['mostraDelete'])){print $_GET['tituloDel'];} ?>"
+      idAssuntoDel.value = "<?php if(isset($_GET['mostraDelete'])){print $_GET['idAssuntoDel'];} ?>"
+
       <?php
       if(isset($_GET['mostraAtt'])){
-        print 'botao.click()';
-      } 
+        print 'botao.click();';
+      }
+      if(isset($_GET['mostraDelete'])){
+        print 'botaoMaravilha.click();';
+      }
       ?>
   </script>
     

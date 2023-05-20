@@ -144,6 +144,7 @@
 
         <form action="../back-end/delete_assunto.php" method="post">
           <div class="modal-body">
+            <p>Tenha certeza antes de deletar seu assunto. Pois, todas as anotações dele também serão excluídas!</p>
             <input hidden name='idAssuntoDelelete' id='idAssuntoDelete' type ='text'>
             <input hidden type="text" name="pagina" id="pagina" value="home.php">
 

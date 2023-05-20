@@ -32,10 +32,6 @@
     display: flex;
 }
 
-.wrap{
-    flex-wrap: wrap;
-}
-
 .column{
     flex-flow: column;
 }
@@ -50,10 +46,6 @@
 
 .start{
     justify-content: flex-start;
-}
-
-.space-between{
-    justify-content: space-between;
 }
 
 .link-assunto{
@@ -145,7 +137,7 @@
     border-color: transparent;
 }
 
-.vermelho:hover{
+.vermelho:active{
     background-color: #a00000;
 }
 
@@ -153,28 +145,25 @@
     color: #d20000;
 }
 
-.btn-vermelho:hover{
+.btn-vermelho:active{
     color: #a00000;
 }
 
-.botao-cadastro{
+.btn-normal{
     margin: 0;
-    border-radius: 10px;
-    width: 85px;
+    margin-bottom: 2rem;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 0px;
+    padding-right: 6px;
+    border-radius: 15px;
+    width: 122px;
     border-color: transparent;
     background: white;
 }
 
-.btn-branco-hover:hover{
-    color: #ddd;
-}
-
-.btn-branco-background-hover:hover{
+.btn-normal:active{
     background: #ddd;
-}
-
-.btn-preto-background-hover:hover{
-    background: #0e0e0e;
 }
 
 .botao-concluir{
@@ -183,6 +172,18 @@
     width: 85px;
     border-color: transparent;
     background-color: white;
+}
+
+.btn-branco-hover:active{
+    color: #ddd;
+}
+
+.btn-branco-background-hover:active{
+    background: #ddd;
+}
+
+.btn-preto-background-hover:active{
+    background: #0e0e0e;
 }
 
 .btn-transparente{
