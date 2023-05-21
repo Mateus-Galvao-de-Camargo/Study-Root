@@ -54,9 +54,8 @@
 }
 
 .bts-options{
-    position: absolute;
     width: 20px;
-    margin-left: 3px;
+    margin: 0;
     padding-top: 21.5px;
     padding-bottom: 23px;
     padding-left: 16px;
@@ -68,10 +67,6 @@
 .sidebar button > span{
     display: inline-flex;
     padding: 0 95px;
-}
-
-.absolute{
-    position: relative;
 }
 
 .edit{

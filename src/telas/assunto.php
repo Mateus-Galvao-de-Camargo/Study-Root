@@ -19,6 +19,24 @@
   if(empty($_SESSION)){
     print "<script>location.href='index.php'</script>";
   }
+  /*
+  if(empty($_GET['geraAnotacao']) || empty($_GET['getIdAssunto'])){
+    print "<script>location.href='home.php'</script>";
+  }
+
+  // Confere se o usuario está tentando acessar conteúdo que não lhe pertence.
+  $testaIdAssunto = $_GET['getIdAssunto'];
+  $testaIdUsuario = $_SESSION['id'];
+  $confereUsuario = $conn->query('SELECT * FROM assunto WHERE id_assunto = $testaIdAssunto AND id_estudante_fk = $testaIdUsuario');
+  
+  if($confereUsuario){
+    //boa, sem gracinhas.
+  } else {
+    //GRACINHAS?
+    print "<script>location.href='home.php'</script>";
+  }
+
+  */
   ?>
 <aside class="sidebar"> 
 
@@ -32,44 +50,21 @@
 </div>
 
 <nav>
-  <div class="absolute">
-    <a href="./assunto.php" class="link-assunto">
-      <button class="bts btn-preto-background-hover">
-        <span>nome567</span>
-      </button>
-    </a>
-    <button class="bts-options btn-preto-background-hover" onclick="mostra(#)"><i class="fa-solid fa-ellipsis-vertical branco"></i></button>
+  <div class="flex column">
+    <?php
+      $id = $_SESSION['id'];
 
-    <div class="edit" id="#" name="editors">
-      <form action="../back-end/delete_assunto.php" method="post">
-        <input hidden type="text" value="#" name="id">
-        <button type="submit" class="btn-transparente"><i class="fa-solid fa-trash-can fa-lg btn-vermelho"></i></button>
-      </form>
+      $sql = "SELECT * FROM assunto WHERE id_estudante_fk = $id";
 
-      <!-- Action muda de acordo com a página  -->
-      <form action="./assunto.php" method="get">
-        <input hidden name="id_assunto" type="text" value="">
-        <input hidden name="titulo-btn" type="text" value="">
-        <input hidden name="resumo-btn" type="text" value="">
-        <button type="submit" name="mostraAtt" class="btn-transparente"><i class="fa-regular fa-pen-to-square fa-lg branco btn-branco-hover"></i></button>
-      </form>
-    </div>
+      if($result = $conn -> query($sql)){
+
+          while($assunto = $result -> fetch_object()){
+              printf("<div class='flex' value='%s'>  <form action='./assunto.php' method='get'> <input hidden name='getIdAssunto' value='%d'> <button class='bts btn-preto-background-hover' type='submit'> <span>%s</span> </button> </form> <button class='bts-options btn-preto-background-hover' onclick='mostra(%d)'><i class='fa-solid fa-ellipsis-vertical branco'></i></button> <div class='edit' id='%d' name=''> <form action='./assunto.php' method='get'> <input hidden type='text' value='%d' name='idAssuntoDel' id='idAssuntoDel'> <input hidden type='text' value='%s' name='tituloDel' id='tituloDel'> <button type='submit' name='mostraDelete' class='btn-transparente'><i class='fa-solid fa-trash-can fa-lg btn-vermelho'></i></button> </form> <form action='./assunto.php' method='get'><input hidden name='id_assunto' type='text' value='%d'><input hidden name='titulo-btn' type='text' value='%s'><input hidden name='resumo-btn' type='text' value='%s'><button type='submit' name='mostraAtt' class='btn-transparente'><i class='fa-regular fa-pen-to-square fa-lg branco btn-branco-hover'></i></button></form> </div> </div>", $assunto->titulo, $assunto->id_assunto, $assunto->titulo, $assunto->id_assunto, $assunto->id_assunto, $assunto->id_assunto, $assunto->titulo, $assunto->id_assunto, $assunto->titulo, $assunto->resumo);
+          }
+          $result -> free_result();
+      }
+    ?>
   </div>
-
-  <?php
-    $id = $_SESSION['id'];
-
-    $sql = "SELECT * FROM assunto WHERE id_estudante_fk = $id";
-
-    if($result = $conn -> query($sql)){
-
-        while($assunto = $result -> fetch_object()){
-            printf("<div class='absolute' value='%s'> <a href='./assunto.php' class='link-assunto'> <button class='bts btn-preto-background-hover'> <span>%s</span> </button> </a> <button class='bts-options btn-preto-background-hover' onclick='mostra(%d)'><i class='fa-solid fa-ellipsis-vertical branco'></i></button> <div class='edit' id='%d' name=''> <form action='./assunto.php' method='get'> <input hidden type='text' value='%d' name='idAssuntoDel' id='idAssuntoDel'> <input hidden type='text' value='%s' name='tituloDel' id='tituloDel'> <button type='submit' name='mostraDelete' class='btn-transparente'><i class='fa-solid fa-trash-can fa-lg btn-vermelho'></i></button> </form> <form action='./assunto.php' method='get'><input hidden name='id_assunto' type='text' value='%d'><input hidden name='titulo-btn' type='text' value='%s'><input hidden name='resumo-btn' type='text' value='%s'><button type='submit' name='mostraAtt' class='btn-transparente'><i class='fa-regular fa-pen-to-square fa-lg branco btn-branco-hover'></i></button></form> </div> </div>", $assunto->titulo, $assunto->titulo, $assunto->id_assunto, $assunto->id_assunto, $assunto->id_assunto, $assunto->titulo, $assunto->id_assunto, $assunto->titulo, $assunto->resumo);
-        }
-
-        $result -> free_result();
-    }
-?>
 </nav>
 </aside>
 
@@ -77,8 +72,8 @@
   <div class="flex column divas">
 
     <a href="./home.php" class="flex end"><p class="btn-close"></p></a>
-    <h1 class="titulo flex center">nome358</h1>
-    <p class="resumidamente flex center">resumo</p>
+    <h1 class="titulo flex center" id="tituloDaAnotacao">nome358</h1>
+    <p class="resumidamente flex center" id="resumoDaAnotacao">resumo</p>
 
     <div class="flex center">
       <button class="btn-normal">Criar Anotação</button>
@@ -87,25 +82,56 @@
 
     <div class="flex center btn-aulas">
       <a class="primeira-aula" href="./anotacao.php"><button class ="botao-materia" type ="submit"><p>ex: primeira aula</p></button></a>
-      <button class="bts-assunto-3p btn-preto-background-hover" onclick="mostraEditAnotacao(anotacao#)"><i class="fa-solid fa-ellipsis-vertical branco"></i></button>
-    </div>
-
-    <div hidden class="edit-anotacao" id="anotacao#" name="editors-anotacao">
+      <button class="bts-assunto-3p btn-preto-background-hover" onclick="mostraEditAnotacao(#)"><i class="fa-solid fa-ellipsis-vertical branco"></i></button>
+      <div class="edit-anotacao" id="anotacao#" name="editors-anotacao">
         <form action="../back-end/delete_anotacao.php" method="post">
           <input hidden type="text" value="#" name="idAnotacaoDel">
           <button type="submit" class="btn-transparente"><i class="fa-solid fa-trash-can fa-lg btn-vermelho"></i></button>
         </form>
-
+  
         <form action="./assunto.php" method="get">
           <input hidden name="idAnotacaoEdit" type="text" value="">
           <input hidden name="tituloEditar" type="text" value="">
           <button type="submit" name="mostraAtt" class="btn-transparente"><i class="fa-regular fa-pen-to-square fa-lg branco btn-branco-hover"></i></button>
         </form>
+      </div>
     </div>
+
+    <?php
+      if(isset($_GET['geraAnotacao'])){
+        $idDoAssunto = $_GET['getIdAssunto'];
+      }
+
+      $sql = "SELECT * FROM anotacao WHERE id_assunto_fk = $id";/*$idDoAssunto*/
+  
+      if($result = $conn -> query($sql)){
+  
+          while($anotacao = $result -> fetch_object()){
+              printf("", $anotacao->id_anotacao, $anotacao->titulo, $anotacao->id_anotacao, $anotacao->id_anotacao, $anotacao->id_anotacao, $anotacao->id_assunto_fk, $anotacao->id_anotacao, $anotacao->titulo);
+/*<div class='flex center btn-aulas'>
+<form action='anotacao.php' method='get'><input hidden type='number' value='%d' name='idAnotacaoParaTexto'><button class ='botao-materia' type='submit'><p>%s</p></button></form>
+<button class='bts-assunto-3p btn-preto-background-hover' onclick='mostraEditAnotacao(anotacao%d)'><i class='fa-solid fa-ellipsis-vertical branco'></i></button>
+
+<div class='edit-anotacao' id='anotacao%d' name='editors-anotacao'>
+<form action='../back-end/delete_anotacao.php' method='post'>
+<input hidden type='text' value='%d' name='idAnotacaoDel'>
+<button type='submit' class='btn-transparente'><i class='fa-solid fa-trash-can fa-lg btn-vermelho'></i></button>
+</form>
+
+<form action='./assunto.php' method='get'>
+<input hidden name='getIdAssunto' type='text' value='%d'>
+<input hidden name='idAnotacaoEdit' type='text' value='%d'>
+<input hidden name='tituloEditar' type='text' value='%s'>
+<button type='submit' name='mostraAnotacaoUp' class='btn-transparente'><i class='fa-regular fa-pen-to-square fa-lg branco btn-branco-hover'></i></button>
+</form></div></div>*/
+          }
+          $result -> free_result();
+      }
+    ?>
 
   </div>   
 
-    <!-- Modal Insert -->
+  <!-- Modal Insert -->
   <div class="modal fade branco" id="modal">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">

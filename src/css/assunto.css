@@ -17,11 +17,6 @@ body{
     margin-bottom: 2rem;
 }
 
-.primeira-aula{
-    font-size: 26px;
-    text-align: center;
-    text-decoration: none;
-}
 .bts-assunto-3p{
     width: 20px;
     height: 7rem;
@@ -65,4 +60,13 @@ p{
 .link-sair{
     text-decoration: none;
     color: white;
+}
+
+.edit-anotacao{
+    position: absolute;
+    left: 100%;
+    border-radius: 6px;
+    padding: 20px 10px 20px 10px;
+    background: #0e0e0e;
+    display: none;
 }
