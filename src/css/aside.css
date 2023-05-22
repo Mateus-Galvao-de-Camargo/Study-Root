@@ -18,6 +18,13 @@ form{
     height: 100vh;
     border-right: 1.5px solid gray;
 }
+#config{
+    margin-left: 20vw;
+    min-width: 15vw;
+    min-height: 2vh;
+    background: #0e0e0e;
+    display: none;
+}
 
 #sidebar{
     width: 20vw;

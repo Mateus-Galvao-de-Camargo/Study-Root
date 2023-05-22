@@ -29,11 +29,18 @@
 
 
   <div id="barra-de-ferramentas" class="flex start">
-    <button class="btn-transparente"><i class="fa-solid fa-gear fa-lg gira" style="color: #a3a3a3;"></i></button>
+    <button class="btn-transparente" onclick="mostra('config')"><i class="fa-solid fa-gear fa-lg gira" style="color: #a3a3a3;"></i></button>
     <button class="btn-transparente branco btn-branco-hover" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-circle-plus fa-lg"></i></button>
     <button hidden id="botao-magia" data-bs-toggle="modal" data-bs-target="#modalUpdate"></button>
     <button hidden id="botao-maravilha" data-bs-toggle="modal" data-bs-target="#modalDelete"></button>
+    <div id="config">
+    <img src="../img/icons8-editar-conta-50.png">
+    <button class="vermelho">Sair</button>
+
+  </div>
   </div> 
+
+ 
 
 
   <div id="listaDeAssuntos" class="flex column">
@@ -140,7 +147,6 @@
         edit.style.display = "none"
       }
     }
-      
       var divs = ["" <?php $id = $_SESSION['id'];$sqlTitulos = "SELECT * FROM assunto WHERE id_estudante_fk = $id";if($result = $conn -> query($sqlTitulos)){ while($assunto = $result -> fetch_object()){ printf(", '%s'", $assunto->titulo);}$result -> free_result();} ?>];
       
       function filtrar(){
