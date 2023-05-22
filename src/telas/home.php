@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../css/aside.css">
     <link rel="stylesheet" href="../css/home.css">
 </head>
-<body>
+<body class="flex">
 
   <?php
   require_once('../back-end/config.php');
@@ -20,62 +20,35 @@
     print "<script>location.href='index.php'</script>";
   }
   ?>
+  <div id="sideBarBorder"></div>
+  <div id="sidebar" class="flex column"> 
 
-  <aside class="sidebar"> 
+  <div id="searchBar" class="flex center">
+    <input class="buscador" onkeyup="filtrar()" type ="text" id="inputDeSearch" placeholder ="Assunto desejado">
+  </div>
 
-    <div class="buscas">
-        <input class="buscador" onkeyup="filtrar()" type ="text" id="inputDeSearch" placeholder ="Assunto desejado">
-    </div>
 
-    <div class="barra-de-ferramentas">
-      <button class="btn-transparente"><i class="fa-solid fa-gear fa-lg gira" style="color: #a3a3a3;"></i></button>
-      <button class="btn-transparente branco btn-branco-hover" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-circle-plus fa-lg"></i></button>
-      <button hidden id="botao-magia" data-bs-toggle="modal" data-bs-target="#modalUpdate"></button>
-      <button hidden id="botao-maravilha" data-bs-toggle="modal" data-bs-target="#modalDelete"></button>
-    </div>
-   
-    <nav>
-      <div value="abc" class="absolute">
-        <a href="./assunto.php" class="link-assunto">
-          <button class="bts btn-preto-background-hover">
-            <span>nome567</span>
-          </button>
-        </a>
-        <button class="bts-options btn-preto-background-hover" onclick="mostra(#)"><i class="fa-solid fa-ellipsis-vertical branco"></i></button>
+  <div id="barra-de-ferramentas" class="flex start">
+    <button class="btn-transparente"><i class="fa-solid fa-gear fa-lg gira" style="color: #a3a3a3;"></i></button>
+    <button class="btn-transparente branco btn-branco-hover" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-circle-plus fa-lg"></i></button>
+    <button hidden id="botao-magia" data-bs-toggle="modal" data-bs-target="#modalUpdate"></button>
+    <button hidden id="botao-maravilha" data-bs-toggle="modal" data-bs-target="#modalDelete"></button>
+  </div> 
 
-        <div class="edit" id="#" name="editors">
-          <form action="./home.php" method="get">
-            <input hidden type="text" value="#" name="idAnota">
-            <input hidden type="text" value='%s' name='tituloDel'>
-            <button type="submit" name="mostraDelete" class="btn-transparente"><i class="fa-solid fa-trash-can fa-lg btn-vermelho"></i></button>
-          </form>
 
-          <!-- Action muda de acordo com a página  -->
-          <form action="./home.php" method="get">
-            <input hidden name="id_assunto" type="text" value="">
-            <input hidden name="titulo-btn" type="text" value="">
-            <input hidden name="resumo-btn" type="text" value="">
-            <button type="submit" name="mostraAtt" class="btn-transparente"><i class="fa-regular fa-pen-to-square fa-lg branco btn-branco-hover"></i></button>
-          </form>
-        </div>
-      </div>
+  <div id="listaDeAssuntos" class="flex column">
+    <?php
+      $id = $_SESSION['id'];
 
-<?php
-    $id = $_SESSION['id'];
-
-    $sql = "SELECT * FROM assunto WHERE id_estudante_fk = $id";
-
-    if($result = $conn -> query($sql)){
-
+      if($result = $conn -> query("SELECT * FROM assunto WHERE id_estudante_fk = $id")){
         while($assunto = $result -> fetch_object()){
-            printf("<div class='absolute' value='%s'> <a href='./assunto.php' class='link-assunto'> <button class='bts btn-preto-background-hover'> <span>%s</span> </button> </a> <button class='bts-options btn-preto-background-hover' onclick='mostra(%d)'><i class='fa-solid fa-ellipsis-vertical branco'></i></button> <div class='edit' id='%d' name=''> <form action='./home.php' method='get'> <input hidden type='text' value='%d' name='idAssuntoDel' id='idAssuntoDel'> <input hidden type='text' value='%s' name='tituloDel' id='tituloDel'> <button type='submit' name='mostraDelete' class='btn-transparente'><i class='fa-solid fa-trash-can fa-lg btn-vermelho'></i></button> </form> <form action='./home.php' method='get'><input hidden name='id_assunto' type='text' value='%d'><input hidden name='titulo-btn' type='text' value='%s'><input hidden name='resumo-btn' type='text' value='%s'><button type='submit' name='mostraAtt' class='btn-transparente'><i class='fa-regular fa-pen-to-square fa-lg branco btn-branco-hover'></i></button></form> </div> </div>", $assunto->titulo, $assunto->titulo, $assunto->id_assunto, $assunto->id_assunto, $assunto->id_assunto, $assunto->titulo, $assunto->id_assunto, $assunto->titulo, $assunto->resumo);
+          printf("<div class='flex' value='%s'> <form action='./assunto.php' method='get'> <input hidden name='getIdAssunto' value='%d'> <button class='bts btn-preto-background-hover' type='submit'> <span>%s</span> </button> </form> <button class='bts-options btn-preto-background-hover' onclick='mostra(%d)'><i class='fa-solid fa-ellipsis-vertical branco'></i></button> <div class='edit' id='%d' name=''> <form action='./home.php' method='get'> <input hidden type='text' value='%d' name='idAssuntoDel' id='idAssuntoDel'> <input hidden type='text' value='%s' name='tituloDel' id='tituloDel'> <button type='submit' name='mostraDelete' class='btn-transparente'><i class='fa-solid fa-trash-can fa-lg btn-vermelho'></i></button> </form> <form action='./home.php' method='get'><input hidden name='id_assunto' type='text' value='%d'><input hidden name='titulo-btn' type='text' value='%s'><input hidden name='resumo-btn' type='text' value='%s'><button type='submit' name='mostraAtt' class='btn-transparente'><i class='fa-regular fa-pen-to-square fa-lg branco btn-branco-hover'></i></button></form> </div> </div>", $assunto->titulo, $assunto->id_assunto, $assunto->titulo, $assunto->id_assunto, $assunto->id_assunto, $assunto->id_assunto, $assunto->titulo, $assunto->id_assunto, $assunto->titulo, $assunto->resumo);
         }
-
         $result -> free_result();
-    }
-?>
-    </nav>
-  </aside>
+      }
+    ?>
+      </div>
+  </div>
 
   <img src="../img/logo.jpeg" class="logo">
 
@@ -179,7 +152,7 @@
           var string = `div[value='${valorId}']`
           var div = document.querySelector(string)
           if(valorId.toLowerCase().indexOf(input) > -1){
-            div.style.display = "block"
+            div.style.display = "flex"
           } else {
             div.style.display = "none"
           }

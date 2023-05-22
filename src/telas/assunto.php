@@ -11,64 +11,66 @@
     <link rel="stylesheet" href="../css/aside.css">
     <link rel="stylesheet" href="../css/assunto.css">
 </head>
-<body>
+<body class="flex">
+  <?php
+    require_once('../back-end/config.php');
+    session_start();
+    // Validando se há um login, se tem um assunto sendo carregado e se esse assunto é pertencente ao, usuário do login.
+    if(empty($_SESSION)){
+      print "<script>location.href='index.php'</script>";
+    } else if(empty($_GET['getIdAssunto'])){
+      print "<script>location.href='home.php'</script>";
+    } else {
+      $testaIdAssunto = $_GET['getIdAssunto'];
+      $testaIdUsuario = $_SESSION['id'];
 
-<?php
-  require_once('../back-end/config.php');
-  session_start();
-  if(empty($_SESSION)){
-    print "<script>location.href='index.php'</script>";
-  }
-  /*
-  if(empty($_GET['geraAnotacao']) || empty($_GET['getIdAssunto'])){
-    print "<script>location.href='home.php'</script>";
-  }
-
-  // Confere se o usuario está tentando acessar conteúdo que não lhe pertence.
-  $testaIdAssunto = $_GET['getIdAssunto'];
-  $testaIdUsuario = $_SESSION['id'];
-  $confereUsuario = $conn->query('SELECT * FROM assunto WHERE id_assunto = $testaIdAssunto AND id_estudante_fk = $testaIdUsuario');
-  
-  if($confereUsuario){
-    //boa, sem gracinhas.
-  } else {
-    //GRACINHAS?
-    print "<script>location.href='home.php'</script>";
-  }
-
-  */
+      $confereUsuario = $conn->query("SELECT * FROM assunto WHERE id_assunto = '$testaIdAssunto' AND id_estudante_fk = '$testaIdUsuario'");
+      $usuarioSendoTestado = $confereUsuario->fetch_object();
+      $qtdDeLinhas = $confereUsuario->num_rows;
+      
+      if($qtdDeLinhas > 0){
+        //boa, sem gracinhas.
+      } else {
+        //GRACINHAS?
+        print "<script>location.href='./home.php'</script>";
+      }
+    }
+    //empty($_GET['geraAnotacao']) || 
   ?>
-<aside class="sidebar"> 
 
-<input class="buscador" onkeyup="filtrar()" type ="text" id="inputDeSearch" placeholder ="Assunto desejado">
+  <div id="sideBarBorder"></div>
+<div id="sidebar" class="flex column"> 
 
-<div class="barra-de-ferramentas">
-  <button class="btn-transparente"><i class="fa-solid fa-gear fa-lg gira" style="color: #a3a3a3;"></i></button>
-  <button class="btn-transparente branco btn-branco-hover" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-circle-plus fa-lg"></i></button>
-  <button hidden id="botao-magia" data-bs-toggle="modal" data-bs-target="#modalUpdate"></button>
-  <button hidden id="botao-maravilha" data-bs-toggle="modal" data-bs-target="#modalDelete"></button>
-</div>
+  <div id="searchBar" class="flex center">
+    <input class="buscador" onkeyup="filtrar()" type ="text" id="inputDeSearch" placeholder ="Assunto desejado">
+  </div>
 
-<nav>
-  <div class="flex column">
+
+  <div id="barra-de-ferramentas" class="flex start">
+    <button class="btn-transparente"><i class="fa-solid fa-gear fa-lg gira" style="color: #a3a3a3;"></i></button>
+    <button class="btn-transparente branco btn-branco-hover" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-circle-plus fa-lg"></i></button>
+    <button hidden id="botao-magia" data-bs-toggle="modal" data-bs-target="#modalUpdate"></button>
+    <button hidden id="botao-maravilha" data-bs-toggle="modal" data-bs-target="#modalDelete"></button>
+  </div> 
+
+
+  <div id="listaDeAssuntos" class="flex column">
     <?php
       $id = $_SESSION['id'];
+      $idAssuntoPeloGet = $_GET['getIdAssunto'];
 
-      $sql = "SELECT * FROM assunto WHERE id_estudante_fk = $id";
-
-      if($result = $conn -> query($sql)){
-
-          while($assunto = $result -> fetch_object()){
-              printf("<div class='flex' value='%s'>  <form action='./assunto.php' method='get'> <input hidden name='getIdAssunto' value='%d'> <button class='bts btn-preto-background-hover' type='submit'> <span>%s</span> </button> </form> <button class='bts-options btn-preto-background-hover' onclick='mostra(%d)'><i class='fa-solid fa-ellipsis-vertical branco'></i></button> <div class='edit' id='%d' name=''> <form action='./assunto.php' method='get'> <input hidden type='text' value='%d' name='idAssuntoDel' id='idAssuntoDel'> <input hidden type='text' value='%s' name='tituloDel' id='tituloDel'> <button type='submit' name='mostraDelete' class='btn-transparente'><i class='fa-solid fa-trash-can fa-lg btn-vermelho'></i></button> </form> <form action='./assunto.php' method='get'><input hidden name='id_assunto' type='text' value='%d'><input hidden name='titulo-btn' type='text' value='%s'><input hidden name='resumo-btn' type='text' value='%s'><button type='submit' name='mostraAtt' class='btn-transparente'><i class='fa-regular fa-pen-to-square fa-lg branco btn-branco-hover'></i></button></form> </div> </div>", $assunto->titulo, $assunto->id_assunto, $assunto->titulo, $assunto->id_assunto, $assunto->id_assunto, $assunto->id_assunto, $assunto->titulo, $assunto->id_assunto, $assunto->titulo, $assunto->resumo);
-          }
-          $result -> free_result();
+      if($result = $conn -> query("SELECT * FROM assunto WHERE id_estudante_fk = $id")){  
+        while($assunto = $result -> fetch_object()){
+          printf("<div class='flex nowrap' value='%s'>  <form action='./assunto.php' method='get'> <input hidden name='getIdAssunto' value='%d'> <button class='bts btn-preto-background-hover' type='submit'> <span>%s</span> </button> </form> <button class='bts-options btn-preto-background-hover' onclick='mostra(%d)'><i class='fa-solid fa-ellipsis-vertical branco'></i></button> <div class='edit' id='%d'> <form action='./assunto.php' method='get'> <input hidden type='text' value='%d' name='getIdAssunto'> <input hidden type='text' value='%d' name='idAssuntoDel' id='idAssuntoDel'> <input hidden type='text' value='%s' name='tituloDel' id='tituloDel'> <button type='submit' name='mostraDelete' class='btn-transparente'><i class='fa-solid fa-trash-can fa-lg btn-vermelho'></i></button> </form> <form action='./assunto.php' method='get'><input hidden value='%d' name='getIdAssunto'><input hidden name='id_assunto' type='text' value='%d'><input hidden name='titulo-btn' type='text' value='%s'><input hidden name='resumo-btn' type='text' value='%s'><button type='submit' name='mostraAtt' class='btn-transparente'><i class='fa-regular fa-pen-to-square fa-lg branco btn-branco-hover'></i></button></form> </div> </div>", $assunto->titulo, $assunto->id_assunto, $assunto->titulo, $assunto->id_assunto, $assunto->id_assunto, $idAssuntoPeloGet, $assunto->id_assunto, $assunto->titulo, $idAssuntoPeloGet, $assunto->id_assunto, $assunto->titulo, $assunto->resumo);
+        }
+        $result -> free_result();
       }
     ?>
   </div>
-</nav>
-</aside>
+</div>
 
-<!-- Conteúdo da página assunto -->
+
+  <!-- Conteúdo da página assunto -->
   <div class="flex column divas">
 
     <a href="./home.php" class="flex end"><p class="btn-close"></p></a>
@@ -76,7 +78,7 @@
     <p class="resumidamente flex center" id="resumoDaAnotacao">resumo</p>
 
     <div class="flex center">
-      <button class="btn-normal">Criar Anotação</button>
+      <button class="btn-normal" data-bs-toggle="modal" data-bs-target="#modalAnotacao">Criar Anotação</button>
     </div>
     
 
@@ -145,7 +147,7 @@
           <div class="modal-body">
             <input  class ="nome-assunto" name="titulo" id="titulo" type ="text" placeholder ="Título" aria-label ="Search">
             <input  class ="descricao-assunto" name="resumo" id="resumo" type ="text" placeholder ="Descrição" aria-label ="Search">
-            <input hidden type="text" name="pagina" id="pagina" value="assunto.php">
+            <input hidden type="text" name="pagina" id="pagina" value="assunto.php?getIdAssunto=<?php if(isset($_GET['getIdAssunto'])){print $_GET['getIdAssunto'];} ?>">
           </div>
 
           <div class="modal-footer">
@@ -172,7 +174,7 @@
             <input class ="nome-assunto" name="tituloAtt" id="tituloAtt" type ="text" placeholder ="Título" aria-label ="Search">
             <input class ="descricao-assunto" name="resumoAtt" id="resumoAtt" type ="text" placeholder ="Descrição" aria-label ="Search">
             <input hidden name='idAssunto' id='idAssunto' type ='text'>
-            <input hidden type="text" name="paginaUp" id="paginaUp" value="assunto.php">
+            <input hidden type="text" name="paginaUp" id="paginaUp" value="assunto.php?getIdAssunto=<?php if(isset($_GET['getIdAssunto'])){print $_GET['getIdAssunto'];} ?>">
           </div>
 
           <div class="modal-footer">
@@ -198,7 +200,7 @@
           <div class="modal-body">
             <p>Tenha certeza antes de deletar seu assunto. Pois, todas as anotações dele também serão excluídas!</p>
             <input hidden name='idAssuntoDelelete' id='idAssuntoDelete' type ='text'>
-            <input hidden type="text" name="pagina" id="pagina" value="assunto.php">
+            <input hidden type="text" name="pagina" id="pagina" value="assunto.php?getIdAssunto=<?php if(isset($_GET['getIdAssunto'])){print $_GET['getIdAssunto'];} ?>">
 
             <button name="deletarAssunto" type="submit" class="vermelho btn-delete-assunto">Apagar Assunto</button>
           </div>
@@ -221,11 +223,12 @@
         <form action="../back-end/cadastro_anotacao.php" method="post">
           <div class="modal-body">
             <input class ="nome-assunto" name="tituloAnotacao" id="tituloAnotacao" type ="text" placeholder ="Título" aria-label ="Search">
-            <input hidden name='idAssuntoInsertAnotacao' id='idAssuntoInsertAnotacao' type ='text' value="">
+            <input hidden name='idAssuntoInsertAnotacao' id='idAssuntoInsertAnotacao' type ='text' value="<?php if(isset($_GET['getIdAssunto'])){print $_GET['getIdAssunto'];} ?>">
+            <input hidden type="text" name="paginaAnotacao" id="paginaAnotacao" value="assunto.php?getIdAssunto=<?php if(isset($_GET['getIdAssunto'])){print $_GET['getIdAssunto'];} ?>">
           </div>
 
           <div class="modal-footer">
-            <button name="criar" type="submit" class="botao-concluir">Concluir</button>
+            <button name="cadastrar" type="submit" class="botao-concluir">Concluir</button>
           </div>
         </form>
 
@@ -247,6 +250,7 @@
           <div class="modal-body">
             <input class ="nome-assunto" name="tituloAnotacaoUp" id="tituloAnotacaoUp" type ="text" placeholder ="Título" aria-label ="Search">
             <input hidden name='idAssuntoUpdateAnotacao' id='idAssuntoUpdateAnotacao' type ='text' value="">
+            <input hidden type="text" name="paginaAnotacaoUp" id="paginaAnotacaoUp" value="assunto.php?getIdAssunto=<?php if(isset($_GET['getIdAssunto'])){print $_GET['getIdAssunto'];} ?>">
           </div>
 
           <div class="modal-footer">
@@ -264,7 +268,7 @@
     function mostra(id) {
       var edit = document.getElementById(`${id}`);
       if(edit.style.display == "none"){
-        edit.style.display = "block";
+        edit.style.display = "flex";
       } else {
         edit.style.display = "none"
       }
@@ -273,7 +277,7 @@
     function mostraEditAnotacao(id) {
       var edit = document.getElementById(`anotacao${id}`);
       if(edit.style.display == "none"){
-        edit.style.display = "block";
+        edit.style.display = "flex";
       } else {
         edit.style.display = "none"
       }
@@ -290,7 +294,7 @@
         var string = `div[value='${valorId}']`
         var div = document.querySelector(string)
         if(valorId.toLowerCase().indexOf(input) > -1){
-          div.style.display = "block"
+          div.style.display = "flex"
         } else {
           div.style.display = "none"
         }
@@ -317,8 +321,6 @@
       idAssuntoDel.value = "<?php if(isset($_GET['mostraDelete'])){print $_GET['idAssuntoDel'];} ?>"
 
       // Modal Anotacao
-      var idAssuntoInsertAnotacao = document.querySelector('#idAssuntoInsertAnotacao');
-      idAssuntoInsertAnotacao.value = "<?php if(isset($_GET['mostraAnotacaoUp'])){print $_GET['idAssuntoInsertAnotacao'];} ?>"
 
       <?php
       if(isset($_GET['mostraAtt'])){

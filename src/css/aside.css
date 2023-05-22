@@ -1,31 +1,36 @@
+body{
+    width: 100vw;
+    height: 100vh;
+    background-color:  rgb(26, 26, 26);
+    overflow-x: hidden;
+    font-family: roboto,"Noto Sans Myanmar UI",arial,sans-serif;
+}
+
+form{
+    height: fit-content;
+    width: fit-content;
+}
+
 /* Forma da própria aside - Ajuste do formato dos botões */
-.sidebar{
+#sideBarBorder{
     position: fixed;
-    top: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 300px;
-    height: 100%;
-    padding: 0px 0px 0px 10px;
-    border-right: 2px solid gray;
+    margin-left: 20vw;
+    height: 100vh;
+    border-right: 1.5px solid gray;
 }
 
-.sidebar-header{
-    width: 100%;
-    margin-bottom: 16px;
+#sidebar{
+    width: 20vw;
+    height: 100vh;
 }
 
-.sidebar .bts{
-   margin-left: -20px;
-   padding-left: 15px;
-   padding-right: 10px;
-   width: 275px;
-   height: 70px;
+#sidebar .bts{
+   width: 17.5vw;
+   height: 8.5vh;
    background: transparent;
-   border: 1.5px solid gray;
    color: white;
-   cursor: pointer;
+   border: 1.5px solid gray;
+   border-left: 0;
 }
 
 .flex{
@@ -48,52 +53,41 @@
     justify-content: flex-start;
 }
 
-.link-assunto{
-    margin-right: -5px;
-    text-decoration: none;
+.nowrap{
+    flex-wrap: nowrap;
 }
 
 .bts-options{
-    width: 20px;
+    min-width: 2.5vw;
     margin: 0;
-    padding-top: 21.5px;
-    padding-bottom: 23px;
-    padding-left: 16px;
-    padding-right: 18px;
     background: transparent;
     border: 1.5px solid gray;
 }
 
-.sidebar button > span{
-    display: inline-flex;
-    padding: 0 95px;
-}
-
 .edit{
-    position: absolute;
-    left: 300px;
-    top: 0;
-    margin-top: -12px;
-    margin-left: 7px;
+    margin-left: 1vw;
+    margin-top: 1.5vh;
+    height: fit-content;
+    padding: 5px;
     border-radius: 6px;
-    padding: 20px 10px 20px 10px;
     background: #0e0e0e;
     display: none;
 }
 
 /* Header da aside - SearchBar */
 .buscador{
-    padding: 10px 45px 10px 15px;
+    margin-top: 2vh;
+    padding: 10px;
     border-radius: 15px;
-    border: 0;
-    border-color: transparent;
-    margin-top: 20px;
-    margin-left: 1.2rem;
+    width: 17vw;
+    height: 6vh;
 }
 
-.barra-de-ferramentas{
-    margin-top: 10px;
-    margin-bottom: 8px;
+#barra-de-ferramentas{
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    width: 20vw;
+    height: 5vh;
 }
 
 /* Modal */
@@ -176,7 +170,7 @@
 }
 
 .btn-preto-background-hover:active{
-    background: #0e0e0e;
+    background-color: #0e0e0e;
 }
 
 .btn-transparente{

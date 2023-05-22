@@ -1,38 +1,35 @@
-body{
-    background-color:  rgb(26, 26, 26);
-    width: 100%;
-    overflow-x: hidden;
+.editor{
+    min-width: 80vw;
+    min-height: 85vh;
 }
 
-form.editor{
-    margin-left: 400px;
-    margin-right: 90px;
+.botao-volta-assunto{
+    height: 10vh;
 }
 
 .btn-salvas{
-    position: absolute;
-    top: 40rem;
-    left: 65rem;
-
+    min-height: 5vh;
+    margin: 0;
+    padding: 0;
 }
 
 .botao-sair{
-    margin: 0 0 0 700px;
-    margin-top: -65px;
     border-color: transparent;
     background-color: transparent;
+    margin: 0;
+    padding: 0;
+}
+
+.botao-sair p{
+    font-size: 10vh;
+    margin: 0;
+    padding: 0;
 }
 
 .link-sair{
     text-decoration: none;
 }
 
-p{
-    font-size: 28px;
-    color: white;
+.tox{
+    min-height: 85vh;
 }
-
-    
-
-
-
