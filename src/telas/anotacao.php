@@ -59,7 +59,7 @@
         </form>
       </div>
 
-      <form method="post" action="submit.php" class="editor">
+      <form method="POST" action="submit.php" class="editor">
         <input class="btn-salvas btn-light" type="submit" name="submit" value="Salvar">
         <textarea name="editor" id="editor"></textarea>
       </form>
@@ -103,8 +103,8 @@
 
         <form action="../back-end/update_assunto.php" method="post">
           <div class="modal-body">
-            <input class ="nome-assunto" name="tituloAtt" id="tituloAtt" type ="text" placeholder ="Título" aria-label ="Search">
-            <input class ="descricao-assunto" name="resumoAtt" id="resumoAtt" type ="text" placeholder ="Descrição" aria-label ="Search">
+          <input SIZE = 26 MAXLENGTH = 24 class ="nome-assunto" required name="tituloAtt" id="tituloAtt" type ="text" placeholder ="Título" aria-label ="Search">
+            <input SIZE = 26 MAXLENGTH = 300 class ="descricao-assunto" name="resumoAtt" id="resumoAtt" type ="text" placeholder ="Descrição" aria-label ="Search">
             <input hidden name='idAssunto' id='idAssunto' type ='text'>
             <input hidden type="text" name="pagina" id="pagina" value="anotacao.php">
           </div>

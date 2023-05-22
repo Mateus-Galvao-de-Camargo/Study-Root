@@ -97,7 +97,7 @@
 
         <form action="../back-end/update_assunto.php" method="post">
           <div class="modal-body">
-            <input SIZE = 26 MAXLENGTH = 52 class ="nome-assunto" required name="tituloAtt" id="tituloAtt" type ="text" placeholder ="Título" aria-label ="Search">
+            <input SIZE = 26 MAXLENGTH = 24 class ="nome-assunto" required name="tituloAtt" id="tituloAtt" type ="text" placeholder ="Título" aria-label ="Search">
             <input SIZE = 26 MAXLENGTH = 300 class ="descricao-assunto" name="resumoAtt" id="resumoAtt" type ="text" placeholder ="Descrição" aria-label ="Search">
             <input hidden name='idAssunto' id='idAssunto' type ='text'>
             <input hidden type="text" name="pagina" id="pagina" value="home.php">
