@@ -35,7 +35,7 @@
     <button hidden id="botao-maravilha" data-bs-toggle="modal" data-bs-target="#modalDelete"></button>
     <div id="config">
     <img src="../img/icons8-editar-conta-50.png">
-    <button class="vermelho">Sair</button>
+    <a href="../back-end/logout.php"><button class="vermelho">Sair</button></a>
 
   </div>
   </div> 
