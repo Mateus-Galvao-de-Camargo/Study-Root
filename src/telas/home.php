@@ -135,7 +135,7 @@
     function mostra(id) {
       var edit = document.getElementById(`${id}`);
       if(edit.style.display == "none"){
-        edit.style.display = "block";
+        edit.style.display = "flex";
       } else {
         edit.style.display = "none"
       }
