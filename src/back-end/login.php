@@ -5,10 +5,20 @@
         print "<script>location.href='../telas/index.php';</script>";
     }
 
-    include('config.php');alert('Não foi possível deletar');
+    include('config.php');
 
     $email = $_POST["email"];
     $senha = $_POST["senha"];
+
+    $resposta = $conn->query("SELECT * FROM estudante WHERE email = '$email'") or die($conn->error);
+
+    $linha = $resposta->fetch_object();
+
+    $senhaResultado = $linha->senha;
+
+    if (password_verify($senha, $senhaResultado) === false) {
+        print "<script>alert('Senha incorreta.$senha não é igual à $senhaResultado');location.href='../telas/index.php';</script>";
+    }
 
     $sql = "SELECT id_estudante FROM estudante WHERE email = '{$email}' AND senha = '{$senha}' ";
 

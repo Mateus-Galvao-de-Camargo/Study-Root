@@ -7,6 +7,8 @@
         $usuario = $_POST['usuario'];
         $email = $_POST['email'];
         $senha = $_POST['senha'];
+        
+        $senha = password_hash($senha, PASSWORD_BCRYPT, ['cost' => 12]);
 
         $emailFormatado = preg_replace('/\s+/', '', $email);
         $senhaFormatada = preg_replace('/\s+/', '', $senha);
