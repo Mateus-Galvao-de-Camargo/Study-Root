@@ -13,6 +13,7 @@ form{
 
 /* Forma da própria aside - Ajuste do formato dos botões */
 #sideBarBorder{
+
     position: fixed;
     margin-left: 20vw;
     height: 100vh;
@@ -31,7 +32,12 @@ form{
     height: 100vh;
 }
 
+.user-botolas{
+    color: white;
+    font-size: 6vh;
+}
 #sidebar .bts{
+   font-size: 2vh;
    width: 17.5vw;
    height: 8.5vh;
    background: transparent;
@@ -82,6 +88,7 @@ form{
 
 /* Header da aside - SearchBar */
 .buscador{
+    font-size: 2vh;
     margin-top: 2vh;
     padding: 10px;
     border-radius: 15px;
