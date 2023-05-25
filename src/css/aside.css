@@ -54,6 +54,7 @@ form{
 
 #listaDeAssuntos{
     overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .user-botolas{
@@ -62,7 +63,7 @@ form{
 }
 #sidebar .bts{
    font-size: 2vh;
-   width: 17.5vw;
+   width: 17vw;
    height: 8.5vh;
    background: transparent;
    color: white;
@@ -106,9 +107,10 @@ form{
 }
 
 .edit{
-    position: absolute;
-    width: 17.5vw;
-    height: 8.5vh;
+    min-width: 2.5vw;
+    min-height: 8.5vh;
+    max-width: 2.5vw;
+    max-height: 8.5vh;
     padding: 5px;
     background-color: rgb(26, 26, 26);
     border: 1.5px solid gray;
