@@ -29,10 +29,16 @@
 
 
   <div id="barra-de-ferramentas" class="flex start">
-    <button class="btn-transparente"><i class="fa-solid fa-gear fa-lg gira" style="color: #a3a3a3;"></i></button>
+  <button class="btn-transparente" onclick="mostra('config')"><i class="fa-solid fa-gear fa-lg gira" style="color: #a3a3a3;"></i></button>
     <button class="btn-transparente branco btn-branco-hover" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-circle-plus fa-lg"></i></button>
     <button hidden id="botao-magia" data-bs-toggle="modal" data-bs-target="#modalUpdate"></button>
     <button hidden id="botao-maravilha" data-bs-toggle="modal" data-bs-target="#modalDelete"></button>
+    <div id="config">
+
+    <i class="fa fa-user-circle user-botolas"></i>
+    <a href="../back-end/logout.php"><button class="vermelho">Sair</button></a>
+
+  </div>
   </div> 
 
 

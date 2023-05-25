@@ -37,7 +37,7 @@
    
     
 <i class="fa fa-user-circle user-botolas"></i>
-    <a href="../back-end/logout.php"><button class="vermelho">Sair</button></a>
+    <a href="../back-end/logout.php"><button class="vermelho btn-cfgvermelho">Sair</button></a>
 
   </div>
   </div> 
