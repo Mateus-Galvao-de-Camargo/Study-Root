@@ -20,7 +20,6 @@
     print "<script>location.href='index.php'</script>";
   }
   ?>
-  <div id="sideBarBorder"></div>
   <div id="sidebar" class="flex column"> 
 
   <div id="searchBar" class="flex center">
@@ -41,9 +40,6 @@
 
   </div>
   </div> 
-
- 
-
 
   <div id="listaDeAssuntos" class="flex column">
     <?php

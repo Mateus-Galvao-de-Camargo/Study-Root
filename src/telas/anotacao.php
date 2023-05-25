@@ -20,7 +20,6 @@
   }
   ?>
 
-  <div id="sideBarBorder"></div>
   <div id="sidebar" class="flex column"> 
 
   <div id="searchBar" class="flex center">
