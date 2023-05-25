@@ -90,6 +90,10 @@ form{
     justify-content: flex-start;
 }
 
+.space-around{
+    justify-content: space-around;
+}
+
 .nowrap{
     flex-wrap: nowrap;
 }
@@ -102,12 +106,13 @@ form{
 }
 
 .edit{
-    margin-left: 1vw;
-    margin-top: 1.5vh;
-    height: fit-content;
+    position: absolute;
+    width: 17.5vw;
+    height: 8.5vh;
     padding: 5px;
-    border-radius: 6px;
-    background: #0e0e0e;
+    background-color: rgb(26, 26, 26);
+    border: 1.5px solid gray;
+    border-left: 0;
 }
 
 /* Header da aside - SearchBar */
