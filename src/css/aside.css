@@ -11,6 +11,10 @@ form{
     width: fit-content;
 }
 
+.icones{
+    font-size: 3vh;
+}
+
 /* Barra de rolagem */
 ::-webkit-scrollbar{
     width: 0.5vw;
@@ -172,6 +176,7 @@ form{
     border-radius: 2vh;
     width: 8vh;
     border-color: transparent;
+
 }
 
 .vermelho:active{
@@ -224,7 +229,6 @@ form{
 .btn-transparente{
     background-color: transparent;
     border: 0;
-    font-size: 1.5vw;
 }
 
 .gira:hover{
