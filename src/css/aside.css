@@ -189,7 +189,7 @@ form{
 .btn-transparente{
     background-color: transparent;
     border: 0;
-    font-size: larger;
+    font-size: 1.5vw;
 }
 
 .gira:hover{
