@@ -6,17 +6,24 @@
     }
 
     include('config.php');
+    include('bcrypt.php');
 
     $email = $_POST["email"];
     $senha = $_POST["senha"];
 
-    $sql = "SELECT id_estudante FROM estudante WHERE email = '{$email}' AND senha = '{$senha}' ";
+    $sql = "SELECT id_estudante FROM estudante WHERE email = '{$email}'";
 
     $res = $conn->query($sql) or die($conn->error);
 
     $row = $res->fetch_object();
 
     $qtd = $res->num_rows;
+
+    $hash = $row->senha;
+
+    if(Bcrypt::check($senha, $hash)){
+        print "<script>alert('Senha errada');</script>";
+    }
 
     if($qtd > 0){
         $_SESSION["id"] = $row->id_estudante;
@@ -25,4 +32,5 @@
     } else{
         print "<script>alert('Email e/ou senha incorreto(s)');</script>";
         print "<script>location.href='../telas/index.php';</script>";
+        header('Location: ../telas/index.php');
     }

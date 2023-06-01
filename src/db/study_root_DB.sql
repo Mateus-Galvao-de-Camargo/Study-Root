@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS estudante(
   id_estudante INT(11) NOT NULL AUTO_INCREMENT,
   usuario VARCHAR(30) NOT NULL,
   email VARCHAR(50) NOT NULL,
-  senha VARCHAR(37) NOT NULL,
+  senha VARCHAR(60) NOT NULL,
   PRIMARY KEY (id_estudante)
 );
 
