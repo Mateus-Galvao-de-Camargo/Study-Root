@@ -11,7 +11,7 @@
     $email = $_POST["email"];
     $senha = $_POST["senha"];
 
-    $sql = "SELECT id_estudante FROM estudante WHERE email = '{$email}'";
+    $sql = "SELECT * FROM estudante WHERE email = '{$email}'";
 
     $res = $conn->query($sql) or die($conn->error);
 
@@ -21,12 +21,10 @@
 
     $hash = $row->senha;
 
-    if(Bcrypt::check($senha, $hash)){
-        print "<script>alert('Senha errada');</script>";
-    }
-
     if($qtd > 0){
-        $_SESSION["id"] = $row->id_estudante;
+        if(Bcrypt::check($senha, $hash)){
+            $_SESSION["id"] = $row->id_estudante;
+        }
 
         print "<script>location.href='../telas/home.php'</script>";
     } else{
