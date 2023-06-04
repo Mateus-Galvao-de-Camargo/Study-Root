@@ -16,7 +16,7 @@
     require_once('../back-end/config.php');
     session_start();
 
-    // Validando se há um login, se tem um assunto sendo carregado e se esse assunto é pertencente ao, usuário do login.
+    // Validando se há um login, se tem um assunto sendo carregado e se esse assunto é pertencente ao usuário do login.
     if(empty($_SESSION)){
       print "<script>location.href='index.php'</script>";
     } else if(empty($_GET['getIdAssunto'])){
@@ -36,7 +36,6 @@
         print "<script>location.href='./home.php'</script>";
       }
     }
-    //empty($_GET['geraAnotacao']) ||
   ?>
 
 <div id="sidebar" class="flex column"> 
@@ -47,16 +46,14 @@
 
 
   <div id="barra-de-ferramentas" class="flex start">
-  <button class="btn-transparente" onclick="mostra('config')"><i class="fa-solid fa-gear fa-lg gira" style="color: #a3a3a3;"></i></button>
+    <button id="abreModalConfig" class="btn-transparente" onclick="mostra('config')"><i class="fa-solid fa-gear fa-lg gira" style="color: #a3a3a3;"></i></button>
     <button class="btn-transparente branco btn-branco-hover" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-circle-plus fa-lg"></i></button>
     <button hidden id="botao-magia" data-bs-toggle="modal" data-bs-target="#modalUpdate"></button>
     <button hidden id="botao-maravilha" data-bs-toggle="modal" data-bs-target="#modalDelete"></button>
     <div id="config">
-
-    <i class="fa fa-user-circle user-botolas"></i>
-    <a href="../back-end/logout.php"><button class="vermelho">Sair</button></a>
-
-  </div>
+      <i class="fa fa-user-circle user-botolas"></i>
+      <a href="../back-end/logout.php"><button class="vermelho btn-cfgvermelho">Sair</button></a>
+    </div>
   </div> 
 
 
@@ -80,42 +77,29 @@
   <div class="flex column divas">
 
     <a href="./home.php" class="flex end"><p class="btn-close"></p></a>
-    <h1 class="titulo flex center" id="tituloDaAnotacao">nome358</h1>
-    <p class="resumidamente flex center" id="resumoDaAnotacao">resumo</p>
+
+    <?php
+      $idDoAssuntoAtual = $_GET['getIdAssunto'];
+      $assuntoAtual = $conn->query("SELECT * FROM assunto WHERE id_assunto = '$idDoAssuntoAtual'");
+      $objeto = $assuntoAtual->fetch_object();
+      print "<h1 class='titulo flex center' id='tituloDaAnotacao'>$objeto->titulo</h1> <p class='resumidamente flex center' id='resumoDaAnotacao'>$objeto->resumo</p>"
+    ?>
 
     <div class="flex center">
       <button class="btn-normal" data-bs-toggle="modal" data-bs-target="#modalAnotacao">Criar Anotação</button>
     </div>
-    
-
-    <div class="flex center btn-aulas">
-      <a class="primeira-aula" href="./anotacao.php"><button class ="botao-materia" type ="submit"><p>ex: primeira aula</p></button></a>
-      <button class="bts-assunto-3p btn-preto-background-hover" onclick="mostraEditAnotacao(#)"><i class="fa-solid fa-ellipsis-vertical branco"></i></button>
-      <div class="edit-anotacao" id="anotacao#" name="editors-anotacao">
-        <form action="../back-end/delete_anotacao.php" method="post">
-          <input hidden type="text" value="#" name="idAnotacaoDel">
-          <button type="submit" class="btn-transparente"><i class="fa-solid fa-trash-can fa-lg btn-vermelho"></i></button>
-        </form>
-  
-        <form action="./assunto.php" method="get">
-          <input hidden name="idAnotacaoEdit" type="text" value="">
-          <input hidden name="tituloEditar" type="text" value="">
-          <button type="submit" name="mostraAtt" class="btn-transparente"><i class="fa-regular fa-pen-to-square fa-lg branco btn-branco-hover"></i></button>
-        </form>
-      </div>
-    </div>
 
     <?php
-      if(isset($_GET['geraAnotacao'])){
+      if(isset($_GET['getIdAssunto'])){
         $idDoAssunto = $_GET['getIdAssunto'];
       }
 
-      $sql = "SELECT * FROM anotacao WHERE id_assunto_fk = $id";/*$idDoAssunto*/
+      $sql = "SELECT * FROM anotacao WHERE id_assunto_fk = $idDoAssunto";
   
       if($result = $conn -> query($sql)){
   
           while($anotacao = $result -> fetch_object()){
-              printf("", $anotacao->id_anotacao, $anotacao->titulo, $anotacao->id_anotacao, $anotacao->id_anotacao, $anotacao->id_anotacao, $anotacao->id_assunto_fk, $anotacao->id_anotacao, $anotacao->titulo);
+              printf("<div class='flex center btn-aulas'><form action='anotacao.php' method='get'><input hidden type='number' value='%d' name='idAnotacaoParaTexto'><button class ='botao-materia' type='submit'><p>%s</p></button></form><button class='bts-assunto-3p btn-preto-background-hover' onclick='mostraEditAnotacao(anotacao%d)'><i class='fa-solid fa-ellipsis-vertical branco'></i></button><div class='edit-anotacao' id='anotacao%d' name='editors-anotacao'><form action='../back-end/delete_anotacao.php' method='post'><input hidden type='text' value='%d' name='idAnotacaoDel'><button type='submit' class='btn-transparente'><i class='fa-solid fa-trash-can fa-lg btn-vermelho'></i></button></form><form action='./assunto.php' method='get'><input hidden name='getIdAssunto' type='text' value='%d'><input hidden name='idAnotacaoEdit' type='text' value='%d'><input hidden name='tituloEditar' type='text' value='%s'><button type='submit' name='mostraAnotacaoUp' class='btn-transparente'><i class='fa-regular fa-pen-to-square fa-lg branco btn-branco-hover'></i></button></form></div></div>", $anotacao->id_anotacao, $anotacao->titulo, $anotacao->id_anotacao, $anotacao->id_anotacao, $anotacao->id_anotacao, $anotacao->id_assunto_fk, $anotacao->id_anotacao, $anotacao->titulo);
 /*<div class='flex center btn-aulas'>
 <form action='anotacao.php' method='get'><input hidden type='number' value='%d' name='idAnotacaoParaTexto'><button class ='botao-materia' type='submit'><p>%s</p></button></form>
 <button class='bts-assunto-3p btn-preto-background-hover' onclick='mostraEditAnotacao(anotacao%d)'><i class='fa-solid fa-ellipsis-vertical branco'></i></button>
@@ -204,7 +188,7 @@
 
         <form action="../back-end/delete_assunto.php" method="post">
           <div class="modal-body">
-            <p>Tenha certeza antes de deletar seu assunto. Pois, todas as anotações dele também serão excluídas!</p>
+            <p>Tenha certeza antes de deletar seu assunto! Pois, todas as anotações dele também serão excluídas!</p>
             <input hidden name='idAssuntoDelelete' id='idAssuntoDelete' type ='text'>
             <input hidden type="text" name="pagina" id="pagina" value='assunto.php?getIdAssunto=<?php if(isset($_GET['getIdAssunto'])){print $_GET['getIdAssunto'];} ?>'>
 
@@ -271,42 +255,62 @@
   <script src="../js/bootstrap.bundle.min.js"></script>
   <script src="../js/bootstrap.min.js"></script>
   <script>
-    function mostra(id) {
-      var edit = document.getElementById(`${id}`);
-      if(edit.style.display == "none"){
+      var divs = ["" <?php $id = $_SESSION['id'];$sqlTitulos = "SELECT * FROM assunto WHERE id_estudante_fk = $id";if($result = $conn -> query($sqlTitulos)){ while($assunto = $result -> fetch_object()){ printf(", '%s'", $assunto->titulo);}$result -> free_result();} ?>];
+      
+      var idDaEditAnterior = 0;
+      var editAnteriormenteAberta = document.getElementById(`${idDaEditAnterior}`)
+      
+      function mostra(idDaEdit) {
+        var edit = document.getElementById(`${idDaEdit}`);
+        var editAnterior = document.getElementById(`${idDaEditAnterior}`);
+        if(idDaEditAnterior != 0){
+          editAnterior.style.display = "none";
+        }
         edit.style.display = "flex";
-      } else {
-        edit.style.display = "none"
+        idDaEditAnterior = idDaEdit;
       }
-    }
 
-    function mostraEditAnotacao(id) {
-      var edit = document.getElementById(`anotacao${id}`);
-      if(edit.style.display == "none"){
-        edit.style.display = "flex";
-      } else {
-        edit.style.display = "none"
+      var modalConfiguracoes = document.querySelector(`#config`);
+      var botaoAbreConfig = document.querySelector(`#abreModalConfig`);
+
+      function fecharModal(modal){
+
+        var fechaModal = document.querySelector(`#${modal}`);
+        fechaModal.style.display = "none";
+
       }
-    }
-      
-    var divs = ["" <?php $id = $_SESSION['id'];$sqlTitulos = "SELECT * FROM assunto WHERE id_estudante_fk = $id";if($result = $conn -> query($sqlTitulos)){ while($assunto = $result -> fetch_object()){ printf(", '%s'", $assunto->titulo);}$result -> free_result();} ?>];
-      
-    function filtrar(){
-      var inputDaSearch = document.querySelector("#inputDeSearch")
-      var input = inputDaSearch.value.toLowerCase()
+
+      window.addEventListener('click', (event)=>{
+
+        if(!modalConfiguracoes.contains(event.target)){
+          fecharModal('config');
+        }
+
+      })
+
+      botaoAbreConfig.addEventListener('click', (event)=>{
         
-      for(i=1; i < divs.length; i++){
-        valorId = divs[i]
-        var string = `div[value='${valorId}']`
-        var div = document.querySelector(string)
-        if(valorId.toLowerCase().indexOf(input) > -1){
-          div.style.display = "flex"
-        } else {
-          div.style.display = "none"
+        event.stopPropagation();
+        modalConfiguracoes.display.style = "flex"
+        
+      })
+
+      function filtrar(){
+        var inputDaSearch = document.querySelector("#inputDeSearch")
+        var input = inputDaSearch.value.toLowerCase()
+        
+        for(i=1; i < divs.length; i++){
+          valorId = divs[i]
+          var string = `div[value='${valorId}']`
+          var div = document.querySelector(string)
+          if(valorId.toLowerCase().indexOf(input) > -1){
+            div.style.display = "flex"
+          } else {
+            div.style.display = "none"
+          }
         }
       }
-    }
-
+      
       // Mostra e atualiza o modal de update
       var idAssunto = document.querySelector('#idAssunto');
       var titulo = document.querySelector('#tituloAtt');
@@ -325,8 +329,6 @@
 
       tituloDel.innerHTML = "<?php if(isset($_GET['mostraDelete'])){print $_GET['tituloDel'];} ?>"
       idAssuntoDel.value = "<?php if(isset($_GET['mostraDelete'])){print $_GET['idAssuntoDel'];} ?>"
-
-      // Modal Anotacao
 
       <?php
       if(isset($_GET['mostraAtt'])){

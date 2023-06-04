@@ -33,12 +33,9 @@
     <button hidden id="botao-magia" data-bs-toggle="modal" data-bs-target="#modalUpdate"></button>
     <button hidden id="botao-maravilha" data-bs-toggle="modal" data-bs-target="#modalDelete"></button>
     <div id="config">
-   
-    
-<i class="fa fa-user-circle user-botolas"></i>
-    <a href="../back-end/logout.php"><button class="vermelho btn-cfgvermelho">Sair</button></a>
-
-  </div>
+      <i class="fa fa-user-circle user-botolas"></i>
+      <a href="../back-end/logout.php"><button class="vermelho btn-cfgvermelho">Sair</button></a>
+    </div>
   </div> 
 
   <div id="listaDeAssuntos" class="flex column">
@@ -122,11 +119,13 @@
 
         <form action="../back-end/delete_assunto.php" method="post">
           <div class="modal-body">
-            <p>Tenha certeza antes de deletar seu assunto. Pois, todas as anotações dele também serão excluídas!</p>
-            <input hidden name='idAssuntoDelelete' id='idAssuntoDelete' type ='text'>
-            <input hidden type="text" name="pagina" id="pagina" value="home.php">
+            <div class="flex column center">
+              <p>Tenha certeza antes de deletar seu assunto! Pois, todas as anotações dele também serão excluídas!</p>
+              <input hidden name='idAssuntoDelelete' id='idAssuntoDelete' type ='text'>
+              <input hidden type="text" name="pagina" id="pagina" value="home.php">
 
-            <button name="deletarAssunto" type="submit" class="vermelho btn-delete-assunto">Apagar Assunto</button>
+              <button name="deletarAssunto" type="submit" class="vermelho btn-delete-assunto center">Apagar Assunto</button>
+            </div>
           </div>
         </form>
 

@@ -17,6 +17,8 @@
   session_start();
   if(empty($_SESSION)){
     print "<script>location.href='index.php'</script>";
+  } else if(empty($_GET['idAnotacaoParaTexto'])){
+    print "<script>location.href='index.php'</script>";
   }
   ?>
 
@@ -26,18 +28,15 @@
     <input class="buscador" onkeyup="filtrar()" type ="text" id="inputDeSearch" placeholder ="Assunto desejado">
   </div>
 
-
   <div id="barra-de-ferramentas" class="flex start">
-  <button class="btn-transparente" onclick="mostra('config')"><i class="fa-solid fa-gear fa-lg gira" style="color: #a3a3a3;"></i></button>
+    <button id="abreModalConfig" class="btn-transparente" onclick="mostra('config')"><i class="fa-solid fa-gear fa-lg gira" style="color: #a3a3a3;"></i></button>
     <button class="btn-transparente branco btn-branco-hover" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-circle-plus fa-lg"></i></button>
     <button hidden id="botao-magia" data-bs-toggle="modal" data-bs-target="#modalUpdate"></button>
     <button hidden id="botao-maravilha" data-bs-toggle="modal" data-bs-target="#modalDelete"></button>
     <div id="config">
-
-    <i class="fa fa-user-circle user-botolas"></i>
-    <a href="../back-end/logout.php"><button class="vermelho">Sair</button></a>
-
-  </div>
+      <i class="fa fa-user-circle user-botolas"></i>
+      <a href="../back-end/logout.php"><button class="vermelho btn-cfgvermelho">Sair</button></a>
+    </div>
   </div> 
 
 
@@ -135,7 +134,7 @@
 
         <form action="../back-end/delete_assunto.php" method="post">
           <div class="modal-body">
-            <p>Tenha certeza antes de deletar seu assunto. Pois, todas as anotações dele também serão excluídas!</p>
+            <p>Tenha certeza antes de deletar seu assunto! Pois, todas as anotações dele também serão excluídas!</p>
             <input hidden name='idAssuntoDelelete' id='idAssuntoDelete' type ='text'>
             <input hidden type="text" name="pagina" id="pagina" value="anotacao.php">
 
@@ -152,17 +151,46 @@
   <script src="../js/bootstrap.bundle.min.js"></script>
   <script src="../js/bootstrap.min.js"></script>
   <script>
-    function mostra(id) {
-      var edit = document.getElementById(`${id}`);
-      if(edit.style.display == "none"){
-        edit.style.display = "flex";
-      } else {
-        edit.style.display = "none"
-      }
-    }
-      
       var divs = ["" <?php $id = $_SESSION['id'];$sqlTitulos = "SELECT * FROM assunto WHERE id_estudante_fk = $id";if($result = $conn -> query($sqlTitulos)){ while($assunto = $result -> fetch_object()){ printf(", '%s'", $assunto->titulo);}$result -> free_result();} ?>];
       
+      var idDaEditAnterior = 0;
+      var editAnteriormenteAberta = document.getElementById(`${idDaEditAnterior}`)
+      
+      function mostra(idDaEdit) {
+        var edit = document.getElementById(`${idDaEdit}`);
+        var editAnterior = document.getElementById(`${idDaEditAnterior}`);
+        if(idDaEditAnterior != 0){
+          editAnterior.style.display = "none";
+        }
+        edit.style.display = "flex";
+        idDaEditAnterior = idDaEdit;
+      }
+
+      var modalConfiguracoes = document.querySelector(`#config`);
+      var botaoAbreConfig = document.querySelector(`#abreModalConfig`);
+
+      function fecharModal(modal){
+
+        var fechaModal = document.querySelector(`#${modal}`);
+        fechaModal.style.display = "none";
+
+      }
+
+      window.addEventListener('click', (event)=>{
+
+        if(!modalConfiguracoes.contains(event.target)){
+          fecharModal('config');
+        }
+
+      })
+
+      botaoAbreConfig.addEventListener('click', (event)=>{
+        
+        event.stopPropagation();
+        modalConfiguracoes.display.style = "flex"
+        
+      })
+
       function filtrar(){
         var inputDaSearch = document.querySelector("#inputDeSearch")
         var input = inputDaSearch.value.toLowerCase()
@@ -179,7 +207,7 @@
         }
       }
       
-
+      // Mostra e atualiza o modal de update
       var idAssunto = document.querySelector('#idAssunto');
       var titulo = document.querySelector('#tituloAtt');
       var resumo = document.querySelector('#resumoAtt');
