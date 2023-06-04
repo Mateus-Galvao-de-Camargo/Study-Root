@@ -15,6 +15,7 @@
   <?php
     require_once('../back-end/config.php');
     session_start();
+
     // Validando se há um login, se tem um assunto sendo carregado e se esse assunto é pertencente ao, usuário do login.
     if(empty($_SESSION)){
       print "<script>location.href='index.php'</script>";
@@ -35,7 +36,7 @@
         print "<script>location.href='./home.php'</script>";
       }
     }
-    //empty($_GET['geraAnotacao']) || 
+    //empty($_GET['geraAnotacao']) ||
   ?>
 
 <div id="sidebar" class="flex column"> 
@@ -62,11 +63,11 @@
   <div id="listaDeAssuntos" class="flex column">
     <?php
       $id = $_SESSION['id'];
-      $idAssuntoPeloGet = $_GET['getIdAssunto'];
+      $idDoAssuntoDaPagina = $_GET['getIdAssunto'];
 
       if($result = $conn -> query("SELECT * FROM assunto WHERE id_estudante_fk = $id")){  
         while($assunto = $result -> fetch_object()){
-          printf("<div class='flex nowrap' value='%s'>  <form action='./assunto.php' method='get'> <input hidden name='getIdAssunto' value='%d'> <button class='bts btn-preto-background-hover' type='submit'> <span>%s</span> </button> </form> <button class='bts-options btn-preto-background-hover' onclick='mostra(%d)'><i class='fa-solid fa-ellipsis-vertical branco'></i></button> <div class='edit' id='%d' style='display: none;'> <form action='./assunto.php' method='get'> <input hidden type='text' value='%d' name='getIdAssunto'> <input hidden type='text' value='%d' name='idAssuntoDel' id='idAssuntoDel'> <input hidden type='text' value='%s' name='tituloDel' id='tituloDel'> <button type='submit' name='mostraDelete' class='btn-transparente'><i class='fa-solid fa-trash-can fa-lg btn-vermelho'></i></button> </form> <form action='./assunto.php' method='get'><input hidden value='%d' name='getIdAssunto'><input hidden name='id_assunto' type='text' value='%d'><input hidden name='titulo-btn' type='text' value='%s'><input hidden name='resumo-btn' type='text' value='%s'><button type='submit' name='mostraAtt' class='btn-transparente'><i class='fa-regular fa-pen-to-square fa-lg branco btn-branco-hover'></i></button></form> </div> </div>", $assunto->titulo, $assunto->id_assunto, $assunto->titulo, $assunto->id_assunto, $assunto->id_assunto, $idAssuntoPeloGet, $assunto->id_assunto, $assunto->titulo, $idAssuntoPeloGet, $assunto->id_assunto, $assunto->titulo, $assunto->resumo);
+          printf("<div value='%s'> <div class='flex'> <form action='./assunto.php' method='get'> <input hidden name='getIdAssunto' value='%d'> <button class='bts btn-preto-background-hover' type='submit'> <span>%s</span> </button> </form> <div class='edit column space-around' id='%d' style='display: none;'> <form action='./assunto.php' method='get'> <input hidden name='getIdAssunto' value='%d'> <input hidden type='text' value='%d' name='idAssuntoDel' id='idAssuntoDel'> <input hidden type='text' value='%s' name='tituloDel' id='tituloDel'> <button type='submit' name='mostraDelete' class='btn-transparente'><i class='fa-solid fa-trash-can fa-lg icones btn-vermelho'></i></button> </form> <form action='./assunto.php' method='get'> <input hidden name='getIdAssunto' value='%d'> <input hidden name='id_assunto' type='text' value='%d'><input hidden name='titulo-btn' type='text' value='%s'><input hidden name='resumo-btn' type='text' value='%s'><button type='submit' name='mostraAtt' class='btn-transparente'><i class='fa-regular fa-pen-to-square fa-lg branco btn-branco-hover icones'></i></button></form> </div> <button class='bts-options btn-preto-background-hover' onclick='mostra(%d)'><i class='fa-solid fa-ellipsis-vertical branco'></i></button> </div> </div>", $assunto->titulo, $assunto->id_assunto, $assunto->titulo,  $assunto->id_assunto, $idDoAssuntoDaPagina, $assunto->id_assunto, $assunto->titulo, $idDoAssuntoDaPagina, $assunto->id_assunto, $assunto->titulo, $assunto->resumo, $assunto->id_assunto);
         }
         $result -> free_result();
       }
@@ -152,7 +153,7 @@
           <div class="modal-body">
             <input  class ="nome-assunto" name="titulo" id="titulo" type ="text" placeholder ="Título" aria-label ="Search">
             <input  class ="descricao-assunto" name="resumo" id="resumo" type ="text" placeholder ="Descrição" aria-label ="Search">
-            <input hidden type="text" name="pagina" id="pagina" value="assunto.php?getIdAssunto=<?php if(isset($_GET['getIdAssunto'])){print $_GET['getIdAssunto'];} ?>">
+            <input hidden type="text" name="pagina" id="pagina" value='assunto.php?getIdAssunto=<?php if(isset($_GET['getIdAssunto'])){print $_GET['getIdAssunto'];} ?>'>
           </div>
 
           <div class="modal-footer">
@@ -176,10 +177,10 @@
 
         <form action="../back-end/update_assunto.php" method="post">
           <div class="modal-body">
-          <input SIZE = 26 MAXLENGTH = 24 class ="nome-assunto" required name="tituloAtt" id="tituloAtt" type ="text" placeholder ="Título" aria-label ="Search">
+          <input SIZE = 26 MAXLENGTH = 20 class ="nome-assunto" required name="tituloAtt" id="tituloAtt" type ="text" placeholder ="Título" aria-label ="Search">
             <input SIZE = 26 MAXLENGTH = 300 class ="descricao-assunto" name="resumoAtt" id="resumoAtt" type ="text" placeholder ="Descrição" aria-label ="Search">
             <input hidden name='idAssunto' id='idAssunto' type ='text'>
-            <input hidden type="text" name="paginaUp" id="paginaUp" value="assunto.php?getIdAssunto=<?php if(isset($_GET['getIdAssunto'])){print $_GET['getIdAssunto'];} ?>">
+            <input hidden type="text" name="pagina" id="pagina" value='assunto.php?getIdAssunto=<?php if(isset($_GET['getIdAssunto'])){print $_GET['getIdAssunto'];} ?>'>
           </div>
 
           <div class="modal-footer">
@@ -205,7 +206,7 @@
           <div class="modal-body">
             <p>Tenha certeza antes de deletar seu assunto. Pois, todas as anotações dele também serão excluídas!</p>
             <input hidden name='idAssuntoDelelete' id='idAssuntoDelete' type ='text'>
-            <input hidden type="text" name="pagina" id="pagina" value="assunto.php?getIdAssunto=<?php if(isset($_GET['getIdAssunto'])){print $_GET['getIdAssunto'];} ?>">
+            <input hidden type="text" name="pagina" id="pagina" value='assunto.php?getIdAssunto=<?php if(isset($_GET['getIdAssunto'])){print $_GET['getIdAssunto'];} ?>'>
 
             <button name="deletarAssunto" type="submit" class="vermelho btn-delete-assunto">Apagar Assunto</button>
           </div>
