@@ -103,7 +103,7 @@
           ?>
 
         </textarea>
-        <input hidden type="text" name="pagina" id="pagina" value="./anotacao.php?idAnotacaoParaTexto=<?php print $idAnotacaoParaTexto ?>">
+        <input hidden type="text" name="pagina" id="pagina" value="./anotacao.php?getIdAssunto=<?php print $testaIdAssunto ?>&idAnotacaoParaTexto=<?php print $idAnotacaoParaTexto ?>">
         <input hidden type="number" name="idAnotacao" id="idAnotacao" value="<?php print $idAnotacaoParaTexto ?>">
       </form>
     </div>
