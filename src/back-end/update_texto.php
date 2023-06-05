@@ -5,14 +5,13 @@
 
     if(isset($_POST['cadastrar'])){
         $idAnotacao = $_POST['idAnotacao'];
-        $estudante = $_SESSION['id'];
-        $texto = $_POST['texto'];
+        $texto = $_POST['editor'];
         $paginaQueEnviou = $_POST['pagina'];
 
-        $row = $conn->query("UPDATE anotacao SET conteudo = '$texto' WHERE id_anotacao = $idAnotacao AND id_estudante_fk = $estudante");
+        $row = $conn->query("UPDATE anotacao SET conteudo = '$texto' WHERE id_anotacao = $idAnotacao");
 
         if($row){
-            print "<script>location.href='../telas/$paginaQueEnviou'</script>";
+            print "<script>location.href='../telas/home.php'</script>";
         } else{
             print "<script>alert('Não foi possível salvar o texto, tente denovo depois.'); location.href='../telas/$paginaQueEnviou'</script>";
         }

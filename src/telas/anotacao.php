@@ -20,15 +20,26 @@
   } else if(empty($_GET['idAnotacaoParaTexto'])){
     header("Location: http://localhost:8081/study-root/src/telas/home.php");
   } else {
-    $testaIdAnotacao = $_GET['getIdAssunto'];
+    $testaIdAnotacao = $_GET['idAnotacaoParaTexto'];
+    $testaIdAssunto = $_GET['getIdAssunto'];
     $testaIdUsuario = $_SESSION['id'];
 
-    $confereUsuario = $conn->query("SELECT * FROM anotacao WHERE id_anotacao = '$testaIdAnotacao' AND id_estudante_fk = '$testaIdUsuario'");
-    $usuarioSendoTestado = $confereUsuario->fetch_object();
-    $qtdDeLinhas = $confereUsuario->num_rows;
+    $confereAssunto = $conn->query("SELECT * FROM anotacao WHERE id_anotacao = '$testaIdAnotacao' AND id_assunto_fk = '$testaIdAssunto'");
+    $usuarioSendoTestado = $confereAssunto->fetch_object();
+    $qtdDeLinhas = $confereAssunto->num_rows;
+
+
       
     if($qtdDeLinhas > 0){
-      //boa, sem gracinhas.
+      $confereUsuario = $conn->query("SELECT * FROM assunto WHERE id_assunto = '$testaIdAssunto' AND id_estudante_fk = '$testaIdUsuario'");
+      $usuarioSendoTestado = $confereUsuario->fetch_object();
+      $qtdDeLinhasDoUsuario = $confereUsuario->num_rows;
+
+      if($qtdDeLinhasDoUsuario > 0){
+        //beleza sem gracinhas
+      } else {
+        header("Location: http://localhost:8081/study-root/src/telas/home.php");
+      }
     } else {
       //GRACINHAS?
       header("Location: http://localhost:8081/study-root/src/telas/home.php");
@@ -77,19 +88,23 @@
         </form>
       </div>
 
-      <form method="POST" action="submit.php" class="editor">
-        <input class="btn-salvas btn-light" type="submit" name="submit" value="Salvar">
+      <form method="post" action="../back-end/update_texto.php" class="editor">
+        <input class="btn-salvas btn-light" type="submit" name="salvaTexto" value="Salvar">
         <textarea name="editor" id="editor">
 
           <?php
             $idAnotacaoParaTexto = $_GET['idAnotacaoParaTexto'];
             $procuraTexto = $conn->query("SELECT conteudo FROM anotacao WHERE id_anotacao = $idAnotacaoParaTexto");
-            $texto = $procuraTexto->fetch_object();
-            
-            print "$texto->conteudo";
+            $qtdDeLinhasAfetadas = $procuraTexto->num_rows;
+            if($qtdDeLinhasAfetadas > 0){
+              $texto = $procuraTexto->fetch_object();
+              print "$texto->conteudo";
+            }
           ?>
 
         </textarea>
+        <input hidden type="text" name="pagina" id="pagina" value="./anotacao.php?idAnotacaoParaTexto=<?php print $idAnotacaoParaTexto ?>">
+        <input hidden type="number" name="idAnotacao" id="idAnotacao" value="<?php print $idAnotacaoParaTexto ?>">
       </form>
     </div>
 
