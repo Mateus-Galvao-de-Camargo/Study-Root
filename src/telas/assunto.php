@@ -18,9 +18,9 @@
 
     // Validando se há um login, se tem um assunto sendo carregado e se esse assunto é pertencente ao usuário do login.
     if(empty($_SESSION)){
-      print "<script>location.href='index.php'</script>";
+      header("Location: http://localhost:8081/study-root/src/telas/index.php");
     } else if(empty($_GET['getIdAssunto'])){
-      print "<script>location.href='home.php'</script>";
+      header("Location: http://localhost:8081/study-root/src/telas/home.php");
     } else {
       $testaIdAssunto = $_GET['getIdAssunto'];
       $testaIdUsuario = $_SESSION['id'];
@@ -33,7 +33,7 @@
         //boa, sem gracinhas.
       } else {
         //GRACINHAS?
-        print "<script>location.href='./home.php'</script>";
+        header("Location: http://localhost:8081/study-root/src/telas/home.php");
       }
     }
   ?>

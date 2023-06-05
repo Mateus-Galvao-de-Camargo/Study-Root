@@ -15,7 +15,7 @@
     <?php
         session_start();
         if(isset($_SESSION["id"])){
-            print "<script>location.href='../telas/home.php'</script>";
+            header("Location: http://localhost:8081/study-root/src/telas/home.php");
         }
     ?>
    

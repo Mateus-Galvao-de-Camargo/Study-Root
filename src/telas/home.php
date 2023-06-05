@@ -17,7 +17,7 @@
   require_once('../back-end/config.php');
   session_start();
   if(empty($_SESSION)){
-    print "<script>location.href='index.php'</script>";
+    header("Location: http://localhost:8081/study-root/src/telas/index.php");
   }
   ?>
   <div id="sidebar" class="flex column"> 

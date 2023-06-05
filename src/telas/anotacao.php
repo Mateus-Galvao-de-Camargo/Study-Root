@@ -16,9 +16,23 @@
   require_once('../back-end/config.php');
   session_start();
   if(empty($_SESSION)){
-    print "<script>location.href='index.php'</script>";
+    header("Location: http://localhost:8081/study-root/src/telas/index.php");
   } else if(empty($_GET['idAnotacaoParaTexto'])){
-    print "<script>location.href='index.php'</script>";
+    header("Location: http://localhost:8081/study-root/src/telas/home.php");
+  } else {
+    $testaIdAnotacao = $_GET['getIdAssunto'];
+    $testaIdUsuario = $_SESSION['id'];
+
+    $confereUsuario = $conn->query("SELECT * FROM anotacao WHERE id_anotacao = '$testaIdAnotacao' AND id_estudante_fk = '$testaIdUsuario'");
+    $usuarioSendoTestado = $confereUsuario->fetch_object();
+    $qtdDeLinhas = $confereUsuario->num_rows;
+      
+    if($qtdDeLinhas > 0){
+      //boa, sem gracinhas.
+    } else {
+      //GRACINHAS?
+      header("Location: http://localhost:8081/study-root/src/telas/home.php");
+    }
   }
   ?>
 
@@ -65,7 +79,17 @@
 
       <form method="POST" action="submit.php" class="editor">
         <input class="btn-salvas btn-light" type="submit" name="submit" value="Salvar">
-        <textarea name="editor" id="editor"></textarea>
+        <textarea name="editor" id="editor">
+
+          <?php
+            $idAnotacaoParaTexto = $_GET['idAnotacaoParaTexto'];
+            $procuraTexto = $conn->query("SELECT conteudo FROM anotacao WHERE id_anotacao = $idAnotacaoParaTexto");
+            $texto = $procuraTexto->fetch_object();
+            
+            print "$texto->conteudo";
+          ?>
+
+        </textarea>
       </form>
     </div>
 
