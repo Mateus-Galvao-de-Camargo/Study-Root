@@ -100,10 +100,6 @@
           </form>
         </div>
       </div>
-    
-      
-        
-      
 
       <form method="post" action="../back-end/update_texto.php" class="editor">
         <input class="btn-salvas" type="submit" name="salvaTexto" value="Salvar">

@@ -50,6 +50,7 @@
     <button class="btn-transparente branco btn-branco-hover" data-bs-toggle="modal" data-bs-target="#modal"><i class="fa-solid fa-circle-plus fa-lg"></i></button>
     <button hidden id="botao-magia" data-bs-toggle="modal" data-bs-target="#modalUpdate"></button>
     <button hidden id="botao-maravilha" data-bs-toggle="modal" data-bs-target="#modalDelete"></button>
+    <button hidden id="botao-estronda" data-bs-toggle="modal" data-bs-target="#modalUpAnotacao"></button>
     <div id="config">
       <i class="fa fa-user-circle user-botolas"></i>
       <a href="../back-end/logout.php"><button class="vermelho btn-cfgvermelho">Sair</button></a>
@@ -99,29 +100,13 @@
       if($result = $conn -> query($sql)){
   
           while($anotacao = $result -> fetch_object()){
-              printf("<div class='flex center btn-aulas'><form action='anotacao.php' method='get'><input hidden type='number' value='%d' name='getIdAssunto'><input hidden type='number' value='%d' name='idAnotacaoParaTexto'><button class ='botao-materia' type='submit'><p>%s</p></button></form><button class='bts-assunto-3p btn-preto-background-hover' onclick='mostraEditAnotacao(anotacao%d)'><i class='fa-solid fa-ellipsis-vertical branco'></i></button><div class='edit-anotacao' id='anotacao%d' name='editors-anotacao'><form action='../back-end/delete_anotacao.php' method='post'><input hidden type='text' value='%d' name='idAnotacaoDel'><button type='submit' class='btn-transparente'><i class='fa-solid fa-trash-can fa-lg btn-vermelho'></i></button></form><form action='./assunto.php' method='get'><input hidden name='getIdAssunto' type='text' value='%d'><input hidden name='idAnotacaoEdit' type='text' value='%d'><input hidden name='tituloEditar' type='text' value='%s'><button type='submit' name='mostraAnotacaoUp' class='btn-transparente'><i class='fa-regular fa-pen-to-square fa-lg branco btn-branco-hover'></i></button></form></div></div>", $idDoAssunto, $anotacao->id_anotacao, $anotacao->titulo, $anotacao->id_anotacao, $anotacao->id_anotacao, $anotacao->id_anotacao, $anotacao->id_assunto_fk, $anotacao->id_anotacao, $anotacao->titulo);
-/*<div class='flex center btn-aulas'>
-<form action='anotacao.php' method='get'><input hidden type='number' value='%d' name='idAnotacaoParaTexto'><button class ='botao-materia' type='submit'><p>%s</p></button></form>
-<button class='bts-assunto-3p btn-preto-background-hover' onclick='mostraEditAnotacao(anotacao%d)'><i class='fa-solid fa-ellipsis-vertical branco'></i></button>
-
-<div class='edit-anotacao' id='anotacao%d' name='editors-anotacao'>
-<form action='../back-end/delete_anotacao.php' method='post'>
-<input hidden type='text' value='%d' name='idAnotacaoDel'>
-<button type='submit' class='btn-transparente'><i class='fa-solid fa-trash-can fa-lg btn-vermelho'></i></button>
-</form>
-
-<form action='./assunto.php' method='get'>
-<input hidden name='getIdAssunto' type='text' value='%d'>
-<input hidden name='idAnotacaoEdit' type='text' value='%d'>
-<input hidden name='tituloEditar' type='text' value='%s'>
-<button type='submit' name='mostraAnotacaoUp' class='btn-transparente'><i class='fa-regular fa-pen-to-square fa-lg branco btn-branco-hover'></i></button>
-</form></div></div>*/
+              printf("<div class='flex btn-aulas'><div class='flex end container-anotacao'><form action='anotacao.php' method='get'> <input hidden type='number' value='%d' name='getIdAssunto'> <input hidden type='number' value='%d' name='idAnotacaoParaTexto'><button class ='botao-materia' type='submit'><p>%s</p></button></form><button class='bts-assunto-3p btn-preto-background-hover' onclick='mostra(`anotacao%d`)'><i class='fa-solid fa-ellipsis-vertical branco'></i></button></div><div class='edit-anotacao flex column start' id='anotacao%d' name='editors-anotacao' style='display: none;'><form action='../back-end/delete_anotacao.php' method='post'> <input hidden type='text' name='pagina' id='pagina' value='assunto.php?getIdAssunto=%d'> <input hidden type='text' value='%d' name='idAnotacaoDel'><button type='submit' class='btn-transparente'><i class='fa-solid fa-trash-can fa-lg btn-vermelho'></i></button></form><form action='./assunto.php' method='get'><input hidden name='getIdAssunto' type='text' value='%d'><input hidden name='idAnotacaoEdit' type='text' value='%d'><input hidden name='tituloEditar' type='text' value='%s'><button type='submit' name='mostraAnotacaoUp' class='btn-transparente'><i class='fa-regular fa-pen-to-square fa-lg branco btn-branco-hover'></i></button></form></div></div>", $idDoAssunto, $anotacao->id_anotacao, $anotacao->titulo, $anotacao->id_anotacao, $anotacao->id_anotacao, $idDoAssunto, $anotacao->id_anotacao, $idDoAssunto, $anotacao->id_anotacao, $anotacao->titulo);
           }
           $result -> free_result();
       }
     ?>
 
-  </div>   
+  </div>
 
   <!-- Modal Insert -->
   <div class="modal fade branco" id="modal">
@@ -232,14 +217,21 @@
       <div class="modal-content">
 
         <div class="modal-header">
-          <h1 class="modal-title fs-5 titulo">Editar Anotação</h1>
-          <button class="btn-close" data-bs-dismiss="modal"></button>
+          <h1 class="modal-title fs-6 titulo">Editar Anotação</h1>
+          <button class="btn-close btn-close-modal" data-bs-dismiss="modal"></button>
         </div>
 
-        <form action="../back-end/update_anotacao.php" method="post">
+        <form class="especial-de-update" action="../back-end/update_anotacao.php" method="post">
           <div class="modal-body">
-            <input class ="nome-assunto" name="tituloAnotacaoUp" id="tituloAnotacaoUp" type ="text" placeholder ="Título" aria-label ="Search">
-            <input hidden name='idAssuntoUpdateAnotacao' id='idAssuntoUpdateAnotacao' type ='text' value="">
+            <?php
+              if(isset($_GET['mostraAnotacaoUp'])){
+                $tituloDaAnotacao = $_GET['tituloEditar'];
+                $idDaAnotacao = $_GET['idAnotacaoEdit'];
+              }
+            ?>
+            <input class ="nome-assunto" name="tituloAnotacaoUp" id="tituloAnotacaoUp" type ="text" placeholder ="Título" aria-label ="Search" value="<?php print $tituloDaAnotacao ?>">
+            <input hidden name="idAnotacaoEdit" id="idAnotacaoEdit" type ="text" aria-label ="Search" value="<?php print $idDaAnotacao ?>">
+            <input hidden name='idDoAssuntoPraUpdateDaAnotacao' id='idDoAssuntoPraUpdateDaAnotacao' type ='text' value="<?php print $testaIdAssunto ?>">
             <input hidden type="text" name="paginaAnotacaoUp" id="paginaAnotacaoUp" value="assunto.php?getIdAssunto=<?php if(isset($_GET['getIdAssunto'])){print $_GET['getIdAssunto'];} ?>">
           </div>
 
@@ -258,7 +250,6 @@
       var divs = ["" <?php $id = $_SESSION['id'];$sqlTitulos = "SELECT * FROM assunto WHERE id_estudante_fk = $id";if($result = $conn -> query($sqlTitulos)){ while($assunto = $result -> fetch_object()){ printf(", '%s'", $assunto->titulo);}$result -> free_result();} ?>];
       
       var idDaEditAnterior = 0;
-      var editAnteriormenteAberta = document.getElementById(`${idDaEditAnterior}`)
       
       function mostra(idDaEdit) {
         var edit = document.getElementById(`${idDaEdit}`);
@@ -330,12 +321,17 @@
       tituloDel.innerHTML = "<?php if(isset($_GET['mostraDelete'])){print $_GET['tituloDel'];} ?>"
       idAssuntoDel.value = "<?php if(isset($_GET['mostraDelete'])){print $_GET['idAssuntoDel'];} ?>"
 
+      var botaoEstronda = document.querySelector('#botao-estronda');
+
       <?php
       if(isset($_GET['mostraAtt'])){
         print 'botao.click();';
       }
       if(isset($_GET['mostraDelete'])){
         print 'botaoMaravilha.click();';
+      }
+      if(isset($_GET['mostraAnotacaoUp'])){
+        print 'botaoEstronda.click();';
       }
       ?>
   </script>

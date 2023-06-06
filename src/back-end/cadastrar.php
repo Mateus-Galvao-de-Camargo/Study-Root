@@ -23,8 +23,10 @@
 
         if($qtd>0){
             print "<script>alert('Email já utilizado! Cadastro não realizado'); location.href='../telas/cadastro.php'</script>";
+            header("Location: http://localhost:8081/study-root/src/telas/cadastro.php");
         } else if($emailFormatado == NULL || $emailFormatado == "" || $usuarioFormatado == NULL || $usuarioFormatado == "" || $senhaFormatada == NULL || $senhaFormatada == ""){
             print "<script>alert('Informações vazias ou com apenas espaços em branco! Cadastro não realizado'); location.href='../telas/cadastro.php'</script>";
+            header("Location: http://localhost:8081/study-root/src/telas/cadastro.php");
         } else {
             $row = $conn->query("INSERT INTO estudante (usuario, email, senha) VALUE ('$usuarioFormatado', '$emailFormatado', '$hash')");
         }
@@ -37,8 +39,10 @@
             $_SESSION["id"] = $res->id_estudante;
 
             print "<script>location.href='../telas/home.php'</script>";
+            header("Location: http://localhost:8081/study-root/src/telas/home.php");
         } else{
             print "<script>alert('Não foi possível cadastrar.'); location.href='../telas/cadastro.php'</script>";
+            header("Location: http://localhost:8081/study-root/src/telas/home.php");
         }
     }
 ?>
