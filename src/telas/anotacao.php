@@ -80,16 +80,33 @@
 </div>
 
   <!-- conteúdo da página -->
-    <div class="flex column">
-      <div class="flex end">
-        <form action="./assunto.php" method="get" class="botao-volta-assunto">
-          <input hidden name='getIdAssunto' value=''>
-          <button class ="botao-sair" type ="submit"><p class="btn-close"></p></button>
-        </form>
+    <div class="flex column container-geral">
+      <div class="flex">
+        <div class="container-titulo flex center">
+          <h1 class="titulo">
+            <?php
+              $pegaTitulo = $conn->query("SELECT titulo FROM anotacao WHERE id_anotacao = $testaIdAnotacao");
+              $titulo = $pegaTitulo->fetch_object();
+
+              print "$titulo->titulo";
+            ?>
+          </h1>
+        </div>
+        
+        <div class="container-btn-fecha">
+          <form action="./assunto.php" method="get" class="botao-volta-assunto">
+            <input hidden name='getIdAssunto' value='<?php print $testaIdAssunto ?>'>
+            <button class ="botao-sair" type ="submit"><p class="btn-close"></p></button>
+          </form>
+        </div>
       </div>
+    
+      
+        
+      
 
       <form method="post" action="../back-end/update_texto.php" class="editor">
-        <input class="btn-salvas btn-light" type="submit" name="salvaTexto" value="Salvar">
+        <input class="btn-salvas" type="submit" name="salvaTexto" value="Salvar">
         <textarea name="editor" id="editor">
 
           <?php
