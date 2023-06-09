@@ -46,6 +46,7 @@ form{
     margin-left: 20vw;
     min-width: 10vw;
     min-height: 6vh;
+    z-index: 50;
     background: #0e0e0e;
     display: none;
 }
@@ -176,6 +177,12 @@ form{
     height: 20%;
 }
 .btn-cfgvermelho{
+    background-color: #d20000;
+    border-color: transparent;
+    color: white;
+    height: 4vh;
+    width: 5vw;
+    border-radius: 2vh;
     margin-top: 0.5vh;
     margin-left: 4vh;
 }

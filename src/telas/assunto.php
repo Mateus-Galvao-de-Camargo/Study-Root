@@ -53,7 +53,7 @@
     <button hidden id="botao-estronda" data-bs-toggle="modal" data-bs-target="#modalUpAnotacao"></button>
     <div id="config">
       <i class="fa fa-user-circle user-botolas"></i>
-      <a href="../back-end/logout.php"><button class="vermelho btn-cfgvermelho">Sair</button></a>
+      <a href="../back-end/logout.php"><button class="btn-cfgvermelho">Sair</button></a>
     </div>
   </div> 
 

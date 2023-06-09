@@ -34,7 +34,7 @@
     <button hidden id="botao-maravilha" data-bs-toggle="modal" data-bs-target="#modalDelete"></button>
     <div id="config">
       <i class="fa fa-user-circle user-botolas"></i>
-      <a href="../back-end/logout.php"><button class="vermelho btn-cfgvermelho">Sair</button></a>
+      <a href="../back-end/logout.php"><button class="btn-cfgvermelho">Sair</button></a>
     </div>
   </div> 
 
