@@ -1,0 +1,75 @@
+body{
+    background-color:  rgb(26, 26, 26);
+    width: 100%;
+    overflow-x: hidden;
+    }
+
+.logo{
+    border-radius: 55px;
+    margin: auto;
+    display: block;
+    width: 250px;
+    margin-top: 13vh;
+}
+
+.email{
+  
+    height: 40px;
+}
+.login-usuario{
+  
+    width: 380px;
+    height: 45px;
+    border-radius: 10px;
+    margin-top: 8vh;
+    margin-left:37.5vw;
+    display: block;
+
+}
+
+
+.login-email{
+    width: 380px;
+    height: 45px;
+    border-radius: 10px;
+    margin: auto;
+    display: block;
+    margin-top: 5vh;
+}
+
+.login-password{
+    width: 380px;
+    height: 45px;
+    border-radius: 10px;
+    margin: auto;
+    display: block;
+    margin-top: 5vh;
+}
+
+.login-btn{
+    width: 190px;
+    height: 45px;
+    border-radius: 10px;
+    margin: auto;
+    display: block;
+    margin-top: 25px;
+}
+
+p{
+    
+    color: rgb(26, 26, 26);
+}
+
+h3{
+    margin-top: 45px;
+    text-align: center;
+}
+
+.linka{
+    text-decoration: none;
+   
+}
+.link{
+    text-decoration: none;
+    color: white;
+}
