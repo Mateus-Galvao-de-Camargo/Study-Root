@@ -195,8 +195,9 @@
           <button class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
-        <form action="../back-end/cadastro_anotacao.php" method="post">
+        
           <div class="modal-body">
+          <form action="../back-end/cadastro_anotacao.php" method="post">
             <input class ="nome-assunto" name="tituloAnotacao" id="tituloAnotacao" type ="text" placeholder ="Título" aria-label ="Search">
             <input hidden name='idAssuntoInsertAnotacao' id='idAssuntoInsertAnotacao' type ='text' value="<?php if(isset($_GET['getIdAssunto'])){print $_GET['getIdAssunto'];} ?>">
             <input hidden type="text" name="paginaAnotacao" id="paginaAnotacao" value="assunto.php?getIdAssunto=<?php if(isset($_GET['getIdAssunto'])){print $_GET['getIdAssunto'];} ?>">
@@ -204,8 +205,9 @@
 
           <div class="modal-footer">
             <button name="cadastrar" type="submit" class="botao-concluir">Concluir</button>
+            </form>
           </div>
-        </form>
+        
 
       </div>
     </div>
