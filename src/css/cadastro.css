@@ -16,17 +16,25 @@ body{
   
     height: 40px;
 }
+.login-usuario{
+  
+    width: 380px;
+    height: 45px;
+    border-radius: 10px;
+    margin-top: 8vh;
+    margin-left:37.5vw;
+    display: block;
 
+}
 
 
 .login-email{
     width: 380px;
     height: 45px;
-    
     border-radius: 10px;
     margin: auto;
     display: block;
-    margin-top: 8vh;
+    margin-top: 5vh;
 }
 
 .login-password{
