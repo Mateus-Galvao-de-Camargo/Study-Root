@@ -2,7 +2,7 @@
     session_start();
 
     if(empty($_POST) or (empty($_POST['email']) or (empty($_POST['senha'])))){
-        print "<script>location.href='../telas/index.php';</script>";
+        print "<script>alert('Email e/ou senha incorreto(s)');location.href='../telas/index.php';</script>";
     }
 
     include('config.php');
@@ -21,12 +21,9 @@
 
     $hash = $row->senha;
 
-    if($qtd > 0){
+     if($qtd > 0){
         if(Bcrypt::check($senha, $hash)){
             $_SESSION["id"] = $row->id_estudante;
         }
-
         print "<script>location.href='../telas/home.php'</script>";
-    } else{
-        print "<script>alert('Email e/ou senha incorreto(s)');location.href='../telas/index.php';</script>";
     }
