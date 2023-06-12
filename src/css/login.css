@@ -9,31 +9,24 @@ body{
     margin: auto;
     display: block;
     width: 250px;
-    margin-top: 170px;
+    margin-top: 13vh;
 }
 
 .email{
   
     height: 40px;
 }
-.login-usuario{
-  
-    width: 380px;
-    height: 45px;
-    border-radius: 10px;
-    margin: 90px 762px -50px;
-    display: block;
 
-}
 
 
 .login-email{
     width: 380px;
     height: 45px;
+    
     border-radius: 10px;
     margin: auto;
     display: block;
-    margin-top: 95px;
+    margin-top: 8vh;
 }
 
 .login-password{
@@ -42,7 +35,7 @@ body{
     border-radius: 10px;
     margin: auto;
     display: block;
-    margin-top: 45px;
+    margin-top: 5vh;
 }
 
 .login-btn{
