@@ -16,9 +16,9 @@
   require_once('../back-end/config.php');
   session_start();
   if(empty($_SESSION)){
-    header("Location: http://localhost:8081/study-root/src/telas/index.php");
+    print "<script>location.href='../telas/index.php';</script>";
   } else if(empty($_GET['idAnotacaoParaTexto'])){
-    header("Location: http://localhost:8081/study-root/src/telas/home.php");
+    print "<script>location.href='../telas/home.php';</script>";
   } else {
     $testaIdAnotacao = $_GET['idAnotacaoParaTexto'];
     $testaIdAssunto = $_GET['getIdAssunto'];
@@ -38,11 +38,11 @@
       if($qtdDeLinhasDoUsuario > 0){
         //beleza sem gracinhas
       } else {
-        header("Location: http://localhost:8081/study-root/src/telas/home.php");
+        print "<script>location.href='../telas/home.php';</script>";
       }
     } else {
       //GRACINHAS?
-      header("Location: http://localhost:8081/study-root/src/telas/home.php");
+      print "<script>location.href='../telas/home.php';</script>";
     }
   }
   ?>

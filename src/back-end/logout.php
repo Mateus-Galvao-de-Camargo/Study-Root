@@ -2,5 +2,5 @@
     session_start();
     unset($_SESSION["id"]);
     session_destroy();
-    header("Location: ../telas/index.php");
+    print "<script>location.href='../telas/index.php'</script>";
     exit;

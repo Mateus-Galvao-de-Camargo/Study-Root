@@ -28,7 +28,5 @@
 
         print "<script>location.href='../telas/home.php'</script>";
     } else{
-        print "<script>alert('Email e/ou senha incorreto(s)');</script>";
-        print "<script>location.href='../telas/index.php';</script>";
-        header('Location: ../telas/index.php');
+        print "<script>alert('Email e/ou senha incorreto(s)');location.href='../telas/index.php';</script>";
     }

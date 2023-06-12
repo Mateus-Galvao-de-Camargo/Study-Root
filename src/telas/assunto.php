@@ -18,9 +18,9 @@
 
     // Validando se há um login, se tem um assunto sendo carregado e se esse assunto é pertencente ao usuário do login.
     if(empty($_SESSION)){
-      header("Location: http://localhost:8081/study-root/src/telas/index.php");
+      print "<script>location.href='../telas/index.php';</script>";
     } else if(empty($_GET['getIdAssunto'])){
-      header("Location: http://localhost:8081/study-root/src/telas/home.php");
+      print "<script>location.href='../telas/home.php';</script>";
     } else {
       $testaIdAssunto = $_GET['getIdAssunto'];
       $testaIdUsuario = $_SESSION['id'];
@@ -33,7 +33,7 @@
         //boa, sem gracinhas.
       } else {
         //GRACINHAS?
-        header("Location: http://localhost:8081/study-root/src/telas/home.php");
+        print "<script>location.href='../telas/home.php';</script>";
       }
     }
   ?>
@@ -207,7 +207,6 @@
             <button name="cadastrar" type="submit" class="botao-concluir">Concluir</button>
             </form>
           </div>
-        
 
       </div>
     </div>
