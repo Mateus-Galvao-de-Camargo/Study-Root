@@ -11,7 +11,15 @@
 
     $pagina = $_POST['pagina'];
 
-    if($senhaNova === $senhaNova2){
+    $senhaFormatada = trim(preg_replace('/\s+/', '', $senhaNova));
+
+    if( empty($_POST) || (empty($_POST['senhaAntiga'])) || (empty($_POST['senhaNova']))){
+        print "<script>alert('Sem gracinhaaas, Alguma senha não foi enviada'); location.href='../telas/home.php';</script>";
+    } else if($senhaFormatada == NULL || $senhaFormatada == ""){
+        print "<script>alert('Sem gracinhaaas, a senha foi enviada vazia ou apenas com espaços!'); location.href='../telas/home.php';</script>";
+    } else if($senhaFormatada != $senhaNova2){
+        print "<script>alert('Sem gracinhaaas, a senha não deve conter espaços!'); location.href='../telas/home.php';</script>";
+    } else if($senhaNova === $senhaNova2){
 
         $procuraUsuario = $conn->query("SELECT * FROM estudante WHERE id_estudante = $idUsuario");
         $confere = $procuraUsuario->fetch_object();
