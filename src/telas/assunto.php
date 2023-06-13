@@ -245,8 +245,8 @@
     </div>
   </div>
 
-    <!-- Modal -->
-    <div class="modal fade branco" id="modalUpdateSenha">
+            <!-- Modal de Trocar senha -->
+  <div class="modal fade branco" id="modalUpdateSenha">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
 
@@ -255,24 +255,24 @@
           <button class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
-        <form action="../back-end/cadastro_assunto.php" method="post">
-          <div class="modal-body">
-            <input SIZE = 26 MAXLENGTH = 52 class ="nome-assunto" required name="titulo" id="titulo" type ="password" placeholder ="Senha Antiga" aria-label ="Search">
-            <input SIZE = 26 MAXLENGTH = 300 class ="descricao-assunto" name="resumo" id="resumo" type ="password" placeholder ="Senha Nova">
-            <input SIZE = 26 MAXLENGTH = 300 class ="descricao-assunto" name="resumo" id="resumo" type ="password" placeholder ="Confirmar Senha"
-            
-             aria-label ="Search">
-            <input hidden type="text" name="pagina" id="pagina" value="home.php">
-          </div>
+        <div class="modal-body">
+          <form action="../back-end/troca_senha.php" method="POST">
+            <input required SIZE = 26 MAXLENGTH = 52 class ="nome-assunto" name="senhaAntiga" type ="password" placeholder ="Senha Antiga">
+            <input required SIZE = 26 MAXLENGTH = 52 class ="nome-assunto" name="senhaNova" type ="password" placeholder ="Senha Nova">
+            <input required SIZE = 26 MAXLENGTH = 52 class ="nome-assunto" name="senhaNova2" type ="password" placeholder ="Confirmar Senha Nova">
+            <input hidden type="text" name="pagina" id="pagina" value="assunto.php?getIdAssunto=<?php print $testaIdAssunto; ?>">
+        </div>
 
-          <div class="modal-footer">
-            <button name="cadastrar" type="submit" class="botao-concluir">Alterar</button>
-          </div>
-        </form>
+            <div class="modal-footer">
+              <button type="submit" class="botao-concluir">Alterar</button>
+          </form>
+            </div>
 
       </div>
     </div>
   </div>
+
+
   
   <script src="../js/bootstrap.bundle.min.js"></script>
   <script src="../js/bootstrap.min.js"></script>

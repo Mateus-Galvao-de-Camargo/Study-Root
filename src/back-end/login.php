@@ -1,15 +1,15 @@
 <?php
     session_start();
 
-    if(empty($_POST) or (empty($_POST['email']) or (empty($_POST['senha'])))){
-        print "<script>alert('Email e/ou senha incorreto(s)');location.href='../telas/index.php';</script>";
-    }
-
     include('config.php');
     include('bcrypt.php');
 
     $email = $_POST["email"];
     $senha = $_POST["senha"];
+
+    if( empty($_POST) || (empty($_POST['email'])) || (empty($_POST['senha'])) || $email == "" || $senha == "" ){
+        print "<script>alert('Email e/ou senha incorreto(s)'); location.href='../telas/index.php';</script>";
+    }
 
     $sql = "SELECT * FROM estudante WHERE email = '{$email}'";
 
@@ -24,6 +24,8 @@
      if($qtd > 0){
         if(Bcrypt::check($senha, $hash)){
             $_SESSION["id"] = $row->id_estudante;
+        } else {
+            print "<script>alert('Email e/ou senha incorreto(s)'); location.href='../telas/index.php';</script>";
         }
         print "<script>location.href='../telas/home.php'</script>";
     }

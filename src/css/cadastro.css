@@ -12,6 +12,29 @@ body{
     margin-top: 13vh;
 }
 
+/* Barra de rolagem */
+::-webkit-scrollbar{
+    width: 0.5vw;
+}
+
+::-webkit-scrollbar-track{
+    background-color: #363636;
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: gray;
+    border-radius: 15px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background-color: rgb(186, 186, 186);
+}
+
+::-webkit-scrollbar-thumb:active{
+    background-color: rgb(201, 201, 201);
+}
+
+
 .email{
   
     height: 40px;
@@ -21,8 +44,8 @@ body{
     width: 380px;
     height: 45px;
     border-radius: 10px;
+    margin: auto;
     margin-top: 8vh;
-    margin-left:37.5vw;
     display: block;
 
 }
