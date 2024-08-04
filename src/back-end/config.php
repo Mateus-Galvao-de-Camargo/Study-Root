@@ -1,8 +1,14 @@
 <?php
 
-$path = dirname(__FILE__, 2);
+require_once __DIR__ . '/../vendor/autoload.php';
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
-$conn = new Mysqli($_ENV['HOST'], $_ENV['USER'], $_ENV['PASS'], $_ENV['BASE']);
+$conn = new Mysqli($_ENV['HOST'], $_ENV['USER'], $_ENV['PASS'], $_ENV['BASE'], $_ENV['PORT']);
+
+if ($conn->connect_error) {
+    die("Conexão falhou: " . $conn->connect_error);
+}

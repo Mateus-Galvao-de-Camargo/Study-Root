@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+
+  apache:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/var/www/html
+    networks:
+      - app-network
+
+  db:
+    image: mysql:latest
+    container_name: study-root-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=kodejifr
+      - MYSQL_DATABASE=study_root
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: kodejifr
+    networks:
+      - app-network
+
+  # nginx:
+  #   image: nginx:latest
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - ./src:/var/www/html
+  #     - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
+  #   depends_on:
+  #     - php-fpm
+  #   networks:
+  #     - app-network
+  
+volumes:
+  db_data:
+
+networks:
+  app-network:
+    driver: bridge
