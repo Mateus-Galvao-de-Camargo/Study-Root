@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -14,13 +17,12 @@
 <body class="flex">
   <?php
     require_once('../back-end/config.php');
-    session_start();
 
     // Validando se há um login, se tem um assunto sendo carregado e se esse assunto é pertencente ao usuário do login.
     if(empty($_SESSION)){
-      print "<script>location.href='../telas/index.php';</script>";
+      print "<script>location.href='../index.php';</script>";
     } else if(empty($_GET['getIdAssunto'])){
-      print "<script>location.href='../telas/home.php';</script>";
+      print "<script>location.href='./home.php';</script>";
     } else {
       $testaIdAssunto = $_GET['getIdAssunto'];
       $testaIdUsuario = $_SESSION['id'];
@@ -33,7 +35,7 @@
         //boa, sem gracinhas.
       } else {
         //GRACINHAS?
-        print "<script>location.href='../telas/home.php';</script>";
+        print "<script>location.href='./home.php';</script>";
       }
     }
   ?>

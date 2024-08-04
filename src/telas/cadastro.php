@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -12,9 +15,8 @@
 
 <body>
     <?php
-        session_start();
         if(isset($_SESSION["id"])){
-            print "<script>location.href='../telas/home.php';</script>";
+            print "<script>location.href='./home.php';</script>";
         }
     ?>
 
@@ -31,7 +33,7 @@
         <button name="cadastrar" class="login-btn">Cadastrar</button>      
     </form>
 
-    <h3><a class="link" href="./index.php">Já possui uma conta?</a></h3>
+    <h3><a class="link" href="../index.php">Já possui uma conta?</a></h3>
 
 </body>
 </html>

@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -13,7 +16,6 @@
 <body>
 
     <?php
-        session_start();
         if(isset($_SESSION["id"])){
             print "<script>location.href='telas/home.php';</script>";
         }

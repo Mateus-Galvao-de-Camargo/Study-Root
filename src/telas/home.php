@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -15,9 +18,9 @@
 
   <?php
   require_once('../back-end/config.php');
-  session_start();
+
   if(empty($_SESSION)){
-    print "<script>location.href='../telas/index.php';</script>";
+    print "<script>location.href='../index.php';</script>";
   }
   ?>
   <div id="sidebar" class="flex column"> 
