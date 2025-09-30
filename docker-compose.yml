@@ -1,7 +1,6 @@
-version: '3.9'
+version: "3.9"
 
 services:
-
   apache:
     build:
       context: .
@@ -11,14 +10,13 @@ services:
     volumes:
       - ./src:/var/www/html
     depends_on:
+      - db
       - redis
-    environment:
-      - SESSION_HANDLER=redis
     networks:
       - app-network
 
   db:
-    image: mysql:latest
+    image: mysql:8.0
     container_name: study-root-mysql
     ports:
       - "3306:3306"
@@ -35,7 +33,7 @@ services:
     restart: always
     ports:
       - 8080:80
-    environment: 
+    environment:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: kodejifr
     networks:
@@ -63,7 +61,7 @@ services:
   #     - php-fpm
   #   networks:
   #     - app-network
-  
+
 volumes:
   db_data:
 

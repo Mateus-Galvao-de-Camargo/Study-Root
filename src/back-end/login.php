@@ -25,7 +25,7 @@
         if(Bcrypt::check($senha, $hash)){
             $_SESSION["id"] = $row->id_estudante;
         } else {
-            print "<script>alert('Email e/ou senha incorreto(s)'); location.href='../telas/index.php';</script>";
+            print "<script>alert('Email e/ou senha incorreto(s)'); location.href='../index.php';</script>";
         }
         print "<script>location.href='../telas/home.php'</script>";
     }
