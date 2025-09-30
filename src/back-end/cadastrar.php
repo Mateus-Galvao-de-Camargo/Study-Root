@@ -15,24 +15,48 @@
 
         $hash = Bcrypt::hash($senhaFormatada);
 
-        $sql = "SELECT * FROM  estudante WHERE email = '$emailFormatado'";
+        $sql = "SELECT * FROM estudante WHERE email = ?";
 
-        $res = $conn->query($sql);
+        if ($conn instanceof PDO) {
+            // PostgreSQL
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$emailFormatado]);
+            $qtd = $stmt->rowCount();
+        } else {
+            // MySQL
+            $res = $conn->query($sql);
+            $qtd = $res->num_rows;
+        }
 
-        $qtd = $res->num_rows;
-
-        if($qtd>0){
+        if($qtd > 0){
             print "<script>alert('Email já utilizado! Cadastro não realizado'); location.href='../telas/cadastro.php'</script>";
         } else if($emailFormatado == NULL || $emailFormatado == "" || $usuarioFormatado == NULL || $usuarioFormatado == "" || $senhaFormatada == NULL || $senhaFormatada == ""){
             print "<script>alert('Informações vazias ou com apenas espaços em branco! Cadastro não realizado'); location.href='../telas/cadastro.php'</script>";
         } else {
-            $row = $conn->query("INSERT INTO estudante (usuario, email, senha) VALUE ('$usuarioFormatado', '$emailFormatado', '$hash')");
+            $insertSql = "INSERT INTO estudante (usuario, email, senha) VALUES (?, ?, ?)";
+            
+            if ($conn instanceof PDO) {
+                // PostgreSQL
+                $stmt = $conn->prepare($insertSql);
+                $row = $stmt->execute([$usuarioFormatado, $emailFormatado, $hash]);
+            } else {
+                // MySQL
+                $row = $conn->query("INSERT INTO estudante (usuario, email, senha) VALUES ('$usuarioFormatado', '$emailFormatado', '$hash')");
+            }
         }
 
         if($row){
-            $select = $conn->query($sql);
-
-            $res = $select->fetch_object();
+            // Busca o usuário recém-criado
+            if ($conn instanceof PDO) {
+                // PostgreSQL
+                $stmt = $conn->prepare($sql);
+                $stmt->execute([$emailFormatado]);
+                $res = $stmt->fetch(PDO::FETCH_OBJ);
+            } else {
+                // MySQL
+                $select = $conn->query($sql);
+                $res = $select->fetch_object();
+            }
 
             $_SESSION["id"] = $res->id_estudante;
 
