@@ -1,42 +1,47 @@
 <?php
-    session_start();
-    
-    include "./config.php";
-    include "./bcrypt.php";
 
-    $senhaVeia = $_POST['senhaAntiga'];
-    $senhaNova = $_POST['senhaNova'];
-    $senhaNova2 = $_POST['senhaNova2'];
-    $idUsuario = $_SESSION['id'];
+declare(strict_types=1);
 
-    $pagina = $_POST['pagina'];
+require_once __DIR__ . '/lib/db.php';
+require_once __DIR__ . '/lib/auth.php';
+require_once __DIR__ . '/lib/helpers.php';
+require_once __DIR__ . '/bcrypt.php';
 
-    $senhaFormatada = trim(preg_replace('/\s+/', '', $senhaNova));
+$estudante = require_auth();
+require_csrf();
 
-    if( empty($_POST) || (empty($_POST['senhaAntiga'])) || (empty($_POST['senhaNova']))){
-        print "<script>alert('Sem gracinhaaas, Alguma senha não foi enviada'); location.href='../telas/home.php';</script>";
-    } else if($senhaFormatada == NULL || $senhaFormatada == ""){
-        print "<script>alert('Sem gracinhaaas, a senha foi enviada vazia ou apenas com espaços!'); location.href='../telas/home.php';</script>";
-    } else if($senhaFormatada != $senhaNova2){
-        print "<script>alert('Sem gracinhaaas, a senha não deve conter espaços!'); location.href='../telas/home.php';</script>";
-    } else if($senhaNova === $senhaNova2){
+$senhaAntiga = (string) ($_POST['senhaAntiga'] ?? '');
+$senhaNova   = (string) ($_POST['senhaNova']   ?? '');
+$senhaNova2  = (string) ($_POST['senhaNova2']  ?? '');
+$pagina      = $_POST['pagina'] ?? 'home.php';
 
-        $procuraUsuario = $conn->query("SELECT * FROM estudante WHERE id_estudante = $idUsuario");
-        $confere = $procuraUsuario->fetch_object();
-        $senhaAntigaNoBanco = $confere->senha;
+if ($senhaAntiga === '' || $senhaNova === '' || $senhaNova2 === '') {
+    alert_and_redirect('Preencha todos os campos.', $pagina);
+}
 
-        if(Bcrypt::check($senhaVeia, $senhaAntigaNoBanco)){
+if ($senhaNova !== $senhaNova2) {
+    alert_and_redirect('As senhas novas não coincidem.', $pagina);
+}
 
-            $hash = Bcrypt::hash($senhaNova);
-            $altera = $conn->query("UPDATE estudante SET senha = '$hash' WHERE id_estudante = '$idUsuario'");
-            print "<script>alert('Senha alterada'); location.href='../telas/$pagina'</script>";
+if (mb_strlen($senhaNova) < 4 || mb_strlen($senhaNova) > 72) {
+    alert_and_redirect('A senha nova deve ter entre 4 e 72 caracteres.', $pagina);
+}
 
-        } else {
-            print "<script>alert('Senha errada 👺'); location.href='../telas/$pagina'</script>";
-        }
+$pdo = study_root_db();
 
-    } else {
-        print "<script>alert('Senhas não coincidem'); location.href='../telas/$pagina'</script>";
-    }
+$sel = $pdo->prepare('SELECT senha FROM estudante WHERE id_estudante = :e LIMIT 1');
+$sel->execute([':e' => $estudante]);
+$row = $sel->fetch();
 
-?>
+if (!$row || !Bcrypt::check($senhaAntiga, $row->senha)) {
+    alert_and_redirect('Senha atual incorreta.', $pagina);
+}
+
+$hash = Bcrypt::hash($senhaNova);
+$upd = $pdo->prepare('UPDATE estudante SET senha = :s WHERE id_estudante = :e');
+$upd->execute([':s' => $hash, ':e' => $estudante]);
+
+// Regenera sessão depois de troca de credencial.
+session_regenerate_id(true);
+
+alert_and_redirect('Senha alterada com sucesso.', $pagina);

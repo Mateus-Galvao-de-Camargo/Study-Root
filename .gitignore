@@ -1,4 +1,4 @@
-# Arquivos de ambiente e configuração sensível
+# Variáveis de ambiente e segredos
 .env
 .env.local
 .env.production
@@ -7,9 +7,8 @@ env.production
 env.local
 env.staging
 
-# Dependências
-vendor/
-composer.lock
+# Dependências PHP
+src/vendor/
 
 # Logs
 *.log
@@ -19,16 +18,16 @@ logs/
 *.tmp
 *.temp
 
-# Arquivos de IDE
+# IDE
 .vscode/
 .idea/
 *.swp
 *.swo
 
-# Arquivos do sistema
+# Sistema
 .DS_Store
 Thumbs.db
 
-# Arquivos de backup
+# Backups
 *.bak
 *.backup

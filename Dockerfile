@@ -1,48 +1,42 @@
-FROM php:8.1-apache
+# Imagem única, leve e suficiente para Render / Fly / qualquer host de Docker.
+# Stack: PHP 8.2 + Apache + PDO_pgsql. Sem MySQL, sem Redis, sem postgres-client em runtime.
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
-    zip \
-    libzip-dev \
-    mariadb-client \
+FROM composer:2 AS deps
+WORKDIR /app
+COPY src/composer.json src/composer.lock* ./
+RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
+
+FROM php:8.2-apache
+
+# Pacotes do sistema necessários para construir as extensões PHP
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libpq-dev \
+        libzip-dev \
+        unzip \
+    && docker-php-ext-install pdo pdo_pgsql zip \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install PHP extensions
-RUN docker-php-ext-install mysqli pdo pdo_mysql zip
+# Configurações de produção
+COPY php.ini /usr/local/etc/php/conf.d/zz-app.ini
 
-# Install Redis extension using Pecl
-# RUN pecl install redis
-# RUN && docker-php-ext-enable redis
+# Habilita mod_rewrite (não é estritamente necessário hoje, mas barato)
+RUN a2enmod rewrite headers
 
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Copy the application
+# Código da aplicação
+WORKDIR /var/www/html
 COPY src/ /var/www/html/
+COPY --from=deps /app/vendor /var/www/html/vendor
 
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
+# Render injeta a porta via $PORT. Apache escuta nela em vez de 80 fixa.
+# A substituição é feita no entrypoint.
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
-# Copy PHP configuration
-COPY php.ini /usr/local/etc/php/
+# Permissões mínimas
+RUN chown -R www-data:www-data /var/www/html
 
-# Copy database initialization script
-COPY init-db.sh /usr/local/bin/init-db.sh
-RUN chmod +x /usr/local/bin/init-db.sh
+EXPOSE 8080
 
-# Create startup script
-RUN echo '#!/bin/bash\n\
-# Start database initialization in background\n\
-/usr/local/bin/init-db.sh &\n\
-\n\
-# Start Apache in foreground\n\
-apache2-foreground' > /usr/local/bin/start.sh && \
-chmod +x /usr/local/bin/start.sh
-
-# Exponha a porta padrão do Apache
-EXPOSE 80
-
-# Use custom startup script
-CMD ["/usr/local/bin/start.sh"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["apache2-foreground"]

@@ -1,70 +1,49 @@
-version: "3.9"
+# Ambiente local de desenvolvimento.
+# Em produção (Render/Fly) o app conecta direto no Neon via DATABASE_URL — sem este compose.
 
 services:
-  apache:
+  app:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "80:80"
-    volumes:
-      - ./src:/var/www/html
+      - "8080:8080"
+    environment:
+      PORT: "8080"
+      DB_DRIVER: pgsql
+      DB_HOST: db
+      DB_PORT: "5432"
+      DB_NAME: study_root
+      DB_USER: study_root
+      DB_PASS: dev_password_change_me
     depends_on:
-      - db
-      - redis
-    networks:
-      - app-network
+      db:
+        condition: service_healthy
+    volumes:
+      # Em dev, montar o código facilita iteração rápida sem rebuild.
+      - ./src:/var/www/html
+      # Anonymous volume: preserva o vendor/ instalado no build.
+      # Sem isso, o bind mount acima sobrescreveria a pasta vendor com vazio,
+      # quebrando o require_once vendor/autoload.php no migrate.
+      - /var/www/html/vendor
+    restart: unless-stopped
 
   db:
-    image: mysql:8.0
-    container_name: study-root-mysql
-    ports:
-      - "3306:3306"
+    image: postgres:16-alpine
     environment:
-      - MYSQL_ROOT_PASSWORD=kodejifr
-      - MYSQL_DATABASE=study_root
+      POSTGRES_DB: study_root
+      POSTGRES_USER: study_root
+      POSTGRES_PASSWORD: dev_password_change_me
     volumes:
-      - db_data:/var/lib/mysql
-    networks:
-      - app-network
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    restart: always
+      - pgdata:/var/lib/postgresql/data
     ports:
-      - 8080:80
-    environment:
-      PMA_HOST: db
-      MYSQL_ROOT_PASSWORD: kodejifr
-    networks:
-      - app-network
-
-  redis:
-    image: redis:latest
-    container_name: redis
-    volumes:
-      - ./redis.conf:/usr/local/etc/redis/redis.conf
-    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
-    ports:
-      - "6379:6379"
-    networks:
-      - app-network
-
-  # nginx:
-  #   image: nginx:latest
-  #   ports:
-  #     - "80:80"
-  #   volumes:
-  #     - ./src:/var/www/html
-  #     - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
-  #   depends_on:
-  #     - php-fpm
-  #   networks:
-  #     - app-network
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U study_root -d study_root"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
 
 volumes:
-  db_data:
-
-networks:
-  app-network:
-    driver: bridge
+  pgdata:

@@ -1,92 +1,42 @@
 <?php
+/**
+ * Wrapper sobre password_hash / password_verify do PHP.
+ *
+ * A versão antiga deste arquivo implementava bcrypt manualmente com
+ * crypt() + salt gerado por mt_rand()/uniqid(). Tanto a geração quanto o
+ * código eram frágeis. Esta versão delega para as funções nativas, que
+ * usam um CSPRNG do sistema e fazem comparação em tempo constante.
+ *
+ * A interface pública (Bcrypt::hash, Bcrypt::check) é mantida para evitar
+ * mudanças em chamadas existentes. Hashes legados com prefixo $2a$ gerados
+ * pela versão antiga continuam compatíveis porque password_verify aceita
+ * qualquer hash bcrypt válido.
+ */
 
-class Bcrypt {
- 
-/**
- * Default salt prefix
- *
- * @see http://www.php.net/security/crypt_blowfish.php
- *
- * @var string
- */
-    protected static $_saltPrefix = '2a';
- 
-/**
- * Default hashing cost (4-31)
- *
- * @var integer
- */
-    protected static $_defaultCost = 12;
- 
-/**
- * Salt limit length
- *
- * @var integer
- */
-    protected static $_saltLength = 22;
- 
-/**
- * Hash a string
- *
- * @param  string  $string The string
- * @param  integer $cost   The hashing cost
- *
- * @see    http://www.php.net/manual/en/function.crypt.php
- *
- * @return string
- */
-    public static function hash($string, $cost = null) {
-        if (empty($cost)) {
-            $cost = self::$_defaultCost;
+declare(strict_types=1);
+
+class Bcrypt
+{
+    public static function hash(string $password, ?int $cost = null): string
+    {
+        $options = [];
+        if ($cost !== null) {
+            $options['cost'] = max(4, min(12, $cost));
         }
- 
-        // Salt
-        $salt = self::generateRandomSalt();
- 
-        // Hash string
-        $hashString = self::__generateHashString((int)$cost, $salt);
- 
-        return crypt($string, $hashString);
+        return password_hash($password, PASSWORD_BCRYPT, $options);
     }
- 
-/**
- * Check a hashed string
- *
- * @param  string $string The string
- * @param  string $hash   The hash
- *
- * @return boolean
- */
-    public static function check($string, $hash) {
-        return (crypt($string, $hash) === $hash);
+
+    public static function check(string $password, string $hash): bool
+    {
+        return password_verify($password, $hash);
     }
- 
-/**
- * Generate a random base64 encoded salt
- *
- * @return string
- */
-    public static function generateRandomSalt() {
-        // Salt seed
-        $seed = uniqid(mt_rand(), true);
- 
-        // Generate salt
-        $salt = base64_encode($seed);
-        $salt = str_replace('+', '.', $salt);
- 
-        return substr($salt, 0, self::$_saltLength);
+
+    public static function needsRehash(string $hash, ?int $cost = null): bool
+    {
+        $options = [];
+        if ($cost !== null) {
+            $options['cost'] = max(4, min(12, $cost));
+        }
+        return password_needs_rehash($hash, PASSWORD_BCRYPT, $options);
     }
- 
-/**
- * Build a hash string for crypt()
- *
- * @param  integer $cost The hashing cost
- * @param  string $salt  The salt
- *
- * @return string
- */
-    private static function __generateHashString($cost, $salt) {
-        return sprintf('$%s$%02d$%s$', self::$_saltPrefix, $cost, $salt);
-    }
- 
 }

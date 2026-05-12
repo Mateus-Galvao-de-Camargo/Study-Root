@@ -1,40 +1,42 @@
 <?php
-    session_start();
 
-    require_once('config.php');
+declare(strict_types=1);
 
-    if(isset($_POST['cadastrar'])){
-        $titulo = $_POST['titulo'];
-        $resumo = $_POST['resumo'];
-        $estudante = $_SESSION['id'];
-        $paginaQueEnviou = $_POST['pagina'];
+require_once __DIR__ . '/lib/db.php';
+require_once __DIR__ . '/lib/auth.php';
+require_once __DIR__ . '/lib/helpers.php';
 
-        $tituloFormatado = trim(preg_replace('/\s+/', ' ', $titulo));
+$estudante = require_auth();
+require_csrf();
 
-        $tamanhoDoTitulo = mb_strlen($tituloFormatado);
+if (!isset($_POST['cadastrar'])) {
+    safe_redirect('home.php');
+}
 
-        $resumoFormatado = trim(preg_replace('/\s+/', ' ', $resumo));
+$titulo  = normalize_spaces((string) ($_POST['titulo'] ?? ''));
+$resumo  = normalize_spaces((string) ($_POST['resumo'] ?? ''));
+$pagina  = $_POST['pagina'] ?? 'home.php';
 
-        $tamanhoDoResumo = mb_strlen($resumoFormatado);
+if ($titulo === '' || mb_strlen($titulo) > 52 || mb_strlen($resumo) > 300) {
+    alert_and_redirect(
+        'Título obrigatório (até 52 caracteres). Resumo até 300 caracteres.',
+        $pagina
+    );
+}
 
-        $tituloRepetido = $conn->query("SELECT * FROM assunto WHERE id_estudante_fk = '$estudante' AND titulo = '$tituloFormatado'");
+$pdo = study_root_db();
 
-        $linha = $tituloRepetido->fetch_object();
+$dup = $pdo->prepare(
+    'SELECT id_assunto FROM assunto WHERE id_estudante_fk = :e AND titulo = :t LIMIT 1'
+);
+$dup->execute([':e' => $estudante, ':t' => $titulo]);
+if ($dup->fetch()) {
+    alert_and_redirect('Você já tem um assunto com esse título.', $pagina);
+}
 
-        $qtd = $tituloRepetido->num_rows;
+$ins = $pdo->prepare(
+    'INSERT INTO assunto (titulo, resumo, id_estudante_fk) VALUES (:t, :r, :e)'
+);
+$ins->execute([':t' => $titulo, ':r' => $resumo, ':e' => $estudante]);
 
-        if($qtd > 0){
-            printf("<script>alert('O título %s já é registrado na sua conta'); location.href='../telas/$paginaQueEnviou'</script>", $linha->titulo);
-        } else if($titulo == NULL || $titulo = "" || $tituloFormatado == NULL || $tamanhoDoTitulo > 52 || $tamanhoDoResumo > 300){
-            print "<script>alert('Sem gracinhas, tente denovo, da maneira correta, o título é obrigatório, deve conter no máximo 52 caractéres e não pode ser vazio ou apenas conter espaços em branco. Assim como o resumo deve conter no máximo 300 caractéres.'); location.href='../telas/$paginaQueEnviou'</script>";
-        } else {
-            $row = $conn->query("INSERT INTO assunto (id_assunto, titulo, resumo, id_estudante_fk) VALUES (NULL, '$tituloFormatado', '$resumoFormatado', '$estudante');");
-        }
-
-        if($row){
-            print "<script>location.href='../telas/$paginaQueEnviou'</script>";
-        } else{
-            print "<script>alert('Não foi possível cadastrar'); location.href='../telas/$paginaQueEnviou'</script>";
-        }
-    }
-?>
+safe_redirect($pagina);

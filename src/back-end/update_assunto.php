@@ -1,48 +1,58 @@
 <?php
-    session_start();
-    
-    require_once('config.php');
 
-    if(isset($_POST['atualizar'])){
-        $idAssunto = $_POST['idAssunto'];
-        $titulo = $_POST['tituloAtt'];
-        $resumo = $_POST['resumoAtt'];
-        $pagina = $_POST['pagina'];
-        $estudante = $_SESSION['id'];
+declare(strict_types=1);
 
-        $tituloFormatado = trim(preg_replace('/\s+/', ' ', $titulo));
-        $tamanhoDoTitulo = mb_strlen($tituloFormatado);
+require_once __DIR__ . '/lib/db.php';
+require_once __DIR__ . '/lib/auth.php';
+require_once __DIR__ . '/lib/helpers.php';
 
-        $resumoFormatado = trim(preg_replace('/\s+/', ' ', $resumo));
-        $tamanhoDoResumo = mb_strlen($resumoFormatado);
+$estudante = require_auth();
+require_csrf();
 
-        $tituloNaoAlterou = $conn->query("SELECT * FROM assunto WHERE id_estudante_fk = '$estudante' AND titulo = '$tituloFormatado' AND id_assunto = '$idAssunto'");
-        $linhaNa = $tituloNaoAlterou->fetch_object();
-        $qtdNa = $tituloNaoAlterou->num_rows;
+if (!isset($_POST['atualizar'])) {
+    safe_redirect('home.php');
+}
 
-        $resumoNaoAlterou = $conn->query("SELECT * FROM assunto WHERE id_estudante_fk = '$estudante' AND resumo = '$resumoFormatado' AND id_assunto = '$idAssunto'");
-        $linhaRNa = $resumoNaoAlterou->fetch_object();
-        $qtdRNa = $resumoNaoAlterou->num_rows;
+$idAssunto = filter_var($_POST['idAssunto'] ?? '', FILTER_VALIDATE_INT);
+$titulo    = normalize_spaces((string) ($_POST['tituloAtt'] ?? ''));
+$resumo    = normalize_spaces((string) ($_POST['resumoAtt'] ?? ''));
+$pagina    = $_POST['pagina'] ?? 'home.php';
 
-        if($tituloFormatado == "" || $tituloFormatado == NULL || $tamanhoDoTitulo > 20 || $tamanhoDoResumo > 300){
-            print "<script>alert('Sem gracinhas, tente denovo, da maneira correta, o título é obrigatório, deve conter no máximo 20 caractéres e não pode ser vazio ou apenas conter espaços em branco. Assim como o resumo deve conter no máximo 300 caractéres.'); location.href='../telas/$pagina'</script>";
-        } else if($qtdNa > 0 && $qtdRNa > 0){
-            print "<script>location.href='../telas/$pagina'</script>";
+if ($idAssunto === false || $idAssunto === null) {
+    safe_redirect('home.php');
+}
 
-        } else if($qtdRNa > 0){
-            $res = $conn->query("UPDATE assunto SET titulo = '$tituloFormatado' WHERE id_assunto = '$idAssunto'");
-            print "<script>location.href='../telas/$pagina'</script>";
-        } else if($qtdNa > 0){
-            $res = $conn->query("UPDATE assunto SET resumo = '$resumoFormatado' WHERE id_assunto = '$idAssunto'");
-            print "<script>location.href='../telas/$pagina'</script>";
-        } else {
-            $res = $conn->query("UPDATE assunto SET titulo = '$tituloFormatado', resumo = '$resumoFormatado' WHERE id_assunto = '$idAssunto'");
-        }
+if ($titulo === '' || mb_strlen($titulo) > 52 || mb_strlen($resumo) > 300) {
+    alert_and_redirect(
+        'Título obrigatório (até 52 caracteres). Resumo até 300 caracteres.',
+        $pagina
+    );
+}
 
-        if($res){
-            print "<script>location.href='../telas/$pagina'</script>";
-        } else{
-            print "<script>alert('Não foi possível cadastrar'); location.href='../telas/$pagina'</script>";
-        }
-    }
-?>
+$pdo = study_root_db();
+
+// Garante que o assunto pertence ao estudante.
+$own = $pdo->prepare(
+    'SELECT id_assunto FROM assunto WHERE id_assunto = :a AND id_estudante_fk = :e LIMIT 1'
+);
+$own->execute([':a' => $idAssunto, ':e' => $estudante]);
+if (!$own->fetch()) {
+    safe_redirect('home.php');
+}
+
+// Evita colisão de título dentro do mesmo dono (excluindo o próprio registro).
+$dup = $pdo->prepare(
+    'SELECT id_assunto FROM assunto
+     WHERE id_estudante_fk = :e AND titulo = :t AND id_assunto <> :a LIMIT 1'
+);
+$dup->execute([':e' => $estudante, ':t' => $titulo, ':a' => $idAssunto]);
+if ($dup->fetch()) {
+    alert_and_redirect('Você já tem outro assunto com esse título.', $pagina);
+}
+
+$upd = $pdo->prepare(
+    'UPDATE assunto SET titulo = :t, resumo = :r WHERE id_assunto = :a AND id_estudante_fk = :e'
+);
+$upd->execute([':t' => $titulo, ':r' => $resumo, ':a' => $idAssunto, ':e' => $estudante]);
+
+safe_redirect($pagina);

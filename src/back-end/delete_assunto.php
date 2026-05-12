@@ -1,30 +1,28 @@
 <?php
-    require('config.php');
 
-    $id = $_POST["idAssuntoDelelete"];
-    $pagina = $_POST["pagina"];
+declare(strict_types=1);
 
-    if($conn){
-        $verificaAnotacoes = $conn->query("SELECT * FROM anotacao WHERE id_assunto_fk = $id");
+require_once __DIR__ . '/lib/db.php';
+require_once __DIR__ . '/lib/auth.php';
+require_once __DIR__ . '/lib/helpers.php';
 
-        if($verificaAnotacoes){
-            $deleteAnotacoes = $conn->query("DELETE FROM anotacao WHERE id_assunto_fk = $id");
+$estudante = require_auth();
+require_csrf();
 
-            if($deleteAnotacoes){
-                $deleteAssunto = $conn->query("DELETE FROM assunto WHERE id_assunto = $id");
+$id     = filter_var($_POST['idAssuntoDelelete'] ?? '', FILTER_VALIDATE_INT);
+$pagina = $_POST['pagina'] ?? 'home.php';
 
-                if($deleteAssunto){
-                    print "<script>location.href='../telas/$pagina'</script>";
-                }
-            }
-        } else {
-            $deleteAssunto = $conn->query("DELETE FROM assunto WHERE id_assunto = $id");
+if ($id === false || $id === null) {
+    safe_redirect($pagina);
+}
 
-            if($deleteAssunto){
-                print "<script>location.href='../telas/$pagina'</script>";
-            }
+$pdo = study_root_db();
 
-        }
-    }
-    print "<script>alert('Não foi possível deletar'); location.href='../telas/$pagina'</script>";
-?>
+// O DELETE checa o dono diretamente — não é preciso SELECT antes.
+// CASCADE no schema garante que as anotações associadas vão junto.
+$del = $pdo->prepare(
+    'DELETE FROM assunto WHERE id_assunto = :a AND id_estudante_fk = :e'
+);
+$del->execute([':a' => $id, ':e' => $estudante]);
+
+safe_redirect($pagina);

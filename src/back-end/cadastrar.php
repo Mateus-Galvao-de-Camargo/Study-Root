@@ -1,68 +1,65 @@
 <?php
-    session_start();
 
-    require_once('config.php');
-    include('bcrypt.php');
+declare(strict_types=1);
 
-    if(isset($_POST['cadastrar'])){
-        $usuario = $_POST['usuario'];
-        $email = $_POST['email'];
-        $senha = $_POST['senha'];
+require_once __DIR__ . '/lib/db.php';
+require_once __DIR__ . '/lib/auth.php';
+require_once __DIR__ . '/lib/helpers.php';
+require_once __DIR__ . '/bcrypt.php';
 
-        $emailFormatado = preg_replace('/\s+/', '', $email);
-        $senhaFormatada = preg_replace('/\s+/', '', $senha);
-        $usuarioFormatado = preg_replace('/\s+/', '', $usuario);
+study_root_session_start();
+require_csrf();
 
-        $hash = Bcrypt::hash($senhaFormatada);
+if (!isset($_POST['cadastrar'])) {
+    header('Location: /telas/cadastro.php');
+    exit;
+}
 
-        $sql = "SELECT * FROM estudante WHERE email = ?";
+$usuario = trim((string) ($_POST['usuario'] ?? ''));
+$email   = trim((string) ($_POST['email']   ?? ''));
+$senha   = (string)        ($_POST['senha']   ?? '');
 
-        if ($conn instanceof PDO) {
-            // PostgreSQL
-            $stmt = $conn->prepare($sql);
-            $stmt->execute([$emailFormatado]);
-            $qtd = $stmt->rowCount();
-        } else {
-            // MySQL
-            $res = $conn->query($sql);
-            $qtd = $res->num_rows;
-        }
+// trim já removeu bordas; remove espaços internos só do email
+$email = preg_replace('/\s+/', '', $email) ?? '';
 
-        if($qtd > 0){
-            print "<script>alert('Email já utilizado! Cadastro não realizado'); location.href='../telas/cadastro.php'</script>";
-        } else if($emailFormatado == NULL || $emailFormatado == "" || $usuarioFormatado == NULL || $usuarioFormatado == "" || $senhaFormatada == NULL || $senhaFormatada == ""){
-            print "<script>alert('Informações vazias ou com apenas espaços em branco! Cadastro não realizado'); location.href='../telas/cadastro.php'</script>";
-        } else {
-            $insertSql = "INSERT INTO estudante (usuario, email, senha) VALUES (?, ?, ?)";
-            
-            if ($conn instanceof PDO) {
-                // PostgreSQL
-                $stmt = $conn->prepare($insertSql);
-                $row = $stmt->execute([$usuarioFormatado, $emailFormatado, $hash]);
-            } else {
-                // MySQL
-                $row = $conn->query("INSERT INTO estudante (usuario, email, senha) VALUES ('$usuarioFormatado', '$emailFormatado', '$hash')");
-            }
-        }
+if ($usuario === '' || $email === '' || $senha === '') {
+    alert_and_redirect('Preencha todos os campos.', 'cadastro.php', '/telas/cadastro.php');
+}
 
-        if($row){
-            // Busca o usuário recém-criado
-            if ($conn instanceof PDO) {
-                // PostgreSQL
-                $stmt = $conn->prepare($sql);
-                $stmt->execute([$emailFormatado]);
-                $res = $stmt->fetch(PDO::FETCH_OBJ);
-            } else {
-                // MySQL
-                $select = $conn->query($sql);
-                $res = $select->fetch_object();
-            }
+if (mb_strlen($usuario) > 30 || mb_strlen($email) > 50 || mb_strlen($senha) > 72) {
+    alert_and_redirect('Algum campo excedeu o tamanho permitido.', 'cadastro.php', '/telas/cadastro.php');
+}
 
-            $_SESSION["id"] = $res->id_estudante;
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    alert_and_redirect('Email inválido.', 'cadastro.php', '/telas/cadastro.php');
+}
 
-            print "<script>location.href='../telas/home.php'</script>";
-        } else{
-            print "<script>alert('Não foi possível cadastrar.'); location.href='../telas/cadastro.php'</script>";
-        }
-    }
-?>
+$pdo = study_root_db();
+
+$check = $pdo->prepare('SELECT id_estudante FROM estudante WHERE email = :email LIMIT 1');
+$check->execute([':email' => $email]);
+if ($check->fetch()) {
+    alert_and_redirect('Email já utilizado.', 'cadastro.php', '/telas/cadastro.php');
+}
+
+$hash = Bcrypt::hash($senha);
+
+$ins = $pdo->prepare(
+    'INSERT INTO estudante (usuario, email, senha) VALUES (:u, :e, :s)'
+);
+$ins->execute([':u' => $usuario, ':e' => $email, ':s' => $hash]);
+
+// Pega o id de forma portável (lastInsertId precisa do nome da sequence em pgsql)
+if (study_root_db_driver() === 'pgsql') {
+    $newId = (int) $pdo->lastInsertId('estudante_id_estudante_seq');
+} else {
+    $newId = (int) $pdo->lastInsertId();
+}
+
+if ($newId <= 0) {
+    alert_and_redirect('Não foi possível cadastrar.', 'cadastro.php', '/telas/cadastro.php');
+}
+
+log_in_as($newId);
+header('Location: /telas/home.php');
+exit;

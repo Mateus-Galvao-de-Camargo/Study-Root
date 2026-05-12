@@ -1,33 +1,29 @@
+# Blueprint para Render (https://render.com).
+#
+# Cria APENAS o web service. O banco fica em Neon (https://neon.tech) por dois
+# motivos: (1) o Postgres free do Render expira em 30 dias, o do Neon não;
+# (2) Neon oferece "scale-to-zero" automático, então a app fica gratuita pra
+# valer no plano free.
+#
+# Antes do primeiro deploy:
+#   1. Crie um projeto em https://neon.tech e copie a connection string
+#      (algo como: postgres://user:pass@ep-xxx.neon.tech/dbname?sslmode=require)
+#   2. No painel do Render, conecte este repositório e crie um Blueprint.
+#   3. Quando o Render perguntar pela env var DATABASE_URL, cole a string acima.
+#
+# O `sync: false` em DATABASE_URL diz pro Render: "essa variável é secret,
+# não a trate como gerenciada pelo blueprint, eu vou preenchê-la no painel".
+
 services:
   - type: web
     name: study-root
     env: docker
+    plan: free
     dockerfilePath: ./Dockerfile
     dockerContext: .
+    healthCheckPath: /index.php
     envVars:
-      - key: MYSQL_HOST
-        fromDatabase:
-          name: study-root-db
-          property: host
-      - key: MYSQL_PORT
-        fromDatabase:
-          name: study-root-db
-          property: port
-      - key: MYSQL_DATABASE
-        fromDatabase:
-          name: study-root-db
-          property: database
-      - key: MYSQL_USERNAME
-        fromDatabase:
-          name: study-root-db
-          property: user
-      - key: MYSQL_PASSWORD
-        fromDatabase:
-          name: study-root-db
-          property: password
-    healthCheckPath: /
-
-databases:
-  - name: study-root-db
-    databaseName: study_root
-    user: study_root_user
+      - key: DATABASE_URL
+        sync: false
+      - key: APP_ENV
+        value: production

@@ -1,36 +1,57 @@
 <?php
-    session_start();
 
-    require_once('config.php');
+declare(strict_types=1);
 
-    if(isset($_POST['atualizar'])){
-        $titulo = $_POST['tituloAnotacaoUp'];
-        $assunto = $_POST['idDoAssuntoPraUpdateDaAnotacao'];
-        $paginaQueEnviou = $_POST['paginaAnotacaoUp'];
-        $idAnotacao = $_POST['idAnotacaoEdit'];
+require_once __DIR__ . '/lib/db.php';
+require_once __DIR__ . '/lib/auth.php';
+require_once __DIR__ . '/lib/helpers.php';
 
-        $tituloFormatado = trim(preg_replace('/\s+/', ' ', $titulo));
+$estudante = require_auth();
+require_csrf();
 
-        $tamanhoDoTitulo = mb_strlen($tituloFormatado);
+if (!isset($_POST['atualizar'])) {
+    safe_redirect('home.php');
+}
 
-        $tituloRepetido = $conn->query("SELECT * FROM anotacao WHERE id_assunto_fk = '$assunto' AND titulo = '$tituloFormatado'");
+$titulo     = normalize_spaces((string) ($_POST['tituloAnotacaoUp'] ?? ''));
+$assunto    = filter_var($_POST['idDoAssuntoPraUpdateDaAnotacao'] ?? '', FILTER_VALIDATE_INT);
+$idAnotacao = filter_var($_POST['idAnotacaoEdit']                ?? '', FILTER_VALIDATE_INT);
+$pagina     = $_POST['paginaAnotacaoUp'] ?? 'home.php';
 
-        $linha = $tituloRepetido->fetch_object();
+if ($assunto === false || $assunto === null || $idAnotacao === false || $idAnotacao === null) {
+    safe_redirect('home.php');
+}
 
-        $qtd = $tituloRepetido->num_rows;
+if ($titulo === '' || mb_strlen($titulo) > 24) {
+    alert_and_redirect('Título obrigatório (até 24 caracteres).', $pagina);
+}
 
-        if($qtd > 0){
-            printf("<script>alert('O título %s já é registrado nesse assunto'); location.href='../telas/$paginaQueEnviou'</script>", $linha->titulo);
-        } else if($tituloFormatado == NULL || $tituloFormatado == "" || $tamanhoDoTitulo > 24){
-            print "<script>alert('Sem gracinhas. tente denovo da maneira correta, o título é obrigatório, deve conter no máximo 24 caractéres e não pode ser vazio ou apenas conter espaços em branco.'); location.href='../telas/$paginaQueEnviou'</script>";
-        } else {
-            $row = $conn->query("UPDATE anotacao SET titulo = '$tituloFormatado' WHERE id_anotacao = $idAnotacao");
-        }
+$pdo = study_root_db();
 
-        if($row){
-            print "<script>location.href='../telas/$paginaQueEnviou'</script>";
-        } else{
-            print "<script>alert('Não foi possível cadastrar'); location.href='../telas/$paginaQueEnviou'</script>";
-        }
-    }
-?>
+// Garante que a anotação pertence a um assunto do estudante logado.
+$own = $pdo->prepare(
+    'SELECT a.id_anotacao
+       FROM anotacao a
+       JOIN assunto s ON s.id_assunto = a.id_assunto_fk
+      WHERE a.id_anotacao = :n AND a.id_assunto_fk = :a AND s.id_estudante_fk = :e
+      LIMIT 1'
+);
+$own->execute([':n' => $idAnotacao, ':a' => $assunto, ':e' => $estudante]);
+if (!$own->fetch()) {
+    safe_redirect('home.php');
+}
+
+// Evita duplicata de título no mesmo assunto.
+$dup = $pdo->prepare(
+    'SELECT id_anotacao FROM anotacao
+     WHERE id_assunto_fk = :a AND titulo = :t AND id_anotacao <> :n LIMIT 1'
+);
+$dup->execute([':a' => $assunto, ':t' => $titulo, ':n' => $idAnotacao]);
+if ($dup->fetch()) {
+    alert_and_redirect('Já existe outra anotação com esse título nesse assunto.', $pagina);
+}
+
+$upd = $pdo->prepare('UPDATE anotacao SET titulo = :t WHERE id_anotacao = :n');
+$upd->execute([':t' => $titulo, ':n' => $idAnotacao]);
+
+safe_redirect($pagina);

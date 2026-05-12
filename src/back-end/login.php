@@ -1,39 +1,39 @@
 <?php
-    session_start();
 
-    include('config.php');
-    include('bcrypt.php');
+declare(strict_types=1);
 
-    $email = $_POST["email"];
-    $senha = $_POST["senha"];
+require_once __DIR__ . '/lib/db.php';
+require_once __DIR__ . '/lib/auth.php';
+require_once __DIR__ . '/lib/helpers.php';
+require_once __DIR__ . '/bcrypt.php';
 
-    if( empty($_POST) || (empty($_POST['email'])) || (empty($_POST['senha'])) || $email == "" || $senha == "" ){
-        print "<script>alert('Email e/ou senha incorreto(s)'); location.href='../index.php';</script>";
-    }
+study_root_session_start();
+require_csrf();
 
-    $sql = "SELECT * FROM estudante WHERE email = ?";
-    
-    if ($conn instanceof PDO) {
-        // PostgreSQL
-        $stmt = $conn->prepare($sql);
-        $stmt->execute([$email]);
-        $row = $stmt->fetch(PDO::FETCH_OBJ);
-        $qtd = $stmt->rowCount();
-    } else {
-        // MySQL
-        $res = $conn->query($sql) or die($conn->error);
-        $row = $res->fetch_object();
-        $qtd = $res->num_rows;
-    }
+$email = trim((string) ($_POST['email'] ?? ''));
+$senha = (string) ($_POST['senha'] ?? '');
 
-    if($qtd > 0){
-        $hash = $row->senha;
-        if(Bcrypt::check($senha, $hash)){
-            $_SESSION["id"] = $row->id_estudante;
-            print "<script>location.href='../telas/home.php'</script>";
-        } else {
-            print "<script>alert('Email e/ou senha incorreto(s)'); location.href='../index.php';</script>";
-        }
-    } else {
-        print "<script>alert('Email e/ou senha incorreto(s)'); location.href='../index.php';</script>";
-    }
+if ($email === '' || $senha === '') {
+    alert_and_redirect('Email e/ou senha incorreto(s)', 'index.php', '/index.php');
+}
+
+$pdo = study_root_db();
+$stmt = $pdo->prepare('SELECT id_estudante, senha FROM estudante WHERE email = :email LIMIT 1');
+$stmt->execute([':email' => $email]);
+$row = $stmt->fetch();
+
+// Validação genérica: nunca informa se foi o email ou a senha que falhou.
+if (!$row || !Bcrypt::check($senha, $row->senha)) {
+    alert_and_redirect('Email e/ou senha incorreto(s)', 'index.php', '/index.php');
+}
+
+// Se o hash ficou desatualizado (custo, algoritmo), reescreve.
+if (Bcrypt::needsRehash($row->senha)) {
+    $novo = Bcrypt::hash($senha);
+    $upd = $pdo->prepare('UPDATE estudante SET senha = :senha WHERE id_estudante = :id');
+    $upd->execute([':senha' => $novo, ':id' => $row->id_estudante]);
+}
+
+log_in_as((int) $row->id_estudante);
+header('Location: /telas/home.php');
+exit;

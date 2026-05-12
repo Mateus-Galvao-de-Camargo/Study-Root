@@ -1,6 +1,9 @@
 <?php
-    session_start();
-    unset($_SESSION["id"]);
-    session_destroy();
-    print "<script>location.href='../index.php'</script>";
-    exit;
+
+declare(strict_types=1);
+
+require_once __DIR__ . '/lib/auth.php';
+
+log_out();
+header('Location: /index.php');
+exit;
