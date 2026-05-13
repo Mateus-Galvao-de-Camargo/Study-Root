@@ -1,13 +1,30 @@
 # Study Root
 
-Sistema gerenciador de anotações em PHP, originalmente desenvolvido como Projeto Integrador no IFSC. Esta versão foi modernizada para servir como portfólio, rodando gratuitamente em nuvem.
+Sistema gerenciador de anotações em PHP, originalmente desenvolvido como Projeto Integrador(TCC) no IFSC. Esta versão foi modernizada para servir como portfólio, rodando gratuitamente em nuvem.
+
+**AVISO** O site está hospedado gratuitamente no Render, após ficar inativo por um tempo ele precisa de 30 segundos para voltar a ativa, este foi meu primeiro projeto da vida e ele renderiza quase completamente tudo no lado do servidor então a maioria das ações demoram um pouco para serem efetuadas.
+
+**AVISO 2** Este sistema foi criado exclusivamente para fins educacionais e usado como portfólio, todas informações, contas e dados estão sujeitos a serem apagados a qualquer momento sem aviso prévio e eu não recomendo que insira dados sensíveis ou sequer reais em qualquer uso dele, você pode se cadastrar até mesmo com um email fictício pois não há validação se ele existe ou pertence a você.
+
+[Site do Study Root](https://study-root-qxr4.onrender.com/)
 
 > Documentação acadêmica: [Google Docs](https://docs.google.com/document/d/1Jh700Q1HGRhJQvnK_KCYZsnnCxnK0gDuvxz54Lvc4ZM/edit?usp=sharing) · Protótipo: [Figma](https://www.figma.com/proto/AiGFEHJlkqDcDRAocHzbB7/Projeto-Integrador---Study-Root?node-id=45-7)
+
+## Como usar o site?
+1 - O primeiro acesso começa pela tela de login, acesse a tela de cadastro pelo link abaixo do formulário de login
+
+2 - Após se cadastrar ele vai logar automáticamente e te enviar à tela principal, na esquerda você pode visualizar uma barra de pesquisa, um botão de configuração que abre um modal com as opções de alterar sua senha ou deslogar, e então você vê o botão branco com um sinal de mais (+) começe clicando nesse mais.
+
+3 - No modal acessado você criará seu primeiro assunto, ela vai servir como uma pasta com nome e descrição
+
+4 - Agora na sua esquerda está o seu primeiro assunto, clique nele e a tela principal mostrará o título, a descrição e o botão de adicionar anotações, clique para adicionar uma anotação
+
+5 - Clicando sobre a sua anotação recém criada você verá o editor de textos, após digitar ele vai salvar sua escrita.
 
 ## Stack
 
 - PHP 8.2 + Apache (imagem `php:8.2-apache`)
-- PostgreSQL (Neon em produção, Postgres 16 local via Docker)
+- PostgreSQL 16
 - PDO_pgsql como driver único
 - TinyMCE para edição rica
 - Bootstrap 5 + FontAwesome 6
@@ -32,50 +49,6 @@ make up           # ou: docker compose up --build
 ```
 
 Acesse <http://localhost:8080>. O schema é aplicado automaticamente pelo entrypoint na primeira subida.
-
-Smoke test end-to-end (em outra janela, com o compose já rodando):
-
-```bash
-make smoke        # ou: bash scripts/smoke-test.sh
-```
-
-Para resetar o banco:
-
-```bash
-make down         # ou: docker compose down -v
-make up
-```
-
-Outros atalhos úteis (`make help` lista todos): `make test` (PHPUnit no container), `make logs`, `make shell`, `make migrate`, `make cleanup-legacy` (apaga arquivos deprecated).
-
-## Como hospedar grátis na nuvem (Render + Neon)
-
-Esta é a forma mais barata e simples de manter o projeto vivo como portfólio.
-
-### 1. Criar o banco no Neon
-
-1. Crie uma conta em <https://neon.tech> (não pede cartão de crédito).
-2. Crie um projeto. O Neon gera um banco `neondb` por padrão — pode usar.
-3. Na tela do projeto, copie a **connection string** (formato `postgres://user:pass@ep-xxxx.neon.tech/dbname?sslmode=require`). Você vai colar isso no Render.
-
-### 2. Criar o web service no Render
-
-1. Crie uma conta em <https://render.com>.
-2. New → Blueprint → conecte o repositório do GitHub.
-3. O Render detecta o `render.yaml` e propõe criar o serviço `study-root`.
-4. Quando pedir a variável `DATABASE_URL`, cole a connection string do Neon.
-5. Confirme o deploy. O Apache vai escutar na porta que o Render injetar via `$PORT`; o `entrypoint.sh` aplica o `schema.sql` antes de subir.
-
-Pronto. Em ~3 minutos o app está no ar em `https://study-root.onrender.com` (URL exata aparece no painel).
-
-> Plano free do Render hiberna depois de 15 minutos sem tráfego. A primeira request depois disso demora ~30s (cold start). Pra portfólio isso costuma ser aceitável — basta avisar no link.
-
-### Alternativas equivalentes
-
-- **Fly.io**: também roda Docker, free tier generoso. Use `fly launch` apontando para o `Dockerfile`. Configure `DATABASE_URL` com `fly secrets set`.
-- **Railway**: $5 USD de crédito mensal. Conecte o repo, ele detecta o Dockerfile.
-
-Em qualquer caso a única variável obrigatória é `DATABASE_URL`.
 
 ## Arquitetura
 
