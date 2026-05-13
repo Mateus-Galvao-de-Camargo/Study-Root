@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Entrypoint do container Study Root.
 # - Ajusta Apache pra escutar na porta vinda da plataforma (Render usa $PORT)
 # - Roda as migrações antes de subir o servidor

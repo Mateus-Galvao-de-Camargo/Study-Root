@@ -31,7 +31,10 @@ COPY --from=deps /app/vendor /var/www/html/vendor
 # Render injeta a porta via $PORT. Apache escuta nela em vez de 80 fixa.
 # A substituição é feita no entrypoint.
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
+# Remove qualquer CRLF (caso o script tenha sido editado/checkado-out no Windows)
+# e garante a permissão de execução.
+RUN sed -i 's/\r$//' /usr/local/bin/entrypoint.sh \
+    && chmod +x /usr/local/bin/entrypoint.sh
 
 # Permissões mínimas
 RUN chown -R www-data:www-data /var/www/html
